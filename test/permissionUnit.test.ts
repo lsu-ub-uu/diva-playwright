@@ -22,8 +22,9 @@ test.describe("Permission unit", () => {
     await page.getByRole("button", { name: "Skapa output" }).click();
     await page.getByRole("menuitem", { name: "Rapport" }).click();
 
-    await expect(page).toHaveTitle(/^Skapa publikation/);
+    await expect(page).toHaveTitle(/^Skapa rapport/);
 
+    await page.getByRole("button", { name: "Postinformation" }).click();
     await expect(
       page.getByRole("combobox", { name: "Rättighetsenhet" })
     ).not.toBeVisible();
@@ -47,8 +48,9 @@ test.describe("Permission unit", () => {
     await page.getByRole("button", { name: "Skapa output" }).click();
     await page.getByRole("menuitem", { name: "Rapport" }).click();
 
-    await expect(page).toHaveTitle(/^Skapa publikation/);
+    await expect(page).toHaveTitle(/^Skapa rapport/);
 
+    await page.getByRole("button", { name: "Postinformation" }).click();
     await expect(
       page.getByRole("combobox", { name: "Rättighetsenhet" })
     ).not.toBeVisible();
@@ -72,8 +74,9 @@ test.describe("Permission unit", () => {
     await page.getByRole("button", { name: "Skapa output" }).click();
     await page.getByRole("menuitem", { name: "Rapport" }).click();
 
-    await expect(page).toHaveTitle(/^Skapa publikation/);
+    await expect(page).toHaveTitle(/^Skapa rapport/);
 
+    await page.getByRole("button", { name: "Postinformation" }).click();
     // Fill create form
     await page.getByRole("combobox", { name: "Rättighetsenhet" }).fill("uu");
     await page.getByRole("option", { name: "Rättighetsenhet" }).click();
@@ -132,8 +135,11 @@ test.describe("Permission unit", () => {
     await kthPage.getByRole("button", { name: "Skapa output" }).click();
     await kthPage.getByRole("menuitem", { name: "Rapport" }).click();
 
-    await expect(kthPage).toHaveTitle(/^Skapa publikation/);
+    await expect(kthPage).toHaveTitle(/^Skapa rapport/);
 
+    await kthPage
+      .getByRole("button", { name: "Administrativ information" })
+      .click();
     await kthPage
       .getByRole("combobox", {
         name: "DiVA-lokal generisk uppmärkning",

@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "End-to-end tests for diva-client",
   "scripts": {
-    "test": "npx playwright test",
-    "test:ui": "npx playwright test --ui"
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:ci": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=junit-report.xml playwright test --reporter=junit"
   },
   "license": "GPL-3.0",
-   "devDependencies": {
+  "devDependencies": {
     "@faker-js/faker": "^9.4.0",
     "@playwright/test": "^1.52.0",
     "dotenv": "^16.4.5",

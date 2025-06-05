@@ -86,12 +86,11 @@ test.describe("Update output", () => {
     ).toBeVisible();
 
     //Assert update page info
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      recordTitle
-    );
     await expect(
       page.getByRole("group", { name: "Huvudtitel" }).getByLabel("Huvudtitel")
     ).toHaveValue(recordTitle);
+
+    await page.getByRole("button", { name: "Fil" }).click();
 
     await page
       .getByLabel("Bifogad fil")
@@ -100,7 +99,7 @@ test.describe("Update output", () => {
     await expect(page.getByLabel("Originalfilnam")).toHaveText("dog.jpg");
 
     const attachmentGroup = page.getByRole("region", {
-      name: "Bilaga",
+      name: "Fil",
     });
     await attachmentGroup
       .getByRole("group", { name: "Typ" })
@@ -112,6 +111,8 @@ test.describe("Update output", () => {
     await expect(
       page.getByText(/^Record was successfully updated/)
     ).toBeVisible();
+
+    await page.getByRole("button", { name: "Fil" }).click();
 
     // Store binary record URL to use in cleanup step.
     downloadLink = await page

@@ -3,16 +3,11 @@ import { createDivaOutput } from "../testData/divaOutput";
 import { createLocalGenericMarkup } from "../testData/localGenericMarkup";
 import type { DataGroup } from "./coraTypes";
 import { getFirstDataAtomicValueWithNameInData } from "./coraUtils";
+import { addSubdomain } from "./addSubdomain";
 
 /* eslint-disable react-hooks/rules-of-hooks */
 
-const {
-  CORA_API_URL,
-  CORA_LOGIN_URL,
-  DOMAIN = "localhost",
-  BASE_PATH = "",
-  PORT = "5173",
-} = process.env;
+const { CORA_API_URL, CORA_LOGIN_URL, TARGET_URL } = process.env;
 
 interface Fixtures {
   authtoken: string;
@@ -83,7 +78,7 @@ export const test = base.extend<Fixtures>({
   kthPage: async ({ browser }, use) => {
     // Set up
     const context = await browser.newContext({
-      baseURL: `http://kth.${DOMAIN}:${PORT}${BASE_PATH}`,
+      baseURL: addSubdomain(TARGET_URL!, "kth"),
     });
     const page = await context.newPage();
 

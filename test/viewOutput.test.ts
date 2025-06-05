@@ -19,18 +19,18 @@ test.describe("View output", () => {
 
     await page.goto(createUrl(`/diva-output/${recordId}`));
 
-    await expect(await page.getByLabel(/^Id/)).toHaveText(recordId);
-    await expect(await page.getByLabel(/^Posttyp/)).toHaveText("diva-output");
-    await expect(await page.getByLabel(/^Valideringstyp/)).toHaveText(
-      "publication_report"
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      recordTitle
     );
-    await expect(await page.getByLabel(/^Datadelare/)).toHaveText("divaData");
-    await expect(await page.getByLabel(/^Skapad av/)).toHaveText("161616");
-    await expect(await page.getByLabel(/^Huvudtitel/)).toHaveText(recordTitle);
 
-    const languageGroup = await page.getByRole("region", {
-      name: "Språk för resursen",
-    });
-    await expect(await languageGroup.getByLabel(/^Språk/)).toHaveText("Ainu");
+    await expect(page.getByText("Rapport")).toBeVisible();
+
+    expect(page.getByText("Ainu")).toBeVisible();
+
+    expect(page.getByText("Övrigt vetenskapligt/konstnärligt")).toBeVisible();
+
+    expect(page.getByText("2025")).toBeVisible();
+
+    expect(page.getByText(recordId)).toBeVisible();
   });
 });
