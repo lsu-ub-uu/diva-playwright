@@ -11,10 +11,11 @@ export default defineConfig({
   workers: CI ? 1 : undefined,
   reporter: CI
     ? [
+        ['list'],
         ['html', { open: 'never' }],
         ['junit', { outputFile: 'junit-report.xml' }],
       ]
-    : [['html']],
+    : [['list'], ['html']],
   use: {
     baseURL: TARGET_URL,
     trace: 'on-first-retry',
