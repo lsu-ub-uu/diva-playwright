@@ -1,5 +1,4 @@
-import type { DataAtomic, DataGroup } from "./coraTypes";
-
+import type { DataAtomic, DataGroup } from './coraTypes';
 
 export function getFirstChildWithNameInData(
   dataGroup: DataGroup,
@@ -22,7 +21,6 @@ export function getFirstChildWithNameInData(
   return matchingChild;
 }
 
-
 export function getAllChildrenWithNameInData(
   dataGroup: DataGroup,
   nameInData: string,
@@ -34,7 +32,6 @@ export function getAllChildrenWithNameInData(
   return childrenToReturn;
 }
 
-
 export function getFirstDataAtomicValueWithNameInData(
   dataGroup: DataGroup,
   nameInData: string,
@@ -43,7 +40,6 @@ export function getFirstDataAtomicValueWithNameInData(
 
   return dataAtomic.value;
 }
-
 
 export function getFirstDataAtomicWithNameInData(
   dataGroup: DataGroup,

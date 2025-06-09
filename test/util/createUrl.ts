@@ -16,8 +16,9 @@
  *     You should have received a copy of the GNU General Public License
  */
 
-const { BASE_PATH } = process.env;
+const { TARGET_URL } = process.env;
 
 export const createUrl = (url: string) => {
-  return BASE_PATH ? `${BASE_PATH}${url}` : url;
+  const basePath = TARGET_URL ? new URL(TARGET_URL).pathname : '';
+  return `${basePath}${url}`;
 };

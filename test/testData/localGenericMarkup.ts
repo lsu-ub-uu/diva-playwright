@@ -1,4 +1,4 @@
-import type { DataGroup } from "../util/coraTypes";
+import type { DataGroup } from '../util/coraTypes';
 
 export const createLocalGenericMarkup = (permissionUnit = 'uu'): DataGroup => ({
   name: 'localGenericMarkup',

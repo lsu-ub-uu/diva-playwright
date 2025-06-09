@@ -16,26 +16,26 @@
  *     You should have received a copy of the GNU General Public License
  */
 
-import { test } from "./util/fixtures";
-import { expect } from "@playwright/test";
-import { faker } from "@faker-js/faker";
-import { createUrl } from "./util/createUrl";
-import { logIn } from "./util/logIn";
+import { test } from './util/fixtures';
+import { expect } from '@playwright/test';
+import { faker } from '@faker-js/faker';
+import { createUrl } from './util/createUrl';
+import { logIn } from './util/logIn';
 import {
   getFirstDataAtomicValueWithNameInData,
   getFirstDataGroupWithNameInData,
-} from "./util/coraUtils";
-import path from "node:path";
+} from './util/coraUtils';
+import path from 'node:path';
 
-test.describe("Update output", () => {
-  test("updates an existing report", async ({ page, divaOutput }) => {
+test.describe('Update output', () => {
+  test('updates an existing report', async ({ page, divaOutput }) => {
     const recordId = getFirstDataAtomicValueWithNameInData(
-      getFirstDataGroupWithNameInData(divaOutput, "recordInfo"),
-      "id"
+      getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
+      'id',
     );
     const recordTitle = getFirstDataAtomicValueWithNameInData(
-      getFirstDataGroupWithNameInData(divaOutput, "titleInfo"),
-      "title"
+      getFirstDataGroupWithNameInData(divaOutput, 'titleInfo'),
+      'title',
     );
 
     await page.goto(createUrl(`/diva-output/${recordId}/update`));
@@ -44,85 +44,85 @@ test.describe("Update output", () => {
     await logIn(page);
 
     //Assert update page info
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Rapport");
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Rapport');
     await expect(
-      page.getByRole("group", { name: "Huvudtitel" }).getByLabel("Huvudtitel")
+      page.getByRole('group', { name: 'Huvudtitel' }).getByLabel('Huvudtitel'),
     ).toHaveValue(recordTitle);
 
     await page
-      .getByRole("group", { name: "År" })
-      .getByLabel("År")
+      .getByRole('group', { name: 'År' })
+      .getByLabel('År')
       .fill(faker.date.recent().getFullYear().toString());
 
-    await page.getByRole("button", { name: "Skicka in" }).click();
+    await page.getByRole('button', { name: 'Skicka in' }).click();
 
     await expect(
-      page.getByText(/^Record was successfully updated/)
+      page.getByText(/^Record was successfully updated/),
     ).toBeVisible();
   });
 
   let downloadLink: string | null = null;
 
-  test("updates an existing report with a binary", async ({
+  test('updates an existing report with a binary', async ({
     page,
     divaOutput,
   }) => {
     const recordId = getFirstDataAtomicValueWithNameInData(
-      getFirstDataGroupWithNameInData(divaOutput, "recordInfo"),
-      "id"
+      getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
+      'id',
     );
     const recordTitle = getFirstDataAtomicValueWithNameInData(
-      getFirstDataGroupWithNameInData(divaOutput, "titleInfo"),
-      "title"
+      getFirstDataGroupWithNameInData(divaOutput, 'titleInfo'),
+      'title',
     );
 
     await page.goto(createUrl(`/diva-output/${recordId}/update`));
 
     // Log in
-    await page.getByRole("button", { name: "Logga in" }).click();
-    await page.getByRole("menuitem", { name: "DiVA Admin" }).click();
+    await page.getByRole('button', { name: 'Logga in' }).click();
+    await page.getByRole('menuitem', { name: 'DiVA Admin' }).click();
     await expect(
-      page.getByRole("button", { name: "DiVA Admin" })
+      page.getByRole('button', { name: 'DiVA Admin' }),
     ).toBeVisible();
 
     //Assert update page info
     await expect(
-      page.getByRole("group", { name: "Huvudtitel" }).getByLabel("Huvudtitel")
+      page.getByRole('group', { name: 'Huvudtitel' }).getByLabel('Huvudtitel'),
     ).toHaveValue(recordTitle);
 
-    await page.getByRole("button", { name: "Fil" }).click();
+    await page.getByRole('button', { name: 'Fil' }).click();
 
     await page
-      .getByLabel("Bifogad fil")
-      .setInputFiles(path.join(__dirname, "assets/dog.jpg"));
+      .getByLabel('Bifogad fil')
+      .setInputFiles(path.join(__dirname, 'assets/dog.jpg'));
 
-    await expect(page.getByLabel("Originalfilnam")).toHaveText("dog.jpg");
+    await expect(page.getByLabel('Originalfilnam')).toHaveText('dog.jpg');
 
-    const attachmentGroup = page.getByRole("region", {
-      name: "Fil",
+    const attachmentGroup = page.getByRole('region', {
+      name: 'Fil',
     });
     await attachmentGroup
-      .getByRole("group", { name: "Typ" })
-      .getByLabel("Typ")
-      .selectOption({ label: "Bild" });
+      .getByRole('group', { name: 'Typ' })
+      .getByLabel('Typ')
+      .selectOption({ label: 'Bild' });
 
-    await page.getByRole("button", { name: "Skicka in" }).click();
+    await page.getByRole('button', { name: 'Skicka in' }).click();
 
     await expect(
-      page.getByText(/^Record was successfully updated/)
+      page.getByText(/^Record was successfully updated/),
     ).toBeVisible();
 
-    await page.getByRole("button", { name: "Fil" }).click();
+    await page.getByRole('button', { name: 'Fil' }).click();
 
     // Store binary record URL to use in cleanup step.
     downloadLink = await page
-      .getByRole("link", { name: "Ladda ner" })
-      .getAttribute("href");
+      .getByRole('link', { name: 'Ladda ner' })
+      .getAttribute('href');
   });
 
   test.afterAll(async ({ authtoken, request }) => {
     /* Delete binary record */
-    const recordUrl = downloadLink?.replace(/\/master.*/, "");
+    const recordUrl = downloadLink?.replace(/\/master.*/, '');
 
     if (recordUrl) {
       await request.delete(recordUrl, {

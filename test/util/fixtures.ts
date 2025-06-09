@@ -1,13 +1,12 @@
-import { test as base, type Page } from "@playwright/test";
-import { createDivaOutput } from "../testData/divaOutput";
-import { createLocalGenericMarkup } from "../testData/localGenericMarkup";
-import type { DataGroup } from "./coraTypes";
-import { getFirstDataAtomicValueWithNameInData } from "./coraUtils";
-import { addSubdomain } from "./addSubdomain";
+import { test as base, type Page } from '@playwright/test';
+import { createDivaOutput } from '../testData/divaOutput';
+import { createLocalGenericMarkup } from '../testData/localGenericMarkup';
+import type { DataGroup } from './coraTypes';
+import { getFirstDataAtomicValueWithNameInData } from './coraUtils';
+import { addSubdomain } from './addSubdomain';
 
-/* eslint-disable react-hooks/rules-of-hooks */
-
-const { CORA_API_URL, CORA_LOGIN_URL, TARGET_URL } = process.env;
+const { CORA_API_URL, CORA_LOGIN_URL, TARGET_URL, CORA_USER, CORA_APPTOKEN } =
+  process.env;
 
 interface Fixtures {
   authtoken: string;
@@ -21,15 +20,15 @@ interface Fixtures {
 export const test = base.extend<Fixtures>({
   authtoken: async ({ request }, use) => {
     const response = await request.post(`${CORA_LOGIN_URL}/apptoken`, {
-      data: "divaAdmin@cora.epc.ub.uu.se\n49ce00fb-68b5-4089-a5f7-1c225d3cf156",
+      data: `${CORA_USER}\n${CORA_APPTOKEN}`,
       headers: {
-        "Content-Type": "application/vnd.cora.login",
+        'Content-Type': 'application/vnd.cora.login',
       },
     });
     const { authentication } = await response.json();
     const token = getFirstDataAtomicValueWithNameInData(
       authentication.data,
-      "token"
+      'token',
     );
 
     await use(token);
@@ -43,8 +42,8 @@ export const test = base.extend<Fixtures>({
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
       data: createDivaOutput(),
       headers: {
-        Accept: "application/vnd.cora.record+json",
-        "Content-Type": "application/vnd.cora.recordGroup+json",
+        Accept: 'application/vnd.cora.record+json',
+        'Content-Type': 'application/vnd.cora.recordGroup+json',
         Authtoken: authtoken,
       },
     });
@@ -59,10 +58,10 @@ export const test = base.extend<Fixtures>({
 
   kthDivaOutput: async ({ request, authtoken }, use) => {
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
-      data: createDivaOutput("kth"),
+      data: createDivaOutput('kth'),
       headers: {
-        Accept: "application/vnd.cora.record+json",
-        "Content-Type": "application/vnd.cora.recordGroup+json",
+        Accept: 'application/vnd.cora.record+json',
+        'Content-Type': 'application/vnd.cora.recordGroup+json',
         Authtoken: authtoken,
       },
     });
@@ -78,7 +77,7 @@ export const test = base.extend<Fixtures>({
   kthPage: async ({ browser }, use) => {
     // Set up
     const context = await browser.newContext({
-      baseURL: addSubdomain(TARGET_URL!, "kth"),
+      baseURL: addSubdomain(TARGET_URL!, 'kth'),
     });
     const page = await context.newPage();
 
@@ -93,13 +92,13 @@ export const test = base.extend<Fixtures>({
     const response = await request.post(
       `${CORA_API_URL}/record/diva-localGenericMarkup`,
       {
-        data: createLocalGenericMarkup("uu"),
+        data: createLocalGenericMarkup('uu'),
         headers: {
-          Accept: "application/vnd.cora.record+json",
-          "Content-Type": "application/vnd.cora.recordGroup+json",
+          Accept: 'application/vnd.cora.record+json',
+          'Content-Type': 'application/vnd.cora.recordGroup+json',
           Authtoken: authtoken,
         },
-      }
+      },
     );
 
     const responseBody = await response.json();
@@ -115,13 +114,13 @@ export const test = base.extend<Fixtures>({
     const response = await request.post(
       `${CORA_API_URL}/record/diva-localGenericMarkup`,
       {
-        data: createLocalGenericMarkup("kth"),
+        data: createLocalGenericMarkup('kth'),
         headers: {
-          Accept: "application/vnd.cora.record+json",
-          "Content-Type": "application/vnd.cora.recordGroup+json",
+          Accept: 'application/vnd.cora.record+json',
+          'Content-Type': 'application/vnd.cora.recordGroup+json',
           Authtoken: authtoken,
         },
-      }
+      },
     );
 
     const responseBody = await response.json();
