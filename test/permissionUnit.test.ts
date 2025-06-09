@@ -7,7 +7,8 @@ import {
   getFirstDataGroupWithNameInData,
 } from './util/coraUtils';
 
-test.describe('Permission unit', () => {
+// Skipped tests until build environment supports domains
+test.fixme('Permission unit', () => {
   test('Auto sets permission unit when on sub-domain from theme', async ({
     kthPage: page,
   }) => {
