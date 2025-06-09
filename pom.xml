@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright 2024 Uppsala University Library
+  ~
+  ~ This file is part of Cora.
+  ~
+  ~     Cora is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     Cora is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>se.uu.ub.cora</groupId>
+    <artifactId>cora-parent</artifactId>
+    <version>2.7.0</version>
+  </parent>
+
+  <artifactId>diva-client-e2e-tests</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>DiVA Client E2E Tests</name>
+
+  <properties>
+    <frontend-maven-plugin.version>1.15.10-atlassian-2</frontend-maven-plugin.version>
+    <nodeVersion>v22.14.0</nodeVersion>
+  </properties>
+
+
+  <scm>
+    <connection>scm:git:https://github.com/lsu-ub-uu/diva-client.git</connection>
+    <developerConnection>scm:git:https://github.com/lsu-ub-uu/diva-client.git</developerConnection>
+    <url>https://github.com/lsu-ub-uu/diva-client.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>test</directory>
+        <targetPath>test</targetPath>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${basedir}</directory>
+        <includes>
+          <include>playwright.config.ts</include>
+          <include>package.json</include>
+          <include>package-lock.json</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
+</project>
