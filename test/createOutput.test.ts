@@ -106,6 +106,7 @@ test.describe('Create output', () => {
   });
 
   test('Create report', async ({ page, request, authtoken }) => {
+    test.slow();
     const mockTitle = faker.book.title();
     const mockSubtitle = faker.book.title();
     const mockAltTitle = faker.book.title();
@@ -134,6 +135,9 @@ test.describe('Create output', () => {
 
     await page
       .getByRole('button', { name: 'Typ av innehåll, Publiceringsstatus' })
+      .click();
+    await page
+      .getByRole('button', { name: 'Lägg till konstnärligt arbete' })
       .click();
     await page
       .getByRole('combobox', { name: 'Konstnärligt arbete' })
@@ -186,6 +190,11 @@ test.describe('Create output', () => {
       .fill(mockAltSubtitle);
 
     await page.getByRole('button', { name: 'Information om upphov' }).click();
+    await page
+      .getByRole('button', {
+        name: 'Lägg till författare, redaktör eller annan roll',
+      })
+      .click();
     const authorGroup = page.getByRole('region', {
       name: 'Författare, redaktör eller annan roll',
     });
@@ -207,6 +216,7 @@ test.describe('Create output', () => {
     await page
       .getByRole('button', { name: 'Abstract, Ämnesord och klassifikation' })
       .click();
+    await page.getByRole('button', { name: 'Lägg till abstract' }).click();
     const abstractGroup = page.getByRole('group', { name: 'Abstract' });
     await abstractGroup.getByRole('combobox', { name: 'Språk' }).fill('Tyska');
     await page.getByRole('option', { name: 'Tyska', exact: true }).click();
@@ -214,6 +224,7 @@ test.describe('Create output', () => {
       .getByRole('textbox', { name: 'Abstract' })
       .fill(abstract);
 
+    await page.getByRole('button', { name: 'Lägg till nyckelord' }).click();
     const keywordsGroup = page.getByRole('region', {
       name: 'Nyckelord',
     });
@@ -230,6 +241,9 @@ test.describe('Create output', () => {
       .fill(keywords);
 
     await page
+      .getByRole('button', { name: 'Lägg till Nationell ämneskategori (SSIF)' })
+      .click();
+    await page
       .getByRole('combobox', {
         name: 'Nationell ämneskategori (SSIF)',
       })
@@ -241,6 +255,11 @@ test.describe('Create output', () => {
       })
       .click();
 
+    await page
+      .getByRole('button', {
+        name: 'Lägg till Globalt mål för hållbar utveckling',
+      })
+      .click();
     await page.getByLabel(/^Globalt mål för hållbar utveckling/).selectOption({
       label: '8. Anständiga arbetsvillkor och ekonomisk tillväxt',
     });
