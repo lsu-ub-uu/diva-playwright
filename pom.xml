@@ -28,20 +28,19 @@
     <version>2.7.0</version>
   </parent>
 
-  <artifactId>diva-client-e2e-tests</artifactId>
+  <artifactId>diva-playwright</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <name>DiVA Client E2E Tests</name>
+  <name>DiVA Playwright</name>
 
   <properties>
-    <frontend-maven-plugin.version>1.15.10-atlassian-2</frontend-maven-plugin.version>
     <nodeVersion>v22.14.0</nodeVersion>
   </properties>
 
 
   <scm>
-    <connection>scm:git:https://github.com/lsu-ub-uu/diva-client.git</connection>
-    <developerConnection>scm:git:https://github.com/lsu-ub-uu/diva-client.git</developerConnection>
-    <url>https://github.com/lsu-ub-uu/diva-client.git</url>
+    <connection>scm:git:https://github.com/lsu-ub-uu/diva-playwright.git</connection>
+    <developerConnection>scm:git:https://github.com/lsu-ub-uu/diva-playwright.git</developerConnection>
+    <url>https://github.com/lsu-ub-uu/diva-playwright.git</url>
     <tag>HEAD</tag>
   </scm>
 

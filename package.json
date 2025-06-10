@@ -1,5 +1,5 @@
 {
-  "name": "diva-client-e2e-tests",
+  "name": "diva-playwright",
   "version": "1.0.0",
   "description": "End-to-end tests for diva-client",
   "scripts": {
