@@ -39,9 +39,6 @@ test.describe('Create output', () => {
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
     // Fill create form
-    await page.getByRole('button', { name: 'Postinformation' }).click();
-    await page.getByRole('combobox', { name: 'Rättighetsenhet' }).fill('uu');
-    await page.getByRole('option', { name: 'Rättighetsenhet' }).click();
 
     await page
       .getByRole('region', {
@@ -51,41 +48,34 @@ test.describe('Create output', () => {
       .fill('Tyska');
     await page.getByRole('option', { name: 'Tyska', exact: true }).click();
 
-    await page
-      .getByRole('button', { name: 'Typ av innehåll, Publiceringsstatus' })
-      .click();
-    await page
-      .getByRole('group', { name: 'Typ av innehåll' })
-      .getByLabel('Typ av innehåll')
-      .selectOption({ label: 'Sakkunniggranskat' });
-
     const titleGroup = page.getByRole('region', {
       name: 'Titel',
     });
     await titleGroup.getByRole('combobox', { name: 'Språk' }).fill('Tyska');
     await page.getByRole('option', { name: 'Tyska', exact: true }).click();
     await titleGroup
-      .getByRole('group', { name: 'Huvudtitel' })
-      .getByLabel('Huvudtitel')
+      .getByRole('textbox', { name: 'Huvudtitel' })
       .fill(mockTitle);
 
     await page
-      .getByRole('group', { name: 'År' })
-      .getByLabel('År')
+      .getByRole('combobox', { name: 'Typ av innehåll' })
+      .selectOption({ label: 'Sakkunniggranskat' });
+
+    await page
+      .getByRole('region', { name: 'Utgivningsdatum' })
+      .getByRole('textbox', { name: 'År' })
       .fill(faker.date.recent().getFullYear().toString());
 
     await page
-      .getByRole('button', { name: 'Administrativ information' })
-      .click();
-    await page
-      .getByRole('group', { name: /^Bibliografiskt granskad/ })
-      .getByLabel(/^Bibliografiskt granskad/)
-      .selectOption({ label: 'Sant' });
+      .getByRole('combobox', { name: /^Postens synlighet/ })
+      .selectOption({ label: 'Publicerad' });
+
+    await page.getByRole('combobox', { name: 'Rättighetsenhet' }).fill('uu');
+    await page.getByRole('option', { name: 'Rättighetsenhet' }).click();
 
     await page
-      .getByRole('group', { name: /^Postens synlighet/ })
-      .getByLabel(/^Postens synlighet/)
-      .selectOption({ label: 'Publicerad' });
+      .getByRole('combobox', { name: /^Bibliografiskt granskad/ })
+      .selectOption({ label: 'Sant' });
 
     // Submit
     await page.getByRole('button', { name: 'Skicka in' }).click();
@@ -128,21 +118,7 @@ test.describe('Create output', () => {
 
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
-    // Fill create form
-    await page.getByRole('button', { name: 'Postinformation' }).click();
-    await page.getByRole('combobox', { name: 'Rättighetsenhet' }).fill('uu');
-    await page.getByRole('option', { name: 'Rättighetsenhet' }).click();
-
-    await page
-      .getByRole('button', { name: 'Typ av innehåll, Publiceringsstatus' })
-      .click();
-    await page
-      .getByRole('button', { name: 'Lägg till konstnärligt arbete' })
-      .click();
-    await page
-      .getByRole('combobox', { name: 'Konstnärligt arbete' })
-      .selectOption({ label: 'Sant' });
-
+    // Verket språk
     await page
       .getByRole('region', {
         name: 'Verkets språk',
@@ -151,27 +127,23 @@ test.describe('Create output', () => {
       .fill('Tyska');
     await page.getByRole('option', { name: 'Tyska', exact: true }).click();
 
-    await page
-      .getByRole('group', { name: 'Typ av innehåll' })
-      .getByLabel('Typ av innehåll')
-      .selectOption({ label: 'Sakkunniggranskat' });
-
+    // Title
     const titleGroup = page.getByRole('region', {
       name: 'Titel',
     });
-
     await titleGroup.getByRole('combobox', { name: 'Språk' }).fill('Tyska');
     await page.getByRole('option', { name: 'Tyska', exact: true }).click();
-
     await titleGroup
       .getByRole('textbox', { name: 'Huvudtitel' })
       .fill(mockTitle);
-
     await titleGroup
       .getByRole('textbox', { name: 'Undertitel' })
       .fill(mockSubtitle);
 
-    await page.getByRole('button', { name: 'Alternativ titel' }).click();
+    // Alternativ titel
+    await page
+      .getByRole('button', { name: 'Lägg till Alternativ titel' })
+      .click();
 
     const alternativeTitleGroup = page.getByRole('region', {
       name: 'Alternativ Titel',
@@ -189,7 +161,27 @@ test.describe('Create output', () => {
       .getByRole('textbox', { name: 'Undertitel' })
       .fill(mockAltSubtitle);
 
-    await page.getByRole('button', { name: 'Information om upphov' }).click();
+    // Typ av innehåll
+    await page
+      .getByRole('combobox', { name: 'Typ av innehåll' })
+      .selectOption({ label: 'Sakkunniggranskat' });
+
+    // Utgivningsdatum
+    await page
+      .getByRole('region', { name: 'Utgivningsdatum' })
+      .getByRole('group', { name: 'År' })
+      .getByLabel('År')
+      .fill(faker.date.recent().getFullYear().toString());
+
+    // Konsnärligt arbete
+    await page
+      .getByRole('button', { name: 'Lägg till konstnärligt arbete' })
+      .click();
+    await page
+      .getByRole('combobox', { name: 'Konstnärligt arbete' })
+      .selectOption({ label: 'Sant' });
+
+    // Författare, redaktör eller annan roll
     await page
       .getByRole('button', {
         name: 'Lägg till författare, redaktör eller annan roll',
@@ -205,14 +197,15 @@ test.describe('Create output', () => {
 
     await authorGroup.getByRole('textbox', { name: 'Förnamn' }).fill(firstName);
 
+    // Antal upphovspersoner
     await page
       .getByRole('button', { name: 'Lägg till antal upphovspersoner' })
       .click();
-
     await page
       .getByRole('textbox', { name: 'Antal upphovspersoner' })
       .fill('2');
 
+    // Abstract
     await page
       .getByRole('button', { name: 'Abstract, Ämnesord och klassifikation' })
       .click();
@@ -224,22 +217,18 @@ test.describe('Create output', () => {
       .getByRole('textbox', { name: 'Abstract' })
       .fill(abstract);
 
+    // Nyckelord
     await page.getByRole('button', { name: 'Lägg till nyckelord' }).click();
     const keywordsGroup = page.getByRole('region', {
       name: 'Nyckelord',
     });
-
-    await keywordsGroup
-      .getByRole('group', { name: 'Språk' })
-      .getByRole('combobox', { name: 'Språk' })
-      .fill('Tyska');
+    await keywordsGroup.getByRole('combobox', { name: 'Språk' }).fill('Tyska');
     await page.getByRole('option', { name: 'Tyska', exact: true }).click();
-
     await keywordsGroup
-      .getByRole('group', { name: 'Nyckelord' })
-      .getByLabel('Nyckelord')
+      .getByRole('textbox', { name: 'Nyckelord' })
       .fill(keywords);
 
+    // Nationell ämneskategori (SSIF)
     await page
       .getByRole('button', { name: 'Lägg till Nationell ämneskategori (SSIF)' })
       .click();
@@ -255,32 +244,31 @@ test.describe('Create output', () => {
       })
       .click();
 
+    // Globalt mål för hållbar utveckling
     await page
       .getByRole('button', {
         name: 'Lägg till Globalt mål för hållbar utveckling',
       })
       .click();
-    await page.getByLabel(/^Globalt mål för hållbar utveckling/).selectOption({
-      label: '8. Anständiga arbetsvillkor och ekonomisk tillväxt',
-    });
+    await page
+      .getByRole('combobox', { name: 'Globalt mål för hållbar utveckling' })
+      .selectOption({
+        label: '8. Anständiga arbetsvillkor och ekonomisk tillväxt',
+      });
 
+    // Postens synlighet
     await page
-      .getByRole('group', { name: 'År' })
-      .getByLabel('År')
-      .fill(faker.date.recent().getFullYear().toString());
-
-    await page
-      .getByRole('button', { name: 'Administrativ information' })
-      .click();
-    await page
-      .getByRole('group', { name: /^Bibliografiskt granskad/ })
-      .getByLabel(/^Bibliografiskt granskad/)
-      .selectOption({ label: 'Sant' });
-
-    await page
-      .getByRole('group', { name: /^Postens synlighet/ })
-      .getByLabel(/^Postens synlighet/)
+      .getByRole('combobox', { name: 'Postens synlighet' })
       .selectOption({ label: 'Publicerad' });
+
+    // Rättighetsenhet
+    await page.getByRole('combobox', { name: 'Rättighetsenhet' }).fill('uu');
+    await page.getByRole('option', { name: 'Rättighetsenhet' }).click();
+
+    // Bibliografiskt granskad
+    await page
+      .getByRole('combobox', { name: 'Bibliografiskt granskad' })
+      .selectOption({ label: 'Sant' });
 
     // Submit
     await page.getByRole('button', { name: 'Skicka in' }).click();

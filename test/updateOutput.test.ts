@@ -49,9 +49,11 @@ test.describe('Update output', () => {
       page.getByRole('group', { name: 'Huvudtitel' }).getByLabel('Huvudtitel'),
     ).toHaveValue(recordTitle);
 
+    // Update year
     await page
-      .getByRole('group', { name: 'År' })
-      .getByLabel('År')
+      .getByRole('region', { name: 'Utgivningsdatum' })
+      .getByRole('textbox', { name: 'År' })
+
       .fill(faker.date.recent().getFullYear().toString());
 
     await page.getByRole('button', { name: 'Skicka in' }).click();
@@ -86,33 +88,31 @@ test.describe('Update output', () => {
     ).toBeVisible();
 
     //Assert update page info
-    await expect(
-      page.getByRole('group', { name: 'Huvudtitel' }).getByLabel('Huvudtitel'),
-    ).toHaveValue(recordTitle);
+    await expect(page.getByRole('textbox', { name: 'Huvudtitel' })).toHaveValue(
+      recordTitle,
+    );
 
-    await page.getByRole('button', { name: 'Fil' }).click();
-
+    // Upload file
     await page
       .getByLabel('Bifogad fil')
       .setInputFiles(path.join(__dirname, 'assets/dog.jpg'));
-
     await expect(page.getByLabel('Originalfilnam')).toHaveText('dog.jpg');
 
-    const attachmentGroup = page.getByRole('region', {
-      name: 'Fil',
-    });
-    await attachmentGroup
-      .getByRole('group', { name: 'Typ' })
-      .getByLabel('Typ')
+    // Select file type
+    await page
+      .getByRole('region', {
+        name: 'Fil',
+      })
+      .getByRole('combobox', { name: 'Typ' })
       .selectOption({ label: 'Bild' });
 
+    // Submit form
     await page.getByRole('button', { name: 'Skicka in' }).click();
 
+    // Assert update snackbar
     await expect(
       page.getByText(/^Record was successfully updated/),
     ).toBeVisible();
-
-    await page.getByRole('button', { name: 'Fil' }).click();
 
     // Store binary record URL to use in cleanup step.
     downloadLink = await page
