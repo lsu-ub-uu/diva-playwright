@@ -184,17 +184,21 @@ test.describe('Create output', () => {
     // Författare, redaktör eller annan roll
     await page
       .getByRole('button', {
+        name: 'Författare, redaktör eller annan roll',
+        exact: true,
+      })
+      .click();
+    await page
+      .getByRole('button', {
         name: 'Lägg till författare, redaktör eller annan roll',
       })
       .click();
     const authorGroup = page.getByRole('region', {
       name: 'Författare, redaktör eller annan roll',
     });
-
     await authorGroup
       .getByRole('textbox', { name: 'Efternamn' })
       .fill(lastName);
-
     await authorGroup.getByRole('textbox', { name: 'Förnamn' }).fill(firstName);
 
     // Antal upphovspersoner
