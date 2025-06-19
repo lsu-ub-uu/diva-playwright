@@ -210,9 +210,7 @@ test.describe('Create output', () => {
       .fill('2');
 
     // Abstract
-    await page
-      .getByRole('button', { name: 'Abstract, Ämnesord och klassifikation' })
-      .click();
+    await page.getByRole('button', { name: 'Ämnesord/klassifikation' }).click();
     await page.getByRole('button', { name: 'Lägg till abstract' }).click();
     const abstractGroup = page.getByRole('group', { name: 'Abstract' });
     await abstractGroup.getByRole('combobox', { name: 'Språk' }).fill('Tyska');
