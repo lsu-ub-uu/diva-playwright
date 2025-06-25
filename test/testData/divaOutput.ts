@@ -28,10 +28,7 @@ export const createDivaOutput = (permissionUnit: string = 'uu'): DataGroup => ({
             { name: 'linkedRecordId', value: permissionUnit },
           ],
         },
-        {
-          name: 'visibility',
-          value: 'published',
-        },
+        { name: 'visibility', value: 'published' },
       ],
     },
     {
@@ -45,16 +42,21 @@ export const createDivaOutput = (permissionUnit: string = 'uu'): DataGroup => ({
       children: [
         {
           name: 'languageTerm',
-          value: 'ain',
+          value: 'eng',
           attributes: { type: 'code', authority: 'iso639-2b' },
         },
       ],
     },
-    { name: 'genre', value: 'vet', attributes: { type: 'contentType' } },
+    {
+      name: 'artisticWork',
+      value: 'false',
+      attributes: { type: 'outputType' },
+    },
+    { name: 'genre', value: 'ref', attributes: { type: 'contentType' } },
     {
       name: 'titleInfo',
       children: [{ name: 'title', value: faker.book.title() }],
-      attributes: { lang: 'alt' },
+      attributes: { lang: 'swe' },
     },
     {
       name: 'originInfo',
@@ -69,6 +71,12 @@ export const createDivaOutput = (permissionUnit: string = 'uu'): DataGroup => ({
           ],
         },
       ],
+    },
+    {
+      name: 'classification',
+      repeatId: '0',
+      value: '10302',
+      attributes: { authority: 'ssif' },
     },
     { name: 'admin', children: [{ name: 'reviewed', value: 'true' }] },
   ],

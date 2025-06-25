@@ -25,9 +25,7 @@ test.describe('View output', () => {
 
     await expect(page.getByText('Rapport')).toBeVisible();
 
-    expect(page.getByText('Ainu')).toBeVisible();
-
-    expect(page.getByText('Övrigt vetenskapligt/konstnärligt')).toBeVisible();
+    expect(page.getByText('Engelska')).toBeVisible();
 
     expect(page.getByText('2025')).toBeVisible();
 

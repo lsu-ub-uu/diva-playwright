@@ -39,7 +39,7 @@ test.describe('Create output', () => {
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
     // Fill create form
-
+    await page.getByRole('button', { name: 'Verkets språk' }).click();
     await page
       .getByRole('region', {
         name: 'Verkets språk',
@@ -62,6 +62,10 @@ test.describe('Create output', () => {
       .selectOption({ label: 'Sakkunniggranskat' });
 
     await page
+      .getByRole('combobox', { name: 'Verk baserat på konstnärlig grund' })
+      .selectOption({ label: 'Falskt' });
+
+    await page
       .getByRole('region', { name: 'Utgivningsdatum' })
       .getByRole('textbox', { name: 'År' })
       .fill(faker.date.recent().getFullYear().toString());
@@ -76,6 +80,23 @@ test.describe('Create output', () => {
     await page
       .getByRole('combobox', { name: /^Bibliografiskt granskad/ })
       .selectOption({ label: 'Sant' });
+
+    // Nationell ämneskategori (SSIF)
+    await page.getByRole('button', { name: 'Ämnesord/klassifikation' }).click();
+    await page
+      .getByRole('button', { name: 'Lägg till Nationell ämneskategori (SSIF)' })
+      .click();
+    await page
+      .getByRole('combobox', {
+        name: 'Nationell ämneskategori (SSIF)',
+      })
+      .fill('Atom- och molekylfysik och optik');
+    await page
+      .getByRole('option', {
+        name: '(10302) Atom- och molekylfysik och optik',
+        exact: true,
+      })
+      .click();
 
     // Submit
     await page.getByRole('button', { name: 'Skicka in' }).click();
@@ -96,7 +117,6 @@ test.describe('Create output', () => {
   });
 
   test('Create report', async ({ page, request, authtoken }) => {
-    test.slow();
     const mockTitle = faker.book.title();
     const mockSubtitle = faker.book.title();
     const mockAltTitle = faker.book.title();
@@ -119,6 +139,7 @@ test.describe('Create output', () => {
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
     // Verket språk
+    await page.getByRole('button', { name: 'Verkets språk' }).click();
     await page
       .getByRole('region', {
         name: 'Verkets språk',
@@ -166,20 +187,17 @@ test.describe('Create output', () => {
       .getByRole('combobox', { name: 'Typ av innehåll' })
       .selectOption({ label: 'Sakkunniggranskat' });
 
+    //Verk baserat på konstnärlig grund
+    await page
+      .getByRole('combobox', { name: 'Verk baserat på konstnärlig grund' })
+      .selectOption({ label: 'Falskt' });
+
     // Utgivningsdatum
     await page
       .getByRole('region', { name: 'Utgivningsdatum' })
       .getByRole('group', { name: 'År' })
       .getByLabel('År')
       .fill(faker.date.recent().getFullYear().toString());
-
-    // Konsnärligt arbete
-    await page
-      .getByRole('button', { name: 'Lägg till konstnärligt arbete' })
-      .click();
-    await page
-      .getByRole('combobox', { name: 'Konstnärligt arbete' })
-      .selectOption({ label: 'Sant' });
 
     // Författare, redaktör eller annan roll
     await page

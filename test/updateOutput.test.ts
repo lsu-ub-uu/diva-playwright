@@ -106,6 +106,11 @@ test.describe('Update output', () => {
       .getByRole('combobox', { name: 'Typ' })
       .selectOption({ label: 'Bild' });
 
+    // Select binary visibility
+    await page
+      .getByRole('combobox', { name: 'Filens synlighet' })
+      .selectOption({ label: 'Gör fritt tillgänglig nu' });
+
     // Submit form
     await page.getByRole('button', { name: 'Skicka in' }).click();
 
