@@ -1,23 +1,42 @@
-import { test as base, type Page } from '@playwright/test';
+import { test as base, Locator, type Page } from '@playwright/test';
 import { createDivaOutput } from '../testData/divaOutput';
 import { createLocalGenericMarkup } from '../testData/localGenericMarkup';
 import type { DataGroup } from './coraTypes';
 import { getFirstDataAtomicValueWithNameInData } from './coraUtils';
 import { addSubdomain } from './addSubdomain';
+import fs from 'fs';
+import path from 'path';
 
 const { CORA_API_URL, CORA_LOGIN_URL, TARGET_URL, CORA_USER, CORA_APPTOKEN } =
   process.env;
 
+interface CustomPage extends Page {
+  getByDefinitionTerm: (dtText: string) => Locator;
+}
+
 interface Fixtures {
+  page: CustomPage;
   authtoken: string;
   kthPage: Page;
   divaOutput: DataGroup;
   kthDivaOutput: DataGroup;
   uuLocalGenericMarkup: DataGroup;
   kthLocalGenericMarkup: DataGroup;
+  ultimateDivaOutput: DataGroup;
 }
 
 export const test = base.extend<Fixtures>({
+  page: async ({ page }, use) => {
+    await use(
+      Object.assign(page, {
+        getByDefinitionTerm: (dtText) =>
+          page.locator(
+            `xpath=//dt[contains(., '${dtText}')]/following-sibling::dd[preceding-sibling::dt[1][contains(., '${dtText}')]]`,
+          ),
+      }),
+    );
+  },
+
   authtoken: async ({ request }, use) => {
     const response = await request.post(`${CORA_LOGIN_URL}/apptoken`, {
       data: `${CORA_USER}\n${CORA_APPTOKEN}`,
@@ -47,6 +66,30 @@ export const test = base.extend<Fixtures>({
         Authtoken: authtoken,
       },
     });
+    const responseBody = await response.json();
+
+    await use(responseBody.record.data);
+
+    await request.delete(responseBody.record.actionLinks.delete.url, {
+      headers: { Authtoken: authtoken },
+    });
+  },
+
+  ultimateDivaOutput: async ({ request, authtoken }, use) => {
+    const xml = fs.readFileSync(
+      path.join(__dirname, '../testData/ultimateDivaOutput.xml'),
+      'utf-8',
+    );
+
+    const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
+      data: xml,
+      headers: {
+        Accept: 'application/vnd.cora.record+json',
+        'Content-Type': 'application/vnd.cora.recordGroup+xml',
+        Authtoken: authtoken,
+      },
+    });
+
     const responseBody = await response.json();
 
     await use(responseBody.record.data);
