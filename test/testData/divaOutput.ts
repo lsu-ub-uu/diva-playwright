@@ -78,6 +78,6 @@ export const createDivaOutput = (permissionUnit: string = 'uu'): DataGroup => ({
       value: '10302',
       attributes: { authority: 'ssif' },
     },
-    { name: 'admin', children: [{ name: 'reviewed', value: 'true' }] },
+    { name: 'adminInfo', children: [{ name: 'reviewed', value: 'true' }] },
   ],
 });

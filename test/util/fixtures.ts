@@ -66,6 +66,11 @@ export const test = base.extend<Fixtures>({
         Authtoken: authtoken,
       },
     });
+
+    if (!response.ok()) {
+      throw new Error(`Failed to create diva output: ${await response.text()}`);
+    }
+
     const responseBody = await response.json();
 
     await use(responseBody.record.data);
