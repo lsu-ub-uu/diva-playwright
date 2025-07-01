@@ -39,7 +39,6 @@ test.describe('Create output', () => {
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
     // Fill create form
-    await page.getByRole('button', { name: 'Verkets språk' }).click();
     await page
       .getByRole('region', {
         name: 'Verkets språk',
@@ -139,7 +138,6 @@ test.describe('Create output', () => {
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
     // Verket språk
-    await page.getByRole('button', { name: 'Verkets språk' }).click();
     await page
       .getByRole('region', {
         name: 'Verkets språk',
