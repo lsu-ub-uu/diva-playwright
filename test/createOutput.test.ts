@@ -83,9 +83,6 @@ test.describe('Create output', () => {
     // Nationell ämneskategori (SSIF)
     await page.getByRole('button', { name: 'Ämnesord/klassifikation' }).click();
     await page
-      .getByRole('button', { name: 'Lägg till Nationell ämneskategori (SSIF)' })
-      .click();
-    await page
       .getByRole('combobox', {
         name: 'Nationell ämneskategori (SSIF)',
       })
@@ -248,9 +245,6 @@ test.describe('Create output', () => {
 
     // Nationell ämneskategori (SSIF)
     await page
-      .getByRole('button', { name: 'Lägg till Nationell ämneskategori (SSIF)' })
-      .click();
-    await page
       .getByRole('combobox', {
         name: 'Nationell ämneskategori (SSIF)',
       })
@@ -265,7 +259,7 @@ test.describe('Create output', () => {
     // Globalt mål för hållbar utveckling
     await page
       .getByRole('button', {
-        name: 'Lägg till Globalt mål för hållbar utveckling',
+        name: 'Lägg till Hållbar utveckling',
       })
       .click();
     await page
