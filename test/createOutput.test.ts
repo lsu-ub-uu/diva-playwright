@@ -64,8 +64,6 @@ test.describe('Create output', () => {
       .getByRole('combobox', { name: 'Verk baserat på konstnärlig grund' })
       .selectOption({ label: 'Falskt' });
 
-    // Utgivningsdatum
-    await page.getByRole('button', { name: 'Ursprung' }).click();
     await page
       .getByRole('region', { name: 'Utgivningsdatum' })
       .getByRole('textbox', { name: 'År' })
@@ -193,7 +191,6 @@ test.describe('Create output', () => {
       .selectOption({ label: 'Falskt' });
 
     // Utgivningsdatum
-    await page.getByRole('button', { name: 'Ursprung' }).click();
     await page
       .getByRole('region', { name: 'Utgivningsdatum' })
       .getByRole('group', { name: 'År' })
