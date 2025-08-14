@@ -96,7 +96,11 @@ test.describe('Update output', () => {
     await page
       .getByLabel('Bifogad fil')
       .setInputFiles(path.join(__dirname, 'assets/dog.jpg'));
-    await expect(page.getByLabel('Originalfilnam')).toHaveText('dog.jpg');
+    await expect(
+      page
+        .getByRole('region', { name: 'Master' })
+        .getByLabel('Originalfilnamn'),
+    ).toHaveText('dog.jpg');
 
     // Select file type
     await page
