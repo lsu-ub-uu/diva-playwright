@@ -27,7 +27,7 @@
   </parent>
 
   <artifactId>diva-playwright</artifactId>
-  <version>1.11.0-SNAPSHOT</version>
+  <version>1.12-SNAPSHOT</version>
   <name>DiVA Playwright</name>
 
   <properties>
