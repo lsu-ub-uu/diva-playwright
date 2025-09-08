@@ -202,13 +202,13 @@ test.describe('Create output', () => {
     // Författare, redaktör eller annan roll
     await page
       .getByRole('button', {
-        name: 'Författare, redaktör eller annan roll',
-        exact: true,
+        name: 'Lägg till författare, redaktör eller annan roll',
       })
       .click();
     await page
       .getByRole('button', {
-        name: 'Lägg till författare, redaktör eller annan roll',
+        name: 'Författare, redaktör eller annan roll',
+        exact: true,
       })
       .click();
     const authorGroup = page.getByRole('region', {
