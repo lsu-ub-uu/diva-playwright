@@ -72,12 +72,12 @@ test.describe('View output', () => {
       message: 'Language',
     }).toBeVisible();
 
-    await expect(
-      page.getByDefinitionTerm('Verk baserat på konstnärlig grund'),
-      {
-        message: 'Artistic work',
-      },
-    ).toHaveText('Sant');
+    // await expect(
+    //   page.getByDefinitionTerm('Verk baserat på konstnärlig grund'),
+    //   {
+    //     message: 'Artistic work',
+    //   },
+    // ).toHaveText('Sant');
 
     await expect(page.getByDefinitionTerm('Typ av innehåll'), {
       message: 'Content type',

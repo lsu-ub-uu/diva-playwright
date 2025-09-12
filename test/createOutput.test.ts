@@ -40,6 +40,9 @@ test.describe('Create output', () => {
 
     // Fill create form
     await page
+      .getByRole('button', { name: 'Verkets språk', exact: true })
+      .click();
+    await page
       .getByRole('region', {
         name: 'Verkets språk',
       })
@@ -60,10 +63,6 @@ test.describe('Create output', () => {
       .getByRole('combobox', { name: 'Typ av innehåll' })
       .selectOption({ label: 'Sakkunniggranskat' });
 
-    /*     await page
-      .getByRole('combobox', { name: 'Verk baserat på konstnärlig grund' })
-      .selectOption({ label: 'Falskt' }); */
-
     await page
       .getByRole('region', { name: 'Utgivningsdatum' })
       .getByRole('textbox', { name: 'År' })
@@ -81,7 +80,6 @@ test.describe('Create output', () => {
       .selectOption({ label: 'Sant' });
 
     // Nationell ämneskategori (SSIF)
-    await page.getByRole('button', { name: 'Ämnesord/klassifikation' }).click();
     await page
       .getByRole('combobox', {
         name: 'Nationell ämneskategori (SSIF)',
@@ -136,6 +134,9 @@ test.describe('Create output', () => {
 
     // Verket språk
     await page
+      .getByRole('button', { name: 'Verkets språk', exact: true })
+      .click();
+    await page
       .getByRole('region', {
         name: 'Verkets språk',
       })
@@ -184,12 +185,7 @@ test.describe('Create output', () => {
 
     //Verk baserat på konstnärlig grund
     await page
-      .getByRole('button', {
-        name: 'Lägg till Verk baserat på konstnärlig grund',
-      })
-      .click();
-    await page
-      .getByRole('combobox', { name: 'Verk baserat på konstnärlig grund' })
+      .getByRole('combobox', { name: 'Baserat på konstnärlig grund' })
       .selectOption({ label: 'Falskt' });
 
     // Utgivningsdatum
@@ -200,11 +196,6 @@ test.describe('Create output', () => {
       .fill(faker.date.recent().getFullYear().toString());
 
     // Författare, redaktör eller annan roll
-    await page
-      .getByRole('button', {
-        name: 'Lägg till författare, redaktör eller annan roll',
-      })
-      .click();
     const authorGroup = page.getByRole('region', {
       name: 'Författare, redaktör eller annan roll',
     });
@@ -215,15 +206,10 @@ test.describe('Create output', () => {
 
     // Antal upphovspersoner
     await page
-      .getByRole('button', { name: 'Lägg till antal upphovspersoner' })
-      .click();
-    await page
       .getByRole('textbox', { name: 'Antal upphovspersoner' })
       .fill('2');
 
     // Abstract
-    await page.getByRole('button', { name: 'Ämnesord/klassifikation' }).click();
-    await page.getByRole('button', { name: 'Lägg till abstract' }).click();
     const abstractGroup = page.getByRole('group', { name: 'Abstract' });
     await abstractGroup.getByRole('combobox', { name: 'Språk' }).fill('Tyska');
     await page.getByRole('option', { name: 'Tyska', exact: true }).click();
@@ -232,7 +218,6 @@ test.describe('Create output', () => {
       .fill(abstract);
 
     // Nyckelord
-    await page.getByRole('button', { name: 'Lägg till nyckelord' }).click();
     const keywordsGroup = page.getByRole('region', {
       name: 'Nyckelord',
     });
@@ -256,11 +241,7 @@ test.describe('Create output', () => {
       .click();
 
     // Globalt mål för hållbar utveckling
-    await page
-      .getByRole('button', {
-        name: 'Lägg till Hållbar utveckling',
-      })
-      .click();
+
     await page
       .getByRole('combobox', { name: 'Globalt mål för hållbar utveckling' })
       .selectOption({
