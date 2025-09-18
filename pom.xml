@@ -27,7 +27,7 @@
   </parent>
 
   <artifactId>diva-playwright</artifactId>
-  <version>1.16-SNAPSHOT</version>
+  <version>1.16.0-SNAPSHOT</version>
   <name>DiVA Playwright</name>
 
   <properties>
@@ -39,7 +39,7 @@
     <connection>scm:git:https://github.com/lsu-ub-uu/diva-playwright.git</connection>
     <developerConnection>scm:git:https://github.com/lsu-ub-uu/diva-playwright.git</developerConnection>
     <url>https://github.com/lsu-ub-uu/diva-playwright.git</url>
-    <tag>release/1.11</tag>
+    <tag>release/1.16</tag>
   </scm>
 
   <build>
