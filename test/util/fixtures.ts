@@ -31,7 +31,7 @@ export const test = base.extend<Fixtures>({
       Object.assign(page, {
         getByDefinitionTerm: (dtText) =>
           page.locator(
-            `xpath=//dt[contains(., '${dtText}')]/following-sibling::dd[preceding-sibling::dt[1][contains(., '${dtText}')]]`,
+            `xpath=//dt[.='${dtText}']/following-sibling::dd[preceding-sibling::dt[1][.='${dtText}']]`,
           ),
       }),
     );
