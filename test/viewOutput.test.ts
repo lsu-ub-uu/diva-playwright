@@ -168,17 +168,63 @@ test.describe('View output', () => {
       message: 'Credits',
     }).toHaveText('7,5 hp');
 
-    // Högersida
+    // Sidebar
+    await expect(page.getByDefinitionTerm('Åtkomstvillkor'), {
+      message: 'Access condition',
+    }).toHaveText('Gratis');
 
+    // Origin info
+    const place = page.getByDefinitionTerm('Ort');
+    await expect(place.getByText('Stockholm'), {
+      message: 'Place of publication',
+    }).toBeVisible();
+    await expect(place.getByText('Uppsala'), {
+      message: 'Place of publication',
+    }).toBeVisible();
     await expect(page.getByDefinitionTerm('Utgivningsdatum'), {
       message: 'Publication date',
     }).toHaveText('2025');
+    await expect(page.getByDefinitionTerm('Upphovsrättsdatum'), {
+      message: 'Copyright date',
+    }).toHaveText('2024-10-12');
+    await expect(page.getByDefinitionTerm('Datum för online först'), {
+      message: 'Online first date',
+    }).toHaveText('1310-01-02');
+    const publisher = page.getByDefinitionTerm('Förlag');
+    await expect(publisher.getByText('Penguin'), {
+      message: 'Publisher Penguin',
+    }).toBeVisible();
+    await expect(publisher.getByText('Bloomsbury'), {
+      message: 'Publisher Bloomsbury',
+    }).toBeVisible();
+    await expect(page.getByDefinitionTerm('Upplaga'), {
+      message: 'Edition',
+    }).toHaveText('First edition');
+    await expect(page.getByDefinitionTerm('Datum för godkännande av patent'), {
+      message: 'Patent approval date',
+    }).toHaveText('2012-10-23');
 
+    const location = page.getByDefinitionTerm('URL');
+    await expect(location.getByRole('link', { name: 'Google' }), {
+      message: 'Location Google',
+    }).toHaveAttribute('href', 'https://www.google.com');
+    await expect(location.getByRole('link', { name: 'Uppsala Universitet' }), {
+      message: 'Location Uppsala Universitet',
+    }).toHaveAttribute('href', 'https://www.uu.se');
+
+    await expect(
+      page
+        .getByDefinitionTerm('Beställningslänk')
+        .getByRole('link', { name: 'Google' }),
+      {
+        message: 'Order link',
+      },
+    ).toHaveAttribute('href', 'https://google.com');
+
+    // Identifiers
     await expect(page.getByDefinitionTerm('DiVA-id'), {
       message: 'DiVA-id',
     }).toHaveText(recordId);
-
-    // Additional <dd> checks
     await expect(page.getByDefinitionTerm('ISBN (print)'), {
       message: 'ISBN print',
     }).toHaveText('978-92-893-8293-9');
@@ -215,6 +261,41 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('Patentnummer'), {
       message: 'Patentnummer',
     }).toHaveText('SE 7713829-5');
+
+    const keywords = page.getByRole('list', {
+      name: 'Nyckelord (Albanska)',
+    });
+    await expect(keywords.getByRole('link', { name: 'Digitization' }), {
+      message: 'Keyword Digitization',
+    }).toBeVisible();
+
+    await expect(keywords.getByRole('link', { name: 'Integration' }), {
+      message: 'Keyword Integration',
+    }).toBeVisible();
+
+    await expect(
+      keywords.getByRole('link', { name: 'Welfare and Gender Equality' }),
+      {
+        message: 'Keyword Welfare and Gender Equality',
+      },
+    ).toBeVisible();
+
+    const ssif = page.getByRole('list', {
+      name: 'Nationell ämneskategori (SSIF)',
+    });
+    await expect(ssif.getByRole('link', { name: 'Naturvetenskap' }), {
+      message: 'SSIF Naturvetenskap',
+    }).toBeVisible();
+
+    const sdg = page.getByRole('list', {
+      name: 'Hållbar utveckling',
+    });
+    await expect(sdg.getByRole('link', { name: 'Ingen Fattigdom' }), {
+      message: 'SDG Ingen Fattigdom',
+    }).toBeVisible();
+    await expect(sdg.getByRole('link', { name: 'Ingen Hunger' }), {
+      message: 'Ingen Hunger',
+    }).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Anteckning'), {
       message: 'Note',
