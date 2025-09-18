@@ -38,6 +38,11 @@ test.describe('View output', () => {
     }).toBeVisible();
     await expect(authors.getByText('Sepideh Jafarzadeh'), {
       message: 'Author name',
+    }).not.toBeVisible();
+
+    await authors.getByRole('button', { name: 'Visa mer' }).click();
+    await expect(authors.getByText('Sepideh Jafarzadeh'), {
+      message: 'Author name',
     }).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Antal upphovspersoner'), {
@@ -49,7 +54,7 @@ test.describe('View output', () => {
         'Organisation som författare, redaktör eller annan roll',
       ),
       { message: 'Author organization' },
-    ).toHaveText('Nordic Council of Ministers');
+    ).toHaveText('Nordic Council of Ministers (Författare)');
 
     await expect(page.getByDefinitionTerm('Alternativ titel (Abchaziska)'), {
       message: 'Alternative title in Abkhazian',

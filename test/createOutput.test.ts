@@ -33,8 +33,8 @@ test.describe('Create output', () => {
     await logIn(page);
 
     // Select validation type
-    await page.getByRole('button', { name: 'Skapa output' }).click();
-    await page.getByRole('menuitem', { name: 'Rapport' }).click();
+    await page.getByRole('button', { name: 'Skapa publikation' }).click();
+    await page.getByRole('menuitem', { name: 'Rapport', exact: true }).click();
 
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
@@ -127,8 +127,8 @@ test.describe('Create output', () => {
     await logIn(page);
 
     // Select validation type
-    await page.getByRole('button', { name: 'Skapa output' }).click();
-    await page.getByRole('menuitem', { name: 'Rapport' }).click();
+    await page.getByRole('button', { name: 'Skapa publikation' }).click();
+    await page.getByRole('menuitem', { name: 'Rapport', exact: true }).click();
 
     await expect(page).toHaveTitle(/^Skapa rapport/);
 
