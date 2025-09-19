@@ -31,10 +31,10 @@ test.describe('View output', () => {
     await expect(authors.getByText('Karl Gunnar Aarsæther'), {
       message: 'Author Karl',
     }).toBeVisible();
-    await expect(authors.getByText('François Bastardie (Författare)'), {
+    await expect(authors.getByText('François Bastardie'), {
       message: 'Author François',
     }).toBeVisible();
-    await expect(authors.getByText('Sepideh Jafarzadeh (Konstkopist)'), {
+    await expect(authors.getByText('Sepideh Jafarzadeh'), {
       message: 'Author Sepideh hidden',
     }).not.toBeVisible();
 
