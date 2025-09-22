@@ -1,11 +1,23 @@
-import { test as base, Locator, type Page } from '@playwright/test';
-import { createDivaOutput } from '../testData/divaOutput';
-import { createLocalGenericMarkup } from '../testData/localGenericMarkup';
-import type { DataGroup } from './coraTypes';
-import { getFirstDataAtomicValueWithNameInData } from './coraUtils';
-import { addSubdomain } from './addSubdomain';
+import {
+  APIRequestContext,
+  test as base,
+  Locator,
+  type Page,
+} from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
+import { createDivaOutput } from '../testData/divaOutput';
+import { createLocalGenericMarkup } from '../testData/localGenericMarkup';
+import { addSubdomain } from './addSubdomain';
+import type { DataGroup } from './coraTypes';
+import { getFirstDataAtomicValueWithNameInData } from './coraUtils';
+
+interface CoraData {
+  name: string;
+  value?: string;
+  children?: CoraData[];
+  attributes?: { [key: string]: string };
+}
 
 const { CORA_API_URL, CORA_LOGIN_URL, TARGET_URL, CORA_USER, CORA_APPTOKEN } =
   process.env;
@@ -29,7 +41,7 @@ export const test = base.extend<Fixtures>({
   page: async ({ page }, use) => {
     await use(
       Object.assign(page, {
-        getByDefinitionTerm: (dtText) =>
+        getByDefinitionTerm: (dtText: string) =>
           page.locator(
             `xpath=//dt[.='${dtText}']/following-sibling::dd[preceding-sibling::dt[1][.='${dtText}']]`,
           ),
@@ -81,13 +93,59 @@ export const test = base.extend<Fixtures>({
   },
 
   ultimateDivaOutput: async ({ request, authtoken }, use) => {
+    // Set up
+    const { id: publisherId, delete: deletePublisher } =
+      await createRecordFromXML(
+        request,
+        '../testData/publisher.xml',
+        'diva-publisher',
+        authtoken,
+      );
+
+    const { id: subjectId, delete: deleteSubject } = await createRecordFromXML(
+      request,
+      '../testData/subject.xml',
+      'diva-subject',
+      authtoken,
+    );
+
+    const { id: courseId, delete: deleteCourse } = await createRecordFromXML(
+      request,
+      '../testData/course.xml',
+      'diva-course',
+      authtoken,
+    );
+
+    const { id: programmeId, delete: deleteProgramme } =
+      await createRecordFromXML(
+        request,
+        '../testData/programme.xml',
+        'diva-programme',
+        authtoken,
+      );
+
+    const { id: localGenericMarkupId, delete: deleteLocalGenericMarkup } =
+      await createRecordFromXML(
+        request,
+        '../testData/localGenericMarkup.xml',
+        'diva-localGenericMarkup',
+        authtoken,
+      );
+
     const xml = fs.readFileSync(
       path.join(__dirname, '../testData/ultimateDivaOutput.xml'),
       'utf-8',
     );
 
+    const updatedXML = xml
+      .replace('{{LINKED_PUBLISHER_ID}}', publisherId)
+      .replace('{{LINKED_SUBJECT_ID}}', subjectId)
+      .replace('{{LINKED_COURSE_ID}}', courseId)
+      .replace('{{LINKED_PROGRAMME_ID}}', programmeId)
+      .replace('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId);
+
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
-      data: xml,
+      data: updatedXML,
       headers: {
         Accept: 'application/vnd.cora.record+json',
         'Content-Type': 'application/vnd.cora.recordGroup+xml',
@@ -97,11 +155,18 @@ export const test = base.extend<Fixtures>({
 
     const responseBody = await response.json();
 
+    // Run test
     await use(responseBody.record.data);
 
+    // Clean up
     await request.delete(responseBody.record.actionLinks.delete.url, {
       headers: { Authtoken: authtoken },
     });
+    await deletePublisher();
+    await deleteSubject();
+    await deleteCourse();
+    await deleteProgramme();
+    await deleteLocalGenericMarkup();
   },
 
   kthDivaOutput: async ({ request, authtoken }, use) => {
@@ -180,3 +245,39 @@ export const test = base.extend<Fixtures>({
     });
   },
 });
+
+async function createRecordFromXML(
+  request: APIRequestContext,
+  xmlPath: string,
+  recordType: string,
+  authtoken: string,
+) {
+  const xml = fs.readFileSync(path.join(__dirname, xmlPath), 'utf-8');
+  const response = await request.post(`${CORA_API_URL}/record/${recordType}`, {
+    data: xml,
+    headers: {
+      Accept: 'application/vnd.cora.record+json',
+      'Content-Type': 'application/vnd.cora.recordGroup+xml',
+      Authtoken: authtoken,
+    },
+  });
+
+  const responseBody = await response.json();
+
+  const id = responseBody.record.data.children
+    .find((c: CoraData) => c.name === 'recordInfo')
+    ?.children.find((c: CoraData) => c.name === 'id')?.value;
+
+  if (!response.ok()) {
+    throw new Error(`Failed to create diva publisher`);
+  }
+
+  return {
+    id,
+    responseBody,
+    delete: () =>
+      request.delete(responseBody.record.actionLinks.delete.url, {
+        headers: { Authtoken: authtoken },
+      }),
+  };
+}

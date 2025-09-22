@@ -144,6 +144,16 @@ test.describe('View output', () => {
       message: 'Physical Description',
     }).toHaveText('239sidor');
 
+    await expect(page.getByDefinitionTerm('Sammanhang (Svenska)'), {
+      message: 'Context swedish',
+    }).toHaveText('Lorem ipsum');
+    await expect(page.getByDefinitionTerm('Sammanhang (Isländska)'), {
+      message: 'Context icelandic',
+    }).toHaveText('Loremur ipsumur');
+    await expect(page.getByDefinitionTerm('Land'), {
+      message: 'Patent country',
+    }).toHaveText('Sverige');
+
     await expect(page.getByDefinitionTerm('Akademisk termin'), {
       message: 'Academic term',
     }).toHaveText('VT 1234');
@@ -169,6 +179,12 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('Högskolepoäng'), {
       message: 'Credits',
     }).toHaveText('7,5 hp');
+    await expect(page.getByDefinitionTerm('Kurs/ämne'), {
+      message: 'Course',
+    }).toHaveText('Egyptologi');
+    await expect(page.getByDefinitionTerm('Utbildningsprogram'), {
+      message: 'Program',
+    }).toHaveText('Arkeologlinjen');
 
     // Sidebar
     await expect(page.getByDefinitionTerm('Åtkomstvillkor'), {
@@ -192,19 +208,43 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('Datum för online först'), {
       message: 'Online first date',
     }).toHaveText('1310-01-02');
+    await expect(page.getByDefinitionTerm('Impressum (äldre tryck)'), {
+      message: 'Imprint',
+    }).toHaveText('Hamburg, Tyskland');
+
     const publisher = page.getByDefinitionTerm('Förlag');
+    await expect(publisher.getByText('My Linked Publisher'), {
+      message: 'Linked publisher',
+    }).toBeVisible();
     await expect(publisher.getByText('Penguin'), {
       message: 'Publisher Penguin',
     }).toBeVisible();
     await expect(publisher.getByText('Bloomsbury'), {
       message: 'Publisher Bloomsbury',
     }).toBeVisible();
+
     await expect(page.getByDefinitionTerm('Upplaga'), {
       message: 'Edition',
     }).toHaveText('First edition');
     await expect(page.getByDefinitionTerm('Datum för godkännande av patent'), {
       message: 'Patent approval date',
     }).toHaveText('2012-10-23');
+
+    const patentHolder = page.getByDefinitionTerm('Patentinnehavare');
+    await expect(patentHolder.getByText('Uppsala universitet'), {
+      message: 'Patent holder name',
+    }).toBeVisible();
+
+    await patentHolder.getByRole('button', { name: 'Visa mer' }).click();
+    await expect(patentHolder.getByText('048a87296'), {
+      message: 'Patent holder identifier',
+    }).toBeVisible();
+    await expect(
+      patentHolder.getByText('Ett universitet som ligger i uppsala'),
+      {
+        message: 'Patent holder description',
+      },
+    ).toBeVisible();
 
     const location = page.getByDefinitionTerm('URL');
     await expect(location.getByRole('link', { name: 'Google' }), {
@@ -251,6 +291,9 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('Scopus'), {
       message: 'Scopus',
     }).toHaveText('2-s2.0-12');
+    await expect(page.getByDefinitionTerm('Arkivnummer'), {
+      message: 'Archive number',
+    }).toHaveText('sa12456456');
     await expect(page.getByDefinitionTerm('OpenAlex'), {
       message: 'OpenAlex',
     }).toHaveText('W3123306174');
@@ -289,6 +332,17 @@ test.describe('View output', () => {
       message: 'SSIF Naturvetenskap',
     }).toBeVisible();
 
+    await expect(
+      page
+        .getByRole('list', {
+          name: 'Lokalt ämne',
+        })
+        .getByText('Mikrobiologi'),
+      {
+        message: 'Subject',
+      },
+    ).toBeVisible();
+
     const sdg = page.getByRole('list', {
       name: 'Hållbar utveckling',
     });
@@ -298,6 +352,15 @@ test.describe('View output', () => {
     await expect(sdg.getByRole('link', { name: 'Ingen Hunger' }), {
       message: 'Ingen Hunger',
     }).toBeVisible();
+
+    await expect(
+      page
+        .getByRole('list', { name: 'DiVA-lokal generisk uppmärkning' })
+        .getByText('Extra viktig publikation'),
+      {
+        message: 'Local generic markup',
+      },
+    ).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Anteckning'), {
       message: 'Note',

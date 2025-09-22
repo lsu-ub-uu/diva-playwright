@@ -110,11 +110,20 @@
 	<physicalDescription>
 		<extent>239sidor</extent>
 	</physicalDescription>
+	<note type="context" lang="swe" repeatId="0">Lorem ipsum</note>
+	<note type="context" lang="ice" repeatId="1">Loremur ipsumur</note>
 	<dateOther type="patent">
 		<year>2012</year>
 		<month>10</month>
 		<day>23</day>
 	</dateOther>
+	<patentHolder type="corporate">
+		<namePart>Uppsala universitet</namePart>
+		<role><role>pth</role></role>
+		<identifier type="ror">048a87296</identifier>
+		<description>Ett universitet som ligger i uppsala</description>
+	</patentHolder>
+	<patentCountry>sw</patentCountry>
 	<abstract lang="eng" repeatId="0">The energy transition of the fishing sector has gained
 increasing attention in recent years. With focus on Nordic countries, status,
 trends, opportunities and challenges are summarized to provide recommendations for
@@ -159,6 +168,12 @@ sector will be essential.
 	<subject lang="alb" repeatId="9">
 		<topic>Digitization, Integration, Welfare and Gender Equality</topic>
 	</subject>
+	<subject authority="diva">
+		<topic repeatId="0">
+			<linkedRecordType>diva-subject</linkedRecordType>
+			<linkedRecordId>{{LINKED_SUBJECT_ID}}</linkedRecordId>
+		</topic>
+	</subject>
     <subject authority="sdg">
         <topic repeatId="1">sdg1</topic>
         <topic repeatId="2">sdg2</topic>
@@ -180,16 +195,7 @@ sector will be essential.
 		<agent>
 			<publisher repeatId="1">
 				<linkedRecordType>diva-publisher</linkedRecordType>
-				<linkedRecordId>diva-publisher:1437068056503025</linkedRecordId>
-				<actionLinks>
-					<read>
-						<requestMethod>GET</requestMethod>
-						<rel>read</rel>
-						<url>https://cora.epc.ub.uu.se/diva/rest/record/diva-publisher/diva-publisher:1437068056503025
-                        </url>
-						<accept>application/vnd.cora.record+xml</accept>
-					</read>
-				</actionLinks>
+				<linkedRecordId>{{LINKED_PUBLISHER_ID}}</linkedRecordId>
 			</publisher>
 			<namePart repeatId="1">Penguin</namePart>
 			<namePart repeatId="2">Bloomsbury</namePart>
@@ -242,6 +248,14 @@ sector will be essential.
 	<studentDegree repeatId="0">
 		<degreeLevel>M1</degreeLevel>
 		<universityPoints>7,5</universityPoints>
+		<programme>
+			<linkedRecordType>diva-programme</linkedRecordType>
+			<linkedRecordId>{{LINKED_PROGRAMME_ID}}</linkedRecordId>
+		</programme>
+		<course>
+			<linkedRecordType>diva-course</linkedRecordType>
+			<linkedRecordId>{{LINKED_COURSE_ID}}</linkedRecordId>
+		</course>
 	</studentDegree>
 	<externalCollaboration>
 		<namePart repeatId="0">Externt Namn</namePart>
@@ -294,6 +308,10 @@ sector will be essential.
 	<accessCondition authority="kb.se">
 		gratis
 	</accessCondition>
+	<localGenericMarkup repeatId="0">
+		<linkedRecordType>diva-localGenericMarkup</linkedRecordType>
+		<linkedRecordId>{{LINKED_LOCAL_GENERIC_MARKUP_ID}}</linkedRecordId>
+	</localGenericMarkup>
 	<adminInfo>
 		<reviewed>true</reviewed>
 		<note type="internal">Leo och Egil was here</note>

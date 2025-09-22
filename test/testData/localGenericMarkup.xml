@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localGenericMarkup>
+    <recordInfo>
+        <validationType>
+            <linkedRecordType>validationType</linkedRecordType>
+            <linkedRecordId>diva-localGenericMarkup</linkedRecordId>
+        </validationType>
+        <dataDivider>
+            <linkedRecordType>system</linkedRecordType>
+            <linkedRecordId>divaData</linkedRecordId>
+        </dataDivider>
+        <permissionUnit>
+            <linkedRecordType>permissionUnit</linkedRecordType>
+            <linkedRecordId>norden</linkedRecordId>
+        </permissionUnit>
+    </recordInfo>
+    <localGenericMarkup>Extra viktig publikation</localGenericMarkup>
+    <description>Denna publikation är extra viktig eftersom...</description>
+</localGenericMarkup>
