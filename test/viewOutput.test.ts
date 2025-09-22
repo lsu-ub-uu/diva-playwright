@@ -43,12 +43,14 @@ test.describe('View output', () => {
       message: 'Author Sepideh',
     }).toBeVisible();
 
+    const organisations = page.getByDefinitionTerm(
+      'Organisation som författare, redaktör eller annan roll',
+    );
     await expect(
-      page.getByDefinitionTerm(
-        'Organisation som författare, redaktör eller annan roll',
-      ),
-      { message: 'Author organization' },
-    ).toHaveText('Nordic Council of Ministers (Författare)');
+      organisations.getByText('Nordic Council of Ministers'),
+    ).toBeVisible();
+    await organisations.getByRole('button', { name: 'Visa mer' }).click();
+    await expect(organisations.getByText('(Författare)')).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Antal upphovspersoner'), {
       message: 'Number of authors',
