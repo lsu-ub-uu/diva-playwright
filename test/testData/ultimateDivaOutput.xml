@@ -326,6 +326,24 @@ sector will be essential.
 			</extent>
 		</part>
 	</relatedItem>
+	<relatedItem type="book">
+		<book>
+			<linkedRecordType>diva-output</linkedRecordType>
+			<linkedRecordId>{{LINKED_BOOK_ID}}</linkedRecordId>
+		</book>
+		<titleInfo lang="eng">
+			<title>BookTitle</title>
+			<subtitle>BookSubtitle</subtitle>
+		</titleInfo>
+		<note type="statementOfResponsibility">Edited by Sara Hornborg and Karl Gunnar Aarsæther</note>
+		<identifier type="isbn" displayLabel="print" repeatId="0">978-92-893-8293-9</identifier>
+		<part>
+			<extent>
+				<start>45</start>
+				<end>67</end>
+			</extent>
+		</part>
+	</relatedItem>
 	<accessCondition authority="kb.se">
 		gratis
 	</accessCondition>

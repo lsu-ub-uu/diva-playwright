@@ -37,14 +37,18 @@ interface Fixtures {
   ultimateDivaOutput: DataGroup;
 }
 
+export const getByDefinitionTerm = (parent: Page | Locator, dtText: string) => {
+  return parent.locator(
+    `xpath=//dt[.='${dtText}']/following-sibling::dd[preceding-sibling::dt[1][.='${dtText}']]`,
+  );
+};
+
 export const test = base.extend<Fixtures>({
   page: async ({ page }, use) => {
     await use(
       Object.assign(page, {
         getByDefinitionTerm: (dtText: string) =>
-          page.locator(
-            `xpath=//dt[.='${dtText}']/following-sibling::dd[preceding-sibling::dt[1][.='${dtText}']]`,
-          ),
+          getByDefinitionTerm(page, dtText),
       }),
     );
   },
@@ -139,6 +143,13 @@ export const test = base.extend<Fixtures>({
       authtoken,
     );
 
+    const { id: bookId, delete: deleteBook } = await createRecordFromXML(
+      request,
+      '../testData/book.xml',
+      'diva-output',
+      authtoken,
+    );
+
     const xml = fs.readFileSync(
       path.join(__dirname, '../testData/ultimateDivaOutput.xml'),
       'utf-8',
@@ -150,7 +161,8 @@ export const test = base.extend<Fixtures>({
       .replace('{{LINKED_COURSE_ID}}', courseId)
       .replace('{{LINKED_PROGRAMME_ID}}', programmeId)
       .replace('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId)
-      .replace('{{LINKED_JOURNAL_ID}}', journalId);
+      .replace('{{LINKED_JOURNAL_ID}}', journalId)
+      .replace('{{LINKED_BOOK_ID}}', bookId);
 
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
       data: updatedXML,
@@ -176,6 +188,7 @@ export const test = base.extend<Fixtures>({
     await deleteProgramme();
     await deleteLocalGenericMarkup();
     await deleteJournal();
+    await deleteBook();
   },
 
   kthDivaOutput: async ({ request, authtoken }, use) => {

@@ -1,4 +1,4 @@
-import { test } from './util/fixtures';
+import { getByDefinitionTerm, test } from './util/fixtures';
 import { expect } from '@playwright/test';
 import { createUrl } from './util/createUrl';
 import {
@@ -187,33 +187,55 @@ test.describe('View output', () => {
     }).toHaveText('Arkeologlinjen');
 
     // Journal
+    const journal = page.getByRole('region', { name: 'Tidskrift' });
     await expect(
-      page.getByRole('heading', { level: 2, name: 'Tidskrift' }),
+      journal.getByRole('heading', { level: 2, name: 'Tidskrift' }),
     ).toBeVisible();
-    await expect(page.getByDefinitionTerm('Titel'), {
+    await expect(getByDefinitionTerm(journal, 'Titel'), {
       message: 'Journal title',
     }).toHaveText("Nature: It's about nature and stuff");
-    await expect(page.getByDefinitionTerm('PISSN'), {
+    await expect(getByDefinitionTerm(journal, 'PISSN'), {
       message: 'Journal PISSN',
     }).toHaveText('1845-9323');
-    await expect(page.getByDefinitionTerm('EISSN'), {
+    await expect(getByDefinitionTerm(journal, 'EISSN'), {
       message: 'Journal EISSN',
     }).toHaveText('3791-2443');
-    await expect(page.getByDefinitionTerm('Volym'), {
+    await expect(getByDefinitionTerm(journal, 'Volym'), {
       message: 'Journal volume',
     }).toHaveText('586');
-    await expect(page.getByDefinitionTerm('Utgivningsnummer'), {
+    await expect(getByDefinitionTerm(journal, 'Utgivningsnummer'), {
       message: 'Journal issue',
     }).toHaveText('1');
-    await expect(page.getByDefinitionTerm('Artikelnummer'), {
+    await expect(getByDefinitionTerm(journal, 'Artikelnummer'), {
       message: 'Journal article number',
     }).toHaveText('1234');
-    await expect(page.getByDefinitionTerm('Startsida'), {
+    await expect(getByDefinitionTerm(journal, 'Startsida'), {
       message: 'Journal start page',
     }).toHaveText('12');
-    await expect(page.getByDefinitionTerm('Slutsida'), {
+    await expect(getByDefinitionTerm(journal, 'Slutsida'), {
       message: 'Journal end page',
     }).toHaveText('34');
+
+    // Book
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Bok' }),
+    ).toBeVisible();
+    const book = page.getByRole('region', { name: 'Bok' });
+    await expect(getByDefinitionTerm(book, 'Titel'), {
+      message: 'Book title',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(
+      book.getByRole('link', { name: 'BookTitle: BookSubtitle' }),
+    ).toBeVisible();
+    await expect(getByDefinitionTerm(book, 'ISBN (print)'), {
+      message: 'Book ISBN print',
+    }).toHaveText('978-92-893-8293-9');
+    await expect(getByDefinitionTerm(book, 'Startsida'), {
+      message: 'Book start page',
+    }).toHaveText('45');
+    await expect(getByDefinitionTerm(book, 'Slutsida'), {
+      message: 'Book end page',
+    }).toHaveText('67');
 
     // Sidebar
     await expect(page.getByDefinitionTerm('Åtkomstvillkor'), {
