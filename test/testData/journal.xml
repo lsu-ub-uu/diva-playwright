@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<journal>
+    <recordInfo>
+        <validationType>
+            <linkedRecordType>validationType</linkedRecordType>
+            <linkedRecordId>diva-journal</linkedRecordId>
+        </validationType>
+        <dataDivider>
+            <linkedRecordType>system</linkedRecordType>
+            <linkedRecordId>divaData</linkedRecordId>
+        </dataDivider>
+    </recordInfo>
+    <titleInfo>
+        <title>Nature</title>
+        <subtitle>It's about nature and stuff</subtitle>
+    </titleInfo>
+    <originInfo>
+        <dateIssued point="start">
+            <year>1869</year>
+        </dateIssued>
+    </originInfo>
+    <identifier type="issn" displayLabel="pissn">1845-9323</identifier>
+    <identifier type="issn" displayLabel="eissn">3791-2443</identifier>
+    <location>
+        <url>https://www.nature.com</url>
+        <displayLabel>Nature</displayLabel>
+    </location>
+</journal>

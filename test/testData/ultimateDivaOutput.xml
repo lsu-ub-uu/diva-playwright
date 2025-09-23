@@ -305,6 +305,27 @@ sector will be essential.
 		<address>Regementsvägen 10</address>
 		<place><placeTerm>Uppsala</placeTerm></place>
 	</defence>
+	<relatedItem type="journal">
+		<journal>
+			<linkedRecordType>diva-journal</linkedRecordType>
+			<linkedRecordId>{{LINKED_JOURNAL_ID}}</linkedRecordId>
+		</journal>
+		<part>
+			<detail type="volume">
+				<number>586</number>
+			</detail>
+			<detail type="issue">
+				<number>1</number>
+			</detail>
+			<detail type="artNo">
+				<number>1234</number>
+			</detail>
+			<extent>
+				<start>12</start>
+				<end>34</end>
+			</extent>
+		</part>
+	</relatedItem>
 	<accessCondition authority="kb.se">
 		gratis
 	</accessCondition>
@@ -320,7 +341,4 @@ sector will be essential.
 		<title>דיג עתידי</title>
 		<subtitle>מצב, מגמות ופרספקטיבות עתידיות בנוגע למעבר האנרגטי של דיג בדגש על מדינות סקנדינביות</subtitle>
 	</titleInfo>
-	<relatedItem type="journal">
-		<titleInfo><title>Some journal</title></titleInfo>
-	</relatedItem>
 </output>

@@ -186,6 +186,35 @@ test.describe('View output', () => {
       message: 'Program',
     }).toHaveText('Arkeologlinjen');
 
+    // Journal
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Tidskrift' }),
+    ).toBeVisible();
+    await expect(page.getByDefinitionTerm('Titel'), {
+      message: 'Journal title',
+    }).toHaveText("Nature: It's about nature and stuff");
+    await expect(page.getByDefinitionTerm('PISSN'), {
+      message: 'Journal PISSN',
+    }).toHaveText('1845-9323');
+    await expect(page.getByDefinitionTerm('EISSN'), {
+      message: 'Journal EISSN',
+    }).toHaveText('3791-2443');
+    await expect(page.getByDefinitionTerm('Volym'), {
+      message: 'Journal volume',
+    }).toHaveText('586');
+    await expect(page.getByDefinitionTerm('Utgivningsnummer'), {
+      message: 'Journal issue',
+    }).toHaveText('1');
+    await expect(page.getByDefinitionTerm('Artikelnummer'), {
+      message: 'Journal article number',
+    }).toHaveText('1234');
+    await expect(page.getByDefinitionTerm('Startsida'), {
+      message: 'Journal start page',
+    }).toHaveText('12');
+    await expect(page.getByDefinitionTerm('Slutsida'), {
+      message: 'Journal end page',
+    }).toHaveText('34');
+
     // Sidebar
     await expect(page.getByDefinitionTerm('Åtkomstvillkor'), {
       message: 'Access condition',

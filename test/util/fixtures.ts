@@ -132,6 +132,13 @@ export const test = base.extend<Fixtures>({
         authtoken,
       );
 
+    const { id: journalId, delete: deleteJournal } = await createRecordFromXML(
+      request,
+      '../testData/journal.xml',
+      'diva-journal',
+      authtoken,
+    );
+
     const xml = fs.readFileSync(
       path.join(__dirname, '../testData/ultimateDivaOutput.xml'),
       'utf-8',
@@ -142,7 +149,8 @@ export const test = base.extend<Fixtures>({
       .replace('{{LINKED_SUBJECT_ID}}', subjectId)
       .replace('{{LINKED_COURSE_ID}}', courseId)
       .replace('{{LINKED_PROGRAMME_ID}}', programmeId)
-      .replace('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId);
+      .replace('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId)
+      .replace('{{LINKED_JOURNAL_ID}}', journalId);
 
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
       data: updatedXML,
@@ -167,6 +175,7 @@ export const test = base.extend<Fixtures>({
     await deleteCourse();
     await deleteProgramme();
     await deleteLocalGenericMarkup();
+    await deleteJournal();
   },
 
   kthDivaOutput: async ({ request, authtoken }, use) => {
