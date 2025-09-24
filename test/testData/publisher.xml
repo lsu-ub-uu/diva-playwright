@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<publisher>
+    <recordInfo>
+        <validationType>
+            <linkedRecordType>validationType</linkedRecordType>
+            <linkedRecordId>diva-publisher</linkedRecordId>
+        </validationType>
+        <dataDivider>
+            <linkedRecordType>system</linkedRecordType>
+            <linkedRecordId>divaData</linkedRecordId>
+        </dataDivider>
+    </recordInfo>
+    <name type="corporate">
+        <namePart>My Linked Publisher</namePart>
+    </name>
+</publisher>

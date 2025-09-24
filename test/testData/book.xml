@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<output>
+	<recordInfo>
+		<validationType>
+			<linkedRecordType>validationType</linkedRecordType>
+			<linkedRecordId>publication_book</linkedRecordId>
+		</validationType>
+		<dataDivider>
+			<linkedRecordType>system</linkedRecordType>
+			<linkedRecordId>divaData</linkedRecordId>
+			<actionLinks>
+				<read>
+					<requestMethod>GET</requestMethod>
+					<rel>read</rel>
+					<url>https://cora.epc.ub.uu.se/diva/rest/record/system/divaData</url>
+					<accept>application/vnd.cora.record+xml</accept>
+				</read>
+			</actionLinks>
+		</dataDivider>
+		<permissionUnit>
+			<linkedRecordType>permissionUnit</linkedRecordType>
+			<linkedRecordId>norden</linkedRecordId>
+			<actionLinks>
+				<read>
+					<requestMethod>GET</requestMethod>
+					<rel>read</rel>
+					<url>https://cora.epc.ub.uu.se/diva/rest/record/permissionUnit/norden</url>
+					<accept>application/vnd.cora.record+xml</accept>
+				</read>
+			</actionLinks>
+		</permissionUnit>
+		<visibility>published</visibility>
+	</recordInfo>
+	<genre type="outputType">publication_book</genre>
+	<language repeatId="0">
+		<languageTerm authority="iso639-2b" type="code">eng</languageTerm>
+	</language>
+
+	<genre type="contentType">pop</genre>
+	<originInfo>
+		<dateIssued>
+			<year>2025</year>
+		</dateIssued>
+	</originInfo>
+	<classification authority="ssif" repeatId="0">1</classification>
+	<titleInfo lang="eng">
+		<title>BookTitle</title>
+		<subtitle>BookSubtitle</subtitle>
+	</titleInfo>
+</output>

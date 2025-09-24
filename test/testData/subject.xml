@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<subject>
+    <recordInfo>
+        <validationType>
+            <linkedRecordType>validationType</linkedRecordType>
+            <linkedRecordId>diva-subject</linkedRecordId>
+        </validationType>
+        <dataDivider>
+            <linkedRecordType>system</linkedRecordType>
+            <linkedRecordId>divaData</linkedRecordId>
+        </dataDivider>
+        <permissionUnit>
+            <linkedRecordType>permissionUnit</linkedRecordType>
+            <linkedRecordId>norden</linkedRecordId>
+        </permissionUnit>
+    </recordInfo>
+    <authority lang="swe">
+        <topic>Mikrobiologi</topic>
+    </authority>
+    <variant lang="eng">
+        <topic>Microbiology</topic>
+    </variant>
+</subject>

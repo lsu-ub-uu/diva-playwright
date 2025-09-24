@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <recordInfo>
+        <validationType>
+            <linkedRecordType>validationType</linkedRecordType>
+            <linkedRecordId>diva-project</linkedRecordId>
+        </validationType>
+        <dataDivider>
+            <linkedRecordType>system</linkedRecordType>
+            <linkedRecordId>divaData</linkedRecordId>
+        </dataDivider>
+    </recordInfo>
+    <titleInfo lang="swe">
+        <title>Deep Learning for Time Series Forecasting</title>
+        <subtitle>The Electric Load Case</subtitle>
+    </titleInfo>
+    <name type="personal" repeatId="0"> 
+        <namePart type="given">Leo</namePart>
+        <namePart type="family">Wessman</namePart>
+    </name>
+    <identifier type="project">123456789</identifier>
+    <typeOfAward>euGrant</typeOfAward>
+</project>

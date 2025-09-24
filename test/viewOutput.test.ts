@@ -1,4 +1,4 @@
-import { test } from './util/fixtures';
+import { getByDefinitionTerm, test } from './util/fixtures';
 import { expect } from '@playwright/test';
 import { createUrl } from './util/createUrl';
 import {
@@ -144,6 +144,25 @@ test.describe('View output', () => {
       message: 'Physical Description',
     }).toHaveText('239sidor');
 
+    await expect(page.getByDefinitionTerm('Sammanhang (Svenska)'), {
+      message: 'Context swedish',
+    }).toHaveText('Lorem ipsum');
+    await expect(page.getByDefinitionTerm('Sammanhang (Isländska)'), {
+      message: 'Context icelandic',
+    }).toHaveText('Loremur ipsumur');
+    await expect(page.getByDefinitionTerm('Land'), {
+      message: 'Patent country',
+    }).toHaveText('Sverige');
+    await expect(page.getByDefinitionTerm('Konferens'), {
+      message: 'Conference',
+    }).toHaveText('Nordic.js 2025');
+    await expect(page.getByDefinitionTerm('Publikationskanal'), {
+      message: 'Publication channel',
+    }).toHaveText('Radio');
+    await expect(page.getByText('Strategiskt initiativ')).toBeVisible();
+    await expect(page.getByText('diabetes')).toBeVisible();
+    await expect(page.getByText('molekylär biovetenskap')).toBeVisible();
+
     await expect(page.getByDefinitionTerm('Akademisk termin'), {
       message: 'Academic term',
     }).toHaveText('VT 1234');
@@ -169,6 +188,179 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('Högskolepoäng'), {
       message: 'Credits',
     }).toHaveText('7,5 hp');
+    await expect(page.getByDefinitionTerm('Kurs/ämne'), {
+      message: 'Course',
+    }).toHaveText('Egyptologi');
+    await expect(page.getByDefinitionTerm('Utbildningsprogram'), {
+      message: 'Program',
+    }).toHaveText('Arkeologlinjen');
+
+    // Journal
+    const journal = page.getByRole('region', { name: 'Tidskrift' });
+    await expect(
+      journal.getByRole('heading', { level: 2, name: 'Tidskrift' }),
+    ).toBeVisible();
+    await expect(getByDefinitionTerm(journal, 'Titel'), {
+      message: 'Journal title',
+    }).toHaveText("Nature: It's about nature and stuff");
+    await expect(getByDefinitionTerm(journal, 'PISSN'), {
+      message: 'Journal PISSN',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(journal, 'EISSN'), {
+      message: 'Journal EISSN',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(journal, 'Volym'), {
+      message: 'Journal volume',
+    }).toHaveText('586');
+    await expect(getByDefinitionTerm(journal, 'Utgivningsnummer'), {
+      message: 'Journal issue',
+    }).toHaveText('1');
+    await expect(getByDefinitionTerm(journal, 'Artikelnummer'), {
+      message: 'Journal article number',
+    }).toHaveText('1234');
+    await expect(getByDefinitionTerm(journal, 'Startsida'), {
+      message: 'Journal start page',
+    }).toHaveText('12');
+    await expect(getByDefinitionTerm(journal, 'Slutsida'), {
+      message: 'Journal end page',
+    }).toHaveText('34');
+
+    // Book
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Bok' }),
+    ).toBeVisible();
+    const book = page.getByRole('region', { name: 'Bok' });
+    await expect(getByDefinitionTerm(book, 'Titel'), {
+      message: 'Book title',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(
+      book.getByRole('link', { name: 'BookTitle: BookSubtitle' }),
+    ).toBeVisible();
+    await expect(getByDefinitionTerm(book, 'ISBN (print)'), {
+      message: 'Book ISBN print',
+    }).toHaveText('978-92-893-8293-9');
+    await expect(getByDefinitionTerm(book, 'Startsida'), {
+      message: 'Book start page',
+    }).toHaveText('45');
+    await expect(getByDefinitionTerm(book, 'Slutsida'), {
+      message: 'Book end page',
+    }).toHaveText('67');
+
+    const bookSeries = book.getByRole('region', { name: 'Serie' });
+    await expect(bookSeries.getByRole('heading', { level: 3, name: 'Serie' }), {
+      message: 'Book series heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(bookSeries, 'Serie'), {
+      message: 'Book series link',
+    }).toHaveText(
+      'Lecture Notes in Computer Science: Artificial Intelligence and Bioinformatics',
+    );
+    await expect(getByDefinitionTerm(bookSeries, 'Nummer'), {
+      message: 'Book series part',
+    }).toHaveText('14');
+
+    // Conference publication
+    await expect(page.getByRole('heading', { level: 2, name: 'Proceeding' }), {
+      message: 'Conference publication heading',
+    }).toBeVisible();
+    const conferencePublication = page.getByRole('region', {
+      name: 'Proceeding',
+    });
+    await expect(getByDefinitionTerm(conferencePublication, 'Proceeding'), {
+      message: 'Conference publication proceeding link',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(getByDefinitionTerm(conferencePublication, 'Titel'), {
+      message: 'Conference publication title',
+    }).toHaveText('ConferenceBookTitle: ConferenceBookSubtitle');
+    await expect(getByDefinitionTerm(conferencePublication, 'Redaktör'), {
+      message: 'Conference publication editor',
+    }).toHaveText('Edited by Sara Hornborg and Karl Gunnar');
+    await expect(getByDefinitionTerm(conferencePublication, 'ISBN (print)'), {
+      message: 'Conference publication ISBN print',
+    }).toHaveText('978-92-893-8293-9');
+    await expect(getByDefinitionTerm(conferencePublication, 'DOI'), {
+      message: 'Conference publication DOI',
+    }).toHaveText('10.1234/conference.doi/5678');
+    await expect(getByDefinitionTerm(conferencePublication, 'Startsida'), {
+      message: 'Conference publication start page',
+    }).toHaveText('89');
+    await expect(getByDefinitionTerm(conferencePublication, 'Slutsida'), {
+      message: 'Conference publication end page',
+    }).toHaveText('101');
+    const conferenceSeries = conferencePublication.getByRole('region', {
+      name: 'Serie',
+    });
+    await expect(
+      conferenceSeries.getByRole('heading', { level: 3, name: 'Serie' }),
+      {
+        message: 'Conference series heading',
+      },
+    ).toBeVisible();
+    await expect(getByDefinitionTerm(conferenceSeries, 'Serie'), {
+      message: 'Conference series link',
+    }).toHaveText(
+      'Lecture Notes in Computer Science: Artificial Intelligence and Bioinformatics',
+    );
+    await expect(getByDefinitionTerm(conferenceSeries, 'Nummer'), {
+      message: 'Conference series part',
+    }).toHaveText('7');
+
+    // Series
+    const series = page.locator('section', {
+      has: page.getByRole('heading', { level: 2, name: 'Serie' }),
+    });
+    await expect(series.getByRole('heading', { level: 2, name: 'Serie' }), {
+      message: 'Series heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(series, 'Titel'), {
+      message: 'Series title',
+    }).toHaveText('A song of Ice and Fire');
+    await expect(getByDefinitionTerm(series, 'EISSN'), {
+      message: 'Series EISSN',
+    }).toHaveText('9988-7766');
+    await expect(getByDefinitionTerm(series, 'PISSN'), {
+      message: 'Series PISSN',
+    }).toHaveText('1234-9876');
+    await expect(getByDefinitionTerm(series, 'Nummer'), {
+      message: 'Series part',
+    }).toHaveText('5');
+
+    // Project
+    const project = page.getByRole('region', { name: 'Projekt' });
+    await expect(project.getByRole('heading', { level: 2, name: 'Projekt' }), {
+      message: 'Project heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(project, 'Projekt'), {
+      message: 'Linked project',
+    }).toHaveText(
+      'Deep Learning for Time Series Forecasting: The Electric Load Case',
+    );
+    await expect(getByDefinitionTerm(project, 'Titel'), {
+      message: 'Project title',
+    }).toHaveText('Project title: Project subtitle');
+
+    // Funder
+    const funder = page.getByRole('region', { name: 'Finansiär' });
+    await expect(funder.getByRole('heading', { level: 2, name: 'Finansiär' }), {
+      message: 'Funder heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(funder, 'Finansiär'), {
+      message: 'Linked funder',
+    }).toHaveText('Vetenskapsrådet');
+    await expect(getByDefinitionTerm(funder, 'Projekt-Id'), {
+      message: 'Funder project id',
+    }).toHaveText('VR 2019-01234');
+
+    // Related
+    await expect(page.getByDefinitionTerm('Relaterad publikation i DiVA'), {
+      message: 'Related publication',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(page.getByDefinitionTerm('Retracted publikation'), {
+      message: 'Retracted publication',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(page.getByDefinitionTerm('Delarbete'), {
+      message: 'Constituent',
+    }).toHaveText('BookTitle: BookSubtitle');
 
     // Sidebar
     await expect(page.getByDefinitionTerm('Åtkomstvillkor'), {
@@ -192,19 +384,43 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('Datum för online först'), {
       message: 'Online first date',
     }).toHaveText('1310-01-02');
+    await expect(page.getByDefinitionTerm('Impressum (äldre tryck)'), {
+      message: 'Imprint',
+    }).toHaveText('Hamburg, Tyskland');
+
     const publisher = page.getByDefinitionTerm('Förlag');
+    await expect(publisher.getByText('My Linked Publisher'), {
+      message: 'Linked publisher',
+    }).toBeVisible();
     await expect(publisher.getByText('Penguin'), {
       message: 'Publisher Penguin',
     }).toBeVisible();
     await expect(publisher.getByText('Bloomsbury'), {
       message: 'Publisher Bloomsbury',
     }).toBeVisible();
+
     await expect(page.getByDefinitionTerm('Upplaga'), {
       message: 'Edition',
     }).toHaveText('First edition');
     await expect(page.getByDefinitionTerm('Datum för godkännande av patent'), {
       message: 'Patent approval date',
     }).toHaveText('2012-10-23');
+
+    const patentHolder = page.getByDefinitionTerm('Patentinnehavare');
+    await expect(patentHolder.getByText('Uppsala universitet'), {
+      message: 'Patent holder name',
+    }).toBeVisible();
+
+    await patentHolder.getByRole('button', { name: 'Visa mer' }).click();
+    await expect(patentHolder.getByText('048a87296'), {
+      message: 'Patent holder identifier',
+    }).toBeVisible();
+    await expect(
+      patentHolder.getByText('Ett universitet som ligger i uppsala'),
+      {
+        message: 'Patent holder description',
+      },
+    ).toBeVisible();
 
     const location = page.getByDefinitionTerm('URL');
     await expect(location.getByRole('link', { name: 'Google' }), {
@@ -224,43 +440,50 @@ test.describe('View output', () => {
     ).toHaveAttribute('href', 'https://google.com');
 
     // Identifiers
-    await expect(page.getByDefinitionTerm('DiVA-id'), {
+    const identifiers = page.getByRole('region', { name: 'Identifierare' });
+    await expect(
+      identifiers.getByRole('heading', { level: 2, name: 'Identifierare' }),
+    ).toBeVisible();
+    await expect(getByDefinitionTerm(identifiers, 'DiVA-id'), {
       message: 'DiVA-id',
     }).toHaveText(recordId);
-    await expect(page.getByDefinitionTerm('ISBN (print)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISBN (print)'), {
       message: 'ISBN print',
     }).toHaveText('978-92-893-8293-9');
-    await expect(page.getByDefinitionTerm('ISBN (online)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISBN (online)'), {
       message: 'ISBN online',
     }).toHaveText('978-92-893-8293-2');
-    await expect(page.getByDefinitionTerm('ISRN'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISRN'), {
       message: 'ISRN',
     }).toHaveText('978-92-893-8293-9');
-    await expect(page.getByDefinitionTerm('ISMN (print)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISMN (print)'), {
       message: 'ISMN print',
     }).toHaveText('9790260000438');
-    await expect(page.getByDefinitionTerm('ISMN (online)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISMN (online)'), {
       message: 'ISMN online',
     }).toHaveText('9790260000432');
-    await expect(page.getByDefinitionTerm('DOI'), {
+    await expect(getByDefinitionTerm(identifiers, 'DOI'), {
       message: 'DOI',
     }).toHaveText('10.6027/nord2025-019');
-    await expect(page.getByDefinitionTerm('PubMed'), {
+    await expect(getByDefinitionTerm(identifiers, 'PubMed'), {
       message: 'PubMed',
     }).toHaveText('10097079');
-    await expect(page.getByDefinitionTerm('Scopus'), {
+    await expect(getByDefinitionTerm(identifiers, 'Scopus'), {
       message: 'Scopus',
     }).toHaveText('2-s2.0-12');
-    await expect(page.getByDefinitionTerm('OpenAlex'), {
+    await expect(getByDefinitionTerm(identifiers, 'Arkivnummer'), {
+      message: 'Archive number',
+    }).toHaveText('sa12456456');
+    await expect(getByDefinitionTerm(identifiers, 'OpenAlex'), {
       message: 'OpenAlex',
     }).toHaveText('W3123306174');
-    await expect(page.getByDefinitionTerm('Libris Id'), {
+    await expect(getByDefinitionTerm(identifiers, 'Libris Id'), {
       message: 'Libris Id',
     }).toHaveText('onr:19769763');
-    await expect(page.getByDefinitionTerm('Lokalt Id'), {
+    await expect(getByDefinitionTerm(identifiers, 'Lokalt Id'), {
       message: 'Lokalt Id',
     }).toHaveText('123456');
-    await expect(page.getByDefinitionTerm('Patentnummer'), {
+    await expect(getByDefinitionTerm(identifiers, 'Patentnummer'), {
       message: 'Patentnummer',
     }).toHaveText('SE 7713829-5');
 
@@ -289,6 +512,17 @@ test.describe('View output', () => {
       message: 'SSIF Naturvetenskap',
     }).toBeVisible();
 
+    await expect(
+      page
+        .getByRole('list', {
+          name: 'Lokalt ämne',
+        })
+        .getByText('Mikrobiologi'),
+      {
+        message: 'Subject',
+      },
+    ).toBeVisible();
+
     const sdg = page.getByRole('list', {
       name: 'Hållbar utveckling',
     });
@@ -298,6 +532,15 @@ test.describe('View output', () => {
     await expect(sdg.getByRole('link', { name: 'Ingen Hunger' }), {
       message: 'Ingen Hunger',
     }).toBeVisible();
+
+    await expect(
+      page
+        .getByRole('list', { name: 'DiVA-lokal generisk uppmärkning' })
+        .getByText('Extra viktig publikation'),
+      {
+        message: 'Local generic markup',
+      },
+    ).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Anteckning'), {
       message: 'Note',
