@@ -19,8 +19,8 @@
             <year>1869</year>
         </dateIssued>
     </originInfo>
-    <identifier type="issn" displayLabel="pissn">1845-9323</identifier>
-    <identifier type="issn" displayLabel="eissn">3791-2443</identifier>
+    <identifier type="issn" displayLabel="pissn">{{RANDOM_ISSN}}</identifier>
+    <identifier type="issn" displayLabel="eissn">{{RANDOM_ISSN}}</identifier>
     <location>
         <url>https://www.nature.com</url>
         <displayLabel>Nature</displayLabel>

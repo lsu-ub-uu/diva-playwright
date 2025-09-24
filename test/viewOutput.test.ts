@@ -196,10 +196,10 @@ test.describe('View output', () => {
     }).toHaveText("Nature: It's about nature and stuff");
     await expect(getByDefinitionTerm(journal, 'PISSN'), {
       message: 'Journal PISSN',
-    }).toHaveText('1845-9323');
+    }).toBeVisible();
     await expect(getByDefinitionTerm(journal, 'EISSN'), {
       message: 'Journal EISSN',
-    }).toHaveText('3791-2443');
+    }).toBeVisible();
     await expect(getByDefinitionTerm(journal, 'Volym'), {
       message: 'Journal volume',
     }).toHaveText('586');
@@ -315,46 +315,50 @@ test.describe('View output', () => {
     ).toHaveAttribute('href', 'https://google.com');
 
     // Identifiers
-    await expect(page.getByDefinitionTerm('DiVA-id'), {
+    const identifiers = page.getByRole('region', { name: 'Identifierare' });
+    await expect(
+      identifiers.getByRole('heading', { level: 2, name: 'Identifierare' }),
+    ).toBeVisible();
+    await expect(getByDefinitionTerm(identifiers, 'DiVA-id'), {
       message: 'DiVA-id',
     }).toHaveText(recordId);
-    await expect(page.getByDefinitionTerm('ISBN (print)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISBN (print)'), {
       message: 'ISBN print',
     }).toHaveText('978-92-893-8293-9');
-    await expect(page.getByDefinitionTerm('ISBN (online)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISBN (online)'), {
       message: 'ISBN online',
     }).toHaveText('978-92-893-8293-2');
-    await expect(page.getByDefinitionTerm('ISRN'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISRN'), {
       message: 'ISRN',
     }).toHaveText('978-92-893-8293-9');
-    await expect(page.getByDefinitionTerm('ISMN (print)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISMN (print)'), {
       message: 'ISMN print',
     }).toHaveText('9790260000438');
-    await expect(page.getByDefinitionTerm('ISMN (online)'), {
+    await expect(getByDefinitionTerm(identifiers, 'ISMN (online)'), {
       message: 'ISMN online',
     }).toHaveText('9790260000432');
-    await expect(page.getByDefinitionTerm('DOI'), {
+    await expect(getByDefinitionTerm(identifiers, 'DOI'), {
       message: 'DOI',
     }).toHaveText('10.6027/nord2025-019');
-    await expect(page.getByDefinitionTerm('PubMed'), {
+    await expect(getByDefinitionTerm(identifiers, 'PubMed'), {
       message: 'PubMed',
     }).toHaveText('10097079');
-    await expect(page.getByDefinitionTerm('Scopus'), {
+    await expect(getByDefinitionTerm(identifiers, 'Scopus'), {
       message: 'Scopus',
     }).toHaveText('2-s2.0-12');
-    await expect(page.getByDefinitionTerm('Arkivnummer'), {
+    await expect(getByDefinitionTerm(identifiers, 'Arkivnummer'), {
       message: 'Archive number',
     }).toHaveText('sa12456456');
-    await expect(page.getByDefinitionTerm('OpenAlex'), {
+    await expect(getByDefinitionTerm(identifiers, 'OpenAlex'), {
       message: 'OpenAlex',
     }).toHaveText('W3123306174');
-    await expect(page.getByDefinitionTerm('Libris Id'), {
+    await expect(getByDefinitionTerm(identifiers, 'Libris Id'), {
       message: 'Libris Id',
     }).toHaveText('onr:19769763');
-    await expect(page.getByDefinitionTerm('Lokalt Id'), {
+    await expect(getByDefinitionTerm(identifiers, 'Lokalt Id'), {
       message: 'Lokalt Id',
     }).toHaveText('123456');
-    await expect(page.getByDefinitionTerm('Patentnummer'), {
+    await expect(getByDefinitionTerm(identifiers, 'Patentnummer'), {
       message: 'Patentnummer',
     }).toHaveText('SE 7713829-5');
 

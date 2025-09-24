@@ -11,6 +11,7 @@ import { createLocalGenericMarkup } from '../testData/localGenericMarkup';
 import { addSubdomain } from './addSubdomain';
 import type { DataGroup } from './coraTypes';
 import { getFirstDataAtomicValueWithNameInData } from './coraUtils';
+import { faker } from '@faker-js/faker';
 
 interface CoraData {
   name: string;
@@ -141,6 +142,9 @@ export const test = base.extend<Fixtures>({
       '../testData/journal.xml',
       'diva-journal',
       authtoken,
+      {
+        '{{RANDOM_ISSN}}': `1234-${faker.number.int({ max: 9999 })}`,
+      },
     );
 
     const { id: bookId, delete: deleteBook } = await createRecordFromXML(
@@ -273,8 +277,12 @@ async function createRecordFromXML(
   xmlPath: string,
   recordType: string,
   authtoken: string,
+  tokens: Record<string, string> = {},
 ) {
-  const xml = fs.readFileSync(path.join(__dirname, xmlPath), 'utf-8');
+  let xml = fs.readFileSync(path.join(__dirname, xmlPath), 'utf-8');
+  for (const [key, value] of Object.entries(tokens)) {
+    xml = xml.replaceAll(key, value);
+  }
   const response = await request.post(`${CORA_API_URL}/record/${recordType}`, {
     data: xml,
     headers: {

@@ -119,7 +119,7 @@
 	</dateOther>
 	<patentHolder type="corporate">
 		<namePart>Uppsala universitet</namePart>
-		<role><role>pth</role></role>
+		<role><roleTerm>pth</roleTerm></role>
 		<identifier type="ror">048a87296</identifier>
 		<description>Ett universitet som ligger i uppsala</description>
 	</patentHolder>
