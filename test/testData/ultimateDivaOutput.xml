@@ -381,6 +381,12 @@ sector will be essential.
 			<partNumber>7</partNumber>
 		</relatedItem>
 	</relatedItem>
+	<relatedItem type="conference">
+		<conference>Nordic.js 2025</conference>
+	</relatedItem>
+	<relatedItem type="publicationChannel">
+		<publicationChannel>Radio</publicationChannel>
+	</relatedItem>
 	<relatedItem type="series" repeatId="0">
 		<titleInfo>
 			<title>A song of Ice and Fire</title>
@@ -389,6 +395,45 @@ sector will be essential.
 		<identifier type="issn" displayLabel="eissn">9988-7766</identifier>
 		<partNumber>5</partNumber>
 	</relatedItem>
+	<relatedItem type="initiative">
+		<initiative repeatId="0">diabetes</initiative>	
+		<initiative repeatId="1">molecularBiosciences</initiative>	
+	</relatedItem>
+	<relatedItem type="project" repeatId="0">
+		<project>
+			<linkedRecordType>diva-project</linkedRecordType>
+			<linkedRecordId>{{LINKED_PROJECT_ID}}</linkedRecordId>
+		</project>
+		<titleInfo lang="eng">
+			<title>Project title</title>
+			<subtitle>Project subtitle</subtitle>
+		</titleInfo>
+	</relatedItem>
+	<relatedItem type="funder" repeatId="0">
+		<funder>
+			<linkedRecordType>diva-funder</linkedRecordType>
+			<linkedRecordId>{{LINKED_FUNDER_ID}}</linkedRecordId>
+		</funder>
+		<identifier type="project">VR 2019-01234</identifier>
+	</relatedItem>
+	<related repeatId="0">
+		<output>
+			<linkedRecordType>diva-output</linkedRecordType>
+			<linkedRecordId>{{LINKED_BOOK_ID}}</linkedRecordId>
+		</output>
+	</related>
+	<related type="constituent" repeatId="0">
+		<output>
+			<linkedRecordType>diva-output</linkedRecordType>
+			<linkedRecordId>{{LINKED_BOOK_ID}}</linkedRecordId>
+		</output>
+	</related>
+	<related type="retracted" repeatId="0">
+		<output>
+			<linkedRecordType>diva-output</linkedRecordType>
+			<linkedRecordId>{{LINKED_BOOK_ID}}</linkedRecordId>
+		</output>
+	</related>
 	<accessCondition authority="kb.se">
 		gratis
 	</accessCondition>

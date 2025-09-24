@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<funder>
+    <recordInfo>
+        <validationType>
+            <linkedRecordType>validationType</linkedRecordType>
+            <linkedRecordId>diva-funder</linkedRecordId>
+        </validationType>
+        <dataDivider>
+            <linkedRecordType>system</linkedRecordType>
+            <linkedRecordId>divaData</linkedRecordId>
+        </dataDivider>
+    </recordInfo>
+    <authority lang="swe">
+        <name type="corporate">
+            <namePart>Vetenskapsrådet</namePart>
+        </name>
+    </authority>
+</funder>

@@ -153,6 +153,15 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('Land'), {
       message: 'Patent country',
     }).toHaveText('Sverige');
+    await expect(page.getByDefinitionTerm('Konferens'), {
+      message: 'Conference',
+    }).toHaveText('Nordic.js 2025');
+    await expect(page.getByDefinitionTerm('Publikationskanal'), {
+      message: 'Publication channel',
+    }).toHaveText('Radio');
+    await expect(page.getByText('Strategiskt initiativ')).toBeVisible();
+    await expect(page.getByText('diabetes')).toBeVisible();
+    await expect(page.getByText('molekylär biovetenskap')).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Akademisk termin'), {
       message: 'Academic term',
@@ -315,6 +324,43 @@ test.describe('View output', () => {
     await expect(getByDefinitionTerm(series, 'Nummer'), {
       message: 'Series part',
     }).toHaveText('5');
+
+    // Project
+    const project = page.getByRole('region', { name: 'Projekt' });
+    await expect(project.getByRole('heading', { level: 2, name: 'Projekt' }), {
+      message: 'Project heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(project, 'Projekt'), {
+      message: 'Linked project',
+    }).toHaveText(
+      'Deep Learning for Time Series Forecasting: The Electric Load Case',
+    );
+    await expect(getByDefinitionTerm(project, 'Titel'), {
+      message: 'Project title',
+    }).toHaveText('Project title: Project subtitle');
+
+    // Funder
+    const funder = page.getByRole('region', { name: 'Finansiär' });
+    await expect(funder.getByRole('heading', { level: 2, name: 'Finansiär' }), {
+      message: 'Funder heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(funder, 'Finansiär'), {
+      message: 'Linked funder',
+    }).toHaveText('Vetenskapsrådet');
+    await expect(getByDefinitionTerm(funder, 'Projekt-Id'), {
+      message: 'Funder project id',
+    }).toHaveText('VR 2019-01234');
+
+    // Related
+    await expect(page.getByDefinitionTerm('Relaterad publikation i DiVA'), {
+      message: 'Related publication',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(page.getByDefinitionTerm('Retracted publikation'), {
+      message: 'Retracted publication',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(page.getByDefinitionTerm('Delarbete'), {
+      message: 'Constituent',
+    }).toHaveText('BookTitle: BookSubtitle');
 
     // Sidebar
     await expect(page.getByDefinitionTerm('Åtkomstvillkor'), {

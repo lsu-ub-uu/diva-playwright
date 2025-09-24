@@ -161,6 +161,20 @@ export const test = base.extend<Fixtures>({
       authtoken,
     );
 
+    const { id: projectId, delete: deleteProject } = await createRecordFromXML(
+      request,
+      '../testData/project.xml',
+      'diva-project',
+      authtoken,
+    );
+
+    const { id: funderId, delete: deleteFunder } = await createRecordFromXML(
+      request,
+      '../testData/funder.xml',
+      'diva-funder',
+      authtoken,
+    );
+
     const xml = fs.readFileSync(
       path.join(__dirname, '../testData/ultimateDivaOutput.xml'),
       'utf-8',
@@ -174,7 +188,9 @@ export const test = base.extend<Fixtures>({
       .replaceAll('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId)
       .replaceAll('{{LINKED_JOURNAL_ID}}', journalId)
       .replaceAll('{{LINKED_BOOK_ID}}', bookId)
-      .replaceAll('{{LINKED_SERIES_ID}}', seriesId);
+      .replaceAll('{{LINKED_SERIES_ID}}', seriesId)
+      .replaceAll('{{LINKED_PROJECT_ID}}', projectId)
+      .replaceAll('{{LINKED_FUNDER_ID}}', funderId);
 
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
       data: updatedXML,
@@ -202,6 +218,8 @@ export const test = base.extend<Fixtures>({
     await deleteJournal();
     await deleteBook();
     await deleteSeries();
+    await deleteProject();
+    await deleteFunder();
   },
 
   kthDivaOutput: async ({ request, authtoken }, use) => {
