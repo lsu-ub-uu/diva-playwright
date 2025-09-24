@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<series>
+    <recordInfo>
+        <validationType>
+            <linkedRecordType>validationType</linkedRecordType>
+            <linkedRecordId>diva-series</linkedRecordId>
+        </validationType>
+        <dataDivider>
+            <linkedRecordType>system</linkedRecordType>
+            <linkedRecordId>divaData</linkedRecordId>
+        </dataDivider>
+        <permissionUnit>
+            <linkedRecordType>permissionUnit</linkedRecordType>
+            <linkedRecordId>norden</linkedRecordId>
+        </permissionUnit>
+    </recordInfo>
+    <titleInfo>
+        <title>Lecture Notes in Computer Science</title>
+        <subtitle>Artificial Intelligence and Bioinformatics</subtitle>
+    </titleInfo>
+</series>

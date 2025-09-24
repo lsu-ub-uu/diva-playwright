@@ -237,6 +237,85 @@ test.describe('View output', () => {
       message: 'Book end page',
     }).toHaveText('67');
 
+    const bookSeries = book.getByRole('region', { name: 'Serie' });
+    await expect(bookSeries.getByRole('heading', { level: 3, name: 'Serie' }), {
+      message: 'Book series heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(bookSeries, 'Serie'), {
+      message: 'Book series link',
+    }).toHaveText(
+      'Lecture Notes in Computer Science: Artificial Intelligence and Bioinformatics',
+    );
+    await expect(getByDefinitionTerm(bookSeries, 'Nummer'), {
+      message: 'Book series part',
+    }).toHaveText('14');
+
+    // Conference publication
+    await expect(page.getByRole('heading', { level: 2, name: 'Proceeding' }), {
+      message: 'Conference publication heading',
+    }).toBeVisible();
+    const conferencePublication = page.getByRole('region', {
+      name: 'Proceeding',
+    });
+    await expect(getByDefinitionTerm(conferencePublication, 'Proceeding'), {
+      message: 'Conference publication proceeding link',
+    }).toHaveText('BookTitle: BookSubtitle');
+    await expect(getByDefinitionTerm(conferencePublication, 'Titel'), {
+      message: 'Conference publication title',
+    }).toHaveText('ConferenceBookTitle: ConferenceBookSubtitle');
+    await expect(getByDefinitionTerm(conferencePublication, 'Redaktör'), {
+      message: 'Conference publication editor',
+    }).toHaveText('Edited by Sara Hornborg and Karl Gunnar');
+    await expect(getByDefinitionTerm(conferencePublication, 'ISBN (print)'), {
+      message: 'Conference publication ISBN print',
+    }).toHaveText('978-92-893-8293-9');
+    await expect(getByDefinitionTerm(conferencePublication, 'DOI'), {
+      message: 'Conference publication DOI',
+    }).toHaveText('10.1234/conference.doi/5678');
+    await expect(getByDefinitionTerm(conferencePublication, 'Startsida'), {
+      message: 'Conference publication start page',
+    }).toHaveText('89');
+    await expect(getByDefinitionTerm(conferencePublication, 'Slutsida'), {
+      message: 'Conference publication end page',
+    }).toHaveText('101');
+    const conferenceSeries = conferencePublication.getByRole('region', {
+      name: 'Serie',
+    });
+    await expect(
+      conferenceSeries.getByRole('heading', { level: 3, name: 'Serie' }),
+      {
+        message: 'Conference series heading',
+      },
+    ).toBeVisible();
+    await expect(getByDefinitionTerm(conferenceSeries, 'Serie'), {
+      message: 'Conference series link',
+    }).toHaveText(
+      'Lecture Notes in Computer Science: Artificial Intelligence and Bioinformatics',
+    );
+    await expect(getByDefinitionTerm(conferenceSeries, 'Nummer'), {
+      message: 'Conference series part',
+    }).toHaveText('7');
+
+    // Series
+    const series = page.locator('section', {
+      has: page.getByRole('heading', { level: 2, name: 'Serie' }),
+    });
+    await expect(series.getByRole('heading', { level: 2, name: 'Serie' }), {
+      message: 'Series heading',
+    }).toBeVisible();
+    await expect(getByDefinitionTerm(series, 'Titel'), {
+      message: 'Series title',
+    }).toHaveText('A song of Ice and Fire');
+    await expect(getByDefinitionTerm(series, 'EISSN'), {
+      message: 'Series EISSN',
+    }).toHaveText('9988-7766');
+    await expect(getByDefinitionTerm(series, 'PISSN'), {
+      message: 'Series PISSN',
+    }).toHaveText('1234-9876');
+    await expect(getByDefinitionTerm(series, 'Nummer'), {
+      message: 'Series part',
+    }).toHaveText('5');
+
     // Sidebar
     await expect(page.getByDefinitionTerm('Åtkomstvillkor'), {
       message: 'Access condition',

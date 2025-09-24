@@ -143,8 +143,15 @@ export const test = base.extend<Fixtures>({
       'diva-journal',
       authtoken,
       {
-        '{{RANDOM_ISSN}}': `1234-${faker.number.int({ max: 9999 })}`,
+        '{{RANDOM_ISSN}}': `1234-${faker.number.int({ min: 1000, max: 9999 })}`,
       },
+    );
+
+    const { id: seriesId, delete: deleteSeries } = await createRecordFromXML(
+      request,
+      '../testData/series.xml',
+      'diva-series',
+      authtoken,
     );
 
     const { id: bookId, delete: deleteBook } = await createRecordFromXML(
@@ -160,13 +167,14 @@ export const test = base.extend<Fixtures>({
     );
 
     const updatedXML = xml
-      .replace('{{LINKED_PUBLISHER_ID}}', publisherId)
-      .replace('{{LINKED_SUBJECT_ID}}', subjectId)
-      .replace('{{LINKED_COURSE_ID}}', courseId)
-      .replace('{{LINKED_PROGRAMME_ID}}', programmeId)
-      .replace('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId)
-      .replace('{{LINKED_JOURNAL_ID}}', journalId)
-      .replace('{{LINKED_BOOK_ID}}', bookId);
+      .replaceAll('{{LINKED_PUBLISHER_ID}}', publisherId)
+      .replaceAll('{{LINKED_SUBJECT_ID}}', subjectId)
+      .replaceAll('{{LINKED_COURSE_ID}}', courseId)
+      .replaceAll('{{LINKED_PROGRAMME_ID}}', programmeId)
+      .replaceAll('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId)
+      .replaceAll('{{LINKED_JOURNAL_ID}}', journalId)
+      .replaceAll('{{LINKED_BOOK_ID}}', bookId)
+      .replaceAll('{{LINKED_SERIES_ID}}', seriesId);
 
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
       data: updatedXML,
@@ -193,6 +201,7 @@ export const test = base.extend<Fixtures>({
     await deleteLocalGenericMarkup();
     await deleteJournal();
     await deleteBook();
+    await deleteSeries();
   },
 
   kthDivaOutput: async ({ request, authtoken }, use) => {

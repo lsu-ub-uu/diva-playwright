@@ -65,6 +65,10 @@
 		<title>Ԥхьаҟатәи аԥсыӡкра</title>
 		<subtitle>Скандинавиатәи арегион ахшыҩзышьҭра аҭаны аԥсыӡкраҿы аенергиа аиҭаҵра иазку аҭагылазаашьа, атрендқәа, ԥхьаҟатәи аперспективақәа еилкаам</subtitle>
 	</titleInfo>
+	<titleInfo lang="heb" repeatId="32" type="alternative">
+		<title>דיג עתידי</title>
+		<subtitle>מצב, מגמות ופרספקטיבות עתידיות בנוגע למעבר האנרגטי של דיג בדגש על מדינות סקנדינביות</subtitle>
+	</titleInfo>
 	<name repeatId="0" type="personal">
 		<namePart type="family">Hornborg</namePart>
 		<namePart type="given">Sara</namePart>
@@ -343,6 +347,47 @@ sector will be essential.
 				<end>67</end>
 			</extent>
 		</part>
+		<relatedItem type="series" repeatId="0">
+			<series>
+				<linkedRecordType>diva-series</linkedRecordType>
+				<linkedRecordId>{{LINKED_SERIES_ID}}</linkedRecordId>
+			</series>
+			<partNumber>14</partNumber>
+		</relatedItem>
+	</relatedItem>
+	<relatedItem type="conferencePublication">
+		<proceeding>
+			<linkedRecordType>diva-output</linkedRecordType>
+			<linkedRecordId>{{LINKED_BOOK_ID}}</linkedRecordId>
+		</proceeding>
+		<titleInfo lang="eng">
+			<title>ConferenceBookTitle</title>
+			<subtitle>ConferenceBookSubtitle</subtitle>
+		</titleInfo>
+		<note type="statementOfResponsibility">Edited by Sara Hornborg and Karl Gunnar</note>
+		<identifier type="isbn" displayLabel="print" repeatId="0">978-92-893-8293-9</identifier>
+		<identifier type="doi">10.1234/conference.doi/5678</identifier>
+		<part>
+			<extent>
+				<start>89</start>
+				<end>101</end>
+			</extent>
+		</part>
+		<relatedItem type="series" repeatId="0">
+			<series>
+				<linkedRecordType>diva-series</linkedRecordType>
+				<linkedRecordId>{{LINKED_SERIES_ID}}</linkedRecordId>
+			</series>
+			<partNumber>7</partNumber>
+		</relatedItem>
+	</relatedItem>
+	<relatedItem type="series" repeatId="0">
+		<titleInfo>
+			<title>A song of Ice and Fire</title>
+		</titleInfo>
+		<identifier type="issn" displayLabel="pissn">1234-9876</identifier>
+		<identifier type="issn" displayLabel="eissn">9988-7766</identifier>
+		<partNumber>5</partNumber>
 	</relatedItem>
 	<accessCondition authority="kb.se">
 		gratis
@@ -355,8 +400,5 @@ sector will be essential.
 		<reviewed>true</reviewed>
 		<note type="internal">Leo och Egil was here</note>
 	</adminInfo>
-	<titleInfo lang="heb" repeatId="32" type="alternative">
-		<title>דיג עתידי</title>
-		<subtitle>מצב, מגמות ופרספקטיבות עתידיות בנוגע למעבר האנרגטי של דיג בדגש על מדינות סקנדינביות</subtitle>
-	</titleInfo>
+	
 </output>
