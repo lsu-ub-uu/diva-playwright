@@ -68,7 +68,7 @@ test.describe('View output', () => {
       'דיג עתידי: מצב, מגמות ופרספקטיבות עתידיות בנוגע למעבר האנרגטי של דיג בדגש על מדינות סקנדינביות',
     );
 
-    await expect(page.getByDefinitionTerm('Publikations-/Outputtyp'), {
+    await expect(page.getByDefinitionTerm('Publikationstyp'), {
       message: 'Output type',
     }).toHaveText('Rapport');
 

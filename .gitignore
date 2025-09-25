@@ -27,3 +27,6 @@ target
 
 # JUnit
 junit-report.xml
+
+# Jetbrains
+.idea/

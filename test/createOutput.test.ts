@@ -68,6 +68,8 @@ test.describe('Create output', () => {
       .getByRole('textbox', { name: 'År' })
       .fill(faker.date.recent().getFullYear().toString());
 
+    // Postens synlighet
+    await page.getByRole('button', { name: 'Postinformation'}).click()
     await page
       .getByRole('combobox', { name: /^Postens synlighet/ })
       .selectOption({ label: 'Publicerad' });
@@ -75,6 +77,7 @@ test.describe('Create output', () => {
     await page.getByRole('combobox', { name: 'Rättighetsenhet' }).fill('uu');
     await page.getByRole('option', { name: 'Rättighetsenhet' }).click();
 
+    await page.getByRole('button', {name: 'Administrativ information', exact: true}).click();
     await page
       .getByRole('combobox', { name: /^Bibliografiskt granskad/ })
       .selectOption({ label: 'Sant' });
@@ -91,6 +94,7 @@ test.describe('Create output', () => {
         exact: true,
       })
       .click();
+
 
     // Submit
     await page.getByRole('button', { name: 'Skicka in' }).click();
@@ -196,6 +200,7 @@ test.describe('Create output', () => {
       .fill(faker.date.recent().getFullYear().toString());
 
     // Författare, redaktör eller annan roll
+    await page.getByRole('button',  {name: 'Författare, redaktör eller annan roll', exact: true}).click();
     const authorGroup = page.getByRole('region', {
       name: 'Författare, redaktör eller annan roll',
     });
@@ -249,6 +254,7 @@ test.describe('Create output', () => {
       });
 
     // Postens synlighet
+    await page.getByRole('button', { name: 'Postinformation'}).click()
     await page
       .getByRole('combobox', { name: 'Postens synlighet' })
       .selectOption({ label: 'Publicerad' });
@@ -258,6 +264,7 @@ test.describe('Create output', () => {
     await page.getByRole('option', { name: 'Rättighetsenhet' }).click();
 
     // Bibliografiskt granskad
+    await page.getByRole('button', { name: 'Administrativ information', exact: true},).click()
     await page
       .getByRole('combobox', { name: 'Bibliografiskt granskad' })
       .selectOption({ label: 'Sant' });
