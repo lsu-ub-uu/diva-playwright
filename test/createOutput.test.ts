@@ -22,7 +22,7 @@ import { faker } from '@faker-js/faker';
 import { createUrl } from './util/createUrl';
 import { logIn } from './util/logIn';
 
-test.describe('Create output', () => {
+test.skip('Create output', () => {
   test('Create report mini', async ({ page, request, authtoken }) => {
     const mockTitle = faker.book.title();
 

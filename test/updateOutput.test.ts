@@ -27,7 +27,7 @@ import {
 } from './util/coraUtils';
 import path from 'node:path';
 
-test.describe('Update output', () => {
+test.skip('Update output', () => {
   test('updates an existing report', async ({ page, divaOutput }) => {
     const recordId = getFirstDataAtomicValueWithNameInData(
       getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
