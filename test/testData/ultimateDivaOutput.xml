@@ -399,15 +399,11 @@ sector will be essential.
 		<initiative repeatId="0">diabetes</initiative>	
 		<initiative repeatId="1">molecularBiosciences</initiative>	
 	</relatedItem>
-	<relatedItem type="project" repeatId="0">
+	<relatedItem type="project" otherType="link" repeatId="0">
 		<project>
 			<linkedRecordType>diva-project</linkedRecordType>
 			<linkedRecordId>{{LINKED_PROJECT_ID}}</linkedRecordId>
 		</project>
-		<titleInfo lang="eng">
-			<title>Project title</title>
-			<subtitle>Project subtitle</subtitle>
-		</titleInfo>
 	</relatedItem>
 	<relatedItem type="funder" repeatId="0">
 		<funder>

@@ -335,9 +335,6 @@ test.describe('View output', () => {
     }).toHaveText(
       'Deep Learning for Time Series Forecasting: The Electric Load Case',
     );
-    await expect(getByDefinitionTerm(project, 'Titel'), {
-      message: 'Project title',
-    }).toHaveText('Project title: Project subtitle');
 
     // Funder
     const funder = page.getByRole('region', { name: 'Finansiär' });
