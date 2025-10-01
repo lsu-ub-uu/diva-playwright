@@ -309,7 +309,7 @@ sector will be essential.
 		<address>Regementsvägen 10</address>
 		<place><placeTerm>Uppsala</placeTerm></place>
 	</defence>
-	<relatedItem type="journal">
+	<relatedItem type="journal" otherType="link">
 		<journal>
 			<linkedRecordType>diva-journal</linkedRecordType>
 			<linkedRecordId>{{LINKED_JOURNAL_ID}}</linkedRecordId>
@@ -347,7 +347,7 @@ sector will be essential.
 				<end>67</end>
 			</extent>
 		</part>
-		<relatedItem type="series" repeatId="0">
+		<relatedItem type="series" otherType="link" repeatId="0">
 			<series>
 				<linkedRecordType>diva-series</linkedRecordType>
 				<linkedRecordId>{{LINKED_SERIES_ID}}</linkedRecordId>
@@ -373,7 +373,7 @@ sector will be essential.
 				<end>101</end>
 			</extent>
 		</part>
-		<relatedItem type="series" repeatId="0">
+		<relatedItem type="series" otherType="link" repeatId="0">
 			<series>
 				<linkedRecordType>diva-series</linkedRecordType>
 				<linkedRecordId>{{LINKED_SERIES_ID}}</linkedRecordId>
@@ -387,7 +387,7 @@ sector will be essential.
 	<relatedItem type="publicationChannel">
 		<publicationChannel>Radio</publicationChannel>
 	</relatedItem>
-	<relatedItem type="series" repeatId="0">
+	<relatedItem type="series" otherType="text" repeatId="0">
 		<titleInfo>
 			<title>A song of Ice and Fire</title>
 		</titleInfo>

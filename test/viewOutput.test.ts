@@ -6,7 +6,7 @@ import {
   getFirstDataGroupWithNameInData,
 } from './util/coraUtils';
 
-test.skip('View output', () => {
+test.describe('View output', () => {
   test('View report', async ({ page, ultimateDivaOutput }) => {
     const recordId = getFirstDataAtomicValueWithNameInData(
       getFirstDataGroupWithNameInData(ultimateDivaOutput, 'recordInfo'),
@@ -255,7 +255,7 @@ test.skip('View output', () => {
     }).toHaveText(
       'Lecture Notes in Computer Science: Artificial Intelligence and Bioinformatics',
     );
-    await expect(getByDefinitionTerm(bookSeries, 'Nummer'), {
+    await expect(getByDefinitionTerm(bookSeries, 'Nummer i serie'), {
       message: 'Book series part',
     }).toHaveText('14');
 
@@ -299,9 +299,9 @@ test.skip('View output', () => {
     await expect(getByDefinitionTerm(conferenceSeries, 'Serie'), {
       message: 'Conference series link',
     }).toHaveText(
-      'Lecture Notes in Computer Science:skip Artificial Intelligence and Bioinformatics',
+      'Lecture Notes in Computer Science: Artificial Intelligence and Bioinformatics',
     );
-    await expect(getByDefinitionTerm(conferenceSeries, 'Nummer'), {
+    await expect(getByDefinitionTerm(conferenceSeries, 'Nummer i serie'), {
       message: 'Conference series part',
     }).toHaveText('7');
 
@@ -321,7 +321,7 @@ test.skip('View output', () => {
     await expect(getByDefinitionTerm(series, 'PISSN'), {
       message: 'Series PISSN',
     }).toHaveText('1234-9876');
-    await expect(getByDefinitionTerm(series, 'Nummer'), {
+    await expect(getByDefinitionTerm(series, 'Nummer i serie'), {
       message: 'Series part',
     }).toHaveText('5');
 
