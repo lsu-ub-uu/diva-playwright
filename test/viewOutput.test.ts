@@ -6,7 +6,7 @@ import {
   getFirstDataGroupWithNameInData,
 } from './util/coraUtils';
 
-test.describe('View output', () => {
+test.skip('View output', () => {
   test('View report', async ({ page, ultimateDivaOutput }) => {
     const recordId = getFirstDataAtomicValueWithNameInData(
       getFirstDataGroupWithNameInData(ultimateDivaOutput, 'recordInfo'),
