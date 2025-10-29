@@ -30,14 +30,14 @@ test.describe('Error', () => {
     );
   });
 
-  test('Shows 400 error page for create page with missing validationType', async ({
+  test('Shows 401 error page for create page with missing validationType', async ({
     page,
   }) => {
     const response = await page.goto(createUrl('/diva-output/create'));
-    expect(response?.status()).toBe(400);
+    expect(response?.status()).toBe(401);
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      '400 - Felaktig begäran',
+      '401 - Obehörig',
     );
   });
 

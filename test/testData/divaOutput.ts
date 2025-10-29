@@ -32,6 +32,10 @@ export const createDivaOutput = (permissionUnit: string = 'uu'): DataGroup => ({
       ],
     },
     {
+      name: 'dataQuality',
+      value: '2026',
+    },
+    {
       name: 'genre',
       value: 'publication_report',
       attributes: { type: 'outputType' },
