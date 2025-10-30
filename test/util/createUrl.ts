@@ -20,5 +20,8 @@ const { TARGET_URL } = process.env;
 
 export const createUrl = (url: string) => {
   const basePath = TARGET_URL ? new URL(TARGET_URL).pathname : '';
-  return `${basePath}${url}`;
+  if (basePath === '/') {
+    return url;
+  }
+  return `${basePath}${url}`; 
 };

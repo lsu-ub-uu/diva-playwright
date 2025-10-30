@@ -1,10 +1,10 @@
 import { expect } from '@playwright/test';
-import { test } from './util/fixtures';
-import { createUrl } from './util/createUrl';
 import {
   getFirstDataAtomicValueWithNameInData,
   getFirstDataGroupWithNameInData,
 } from './util/coraUtils';
+import { test } from './util/fixtures';
+import { goToPage } from './util/goToPage';
 
 test.describe('Search output', () => {
   test('Search for records', async ({ page, divaOutput }) => {
@@ -17,7 +17,7 @@ test.describe('Search output', () => {
       'id',
     );
 
-    await page.goto(createUrl('/diva-output'));
+    await goToPage(page, '/diva-output');
 
     await page.getByRole('textbox', { name: 'Fritext' }).fill(recordTitle);
 
