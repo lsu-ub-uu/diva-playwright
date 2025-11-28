@@ -26,6 +26,6 @@ test.describe('Search output', () => {
     ).toHaveValue(recordTitle);
     await page.getByRole('button', { name: 'Sök', exact: true }).click();
 
-    await expect(await page.getByText(recordId)).toBeVisible();
+    await expect(await page.getByText(recordId, {exact: true})).toBeVisible();
   });
 });
