@@ -12,11 +12,7 @@ test.describe('Search output', () => {
       getFirstDataGroupWithNameInData(divaOutput, 'titleInfo'),
       'title',
     );
-    const recordId = getFirstDataAtomicValueWithNameInData(
-      getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
-      'id',
-    );
-
+    
     await goToPage(page, '/diva-output');
 
     await page.getByRole('textbox', { name: 'Fritext' }).fill(recordTitle);
@@ -26,6 +22,9 @@ test.describe('Search output', () => {
     ).toHaveValue(recordTitle);
     await page.getByRole('button', { name: 'Sök', exact: true }).click();
 
-    await expect(await page.getByText(recordId, {exact: true})).toBeVisible();
+    await expect(await page.getByText(recordTitle, {exact: true})).toBeVisible();
+    await expect(await page.getByText('Rapport', {exact: true})).toBeVisible();
+    await expect(await page.getByText('DiVA-2026', {exact: true})).toBeVisible();
+    await expect(await page.getByText('2025', {exact: true})).toBeVisible();
   });
 });
