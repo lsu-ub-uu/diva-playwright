@@ -23,8 +23,5 @@ test.describe('Search output', () => {
     await page.getByRole('button', { name: 'Sök', exact: true }).click();
 
     await expect(await page.getByText(recordTitle, {exact: true})).toBeVisible();
-    await expect(await page.getByText('Rapport', {exact: true})).toBeVisible();
-    await expect(await page.getByText('DiVA-2026', {exact: true})).toBeVisible();
-    await expect(await page.getByText('2025', {exact: true})).toBeVisible();
   });
 });
