@@ -10,6 +10,3 @@ The following environment variables are required to run the tests. Either pass t
 
 TARGET_URL: The DiVA Client URL on which the tests should be run. E.g https://cora.epc.ub.uu.se/divaclient
 CORA_API_URL: The URL to the Cora REST API where test data will be created. E.g. https://cora.epc.ub.uu.se/diva/rest
-CORA_LOGIN_URL: The URL to the Cora Login REST API. E.g. https://cora.epc.ub.uu.se/diva/login/rest
-CORA_USER: user@cora.epc.ub.uu.se
-CORA_APPTOKEN: xxxxx-xxxx-xxxx-xxxx-xxxxxxxx

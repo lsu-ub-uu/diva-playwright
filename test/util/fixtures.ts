@@ -20,16 +20,43 @@ interface CoraData {
   attributes?: { [key: string]: string };
 }
 
-const { CORA_API_URL, CORA_LOGIN_URL, TARGET_URL, CORA_USER, CORA_APPTOKEN } =
-  process.env;
+interface DeploymentInfo {
+  applicationName: string;
+  deploymentName: string;
+  coraVersion: string;
+  applicationVersion: string;
+  urls: {
+    REST: string;
+    appTokenLogin: string;
+    passwordLogin: string;
+    record: string;
+    recordType: string;
+    iiif: string;
+    [key: string]: string;
+  };
+  exampleUsers: ExampleUser[];
+}
+
+interface ExampleUser {
+  name: string;
+  text: string;
+  type: string;
+  loginId: string;
+  appToken: string;
+}
+
+const { CORA_API_URL, TARGET_URL } = process.env;
 
 interface CustomPage extends Page {
   getByDefinitionTerm: (dtText: string) => Locator;
 }
 
+interface WorkerFixtures {
+  authtoken: string;
+}
+
 interface Fixtures {
   page: CustomPage;
-  authtoken: string;
   kthPage: Page;
   divaOutput: DataGroup;
   kthDivaOutput: DataGroup;
@@ -44,7 +71,7 @@ export const getByDefinitionTerm = (parent: Page | Locator, dtText: string) => {
   );
 };
 
-export const test = base.extend<Fixtures>({
+export const test = base.extend<Fixtures, WorkerFixtures>({
   page: async ({ page }, use) => {
     await use(
       Object.assign(page, {
@@ -54,25 +81,47 @@ export const test = base.extend<Fixtures>({
     );
   },
 
-  authtoken: async ({ request }, use) => {
-    const response = await request.post(`${CORA_LOGIN_URL}/apptoken`, {
-      data: `${CORA_USER}\n${CORA_APPTOKEN}`,
-      headers: {
-        'Content-Type': 'application/vnd.cora.login',
-      },
-    });
-    const { authentication } = await response.json();
-    const token = getFirstDataAtomicValueWithNameInData(
-      authentication.data,
-      'token',
-    );
+  authtoken: [
+    async ({ browser }, use) => {
+      const deploymentInfoRes = await fetch(`${CORA_API_URL}/`, {
+        headers: {
+          Accept: 'application/vnd.cora.deploymentInfo+json',
+        },
+      });
+      const deploymentInfo = (await deploymentInfoRes.json()) as DeploymentInfo;
+      const playwrightUser = deploymentInfo.exampleUsers.find(
+        (user) => user.loginId === 'playwrightTester@diva.cora.se',
+      );
 
-    await use(token);
+      if (!playwrightUser) {
+        throw new Error(`Playwright user not found in deployment info.`);
+      }
 
-    await request.delete(authentication.actionLinks.delete.url, {
-      headers: { Authtoken: token },
-    });
-  },
+      console.log(deploymentInfo);
+
+      const loginResponse = await fetch(deploymentInfo.urls.appTokenLogin, {
+        method: 'POST',
+        body: `${playwrightUser.loginId}\n${playwrightUser.appToken}`,
+        headers: {
+          'Content-Type': 'application/vnd.cora.login',
+        },
+      });
+      const { authentication } = await loginResponse.json();
+      const token = getFirstDataAtomicValueWithNameInData(
+        authentication.data,
+        'token',
+      );
+
+      await use(token);
+
+      // Clean up: delete the token
+      await fetch(authentication.actionLinks.delete.url, {
+        method: 'DELETE',
+        headers: { Authtoken: token },
+      });
+    },
+    { scope: 'worker' },
+  ],
 
   divaOutput: async ({ request, authtoken }, use) => {
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
@@ -224,7 +273,7 @@ export const test = base.extend<Fixtures>({
 
   kthDivaOutput: async ({ request, authtoken }, use) => {
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
-      data: createDivaOutput('kth'),
+      data: createDivaOutput(),
       headers: {
         Accept: 'application/vnd.cora.record+json',
         'Content-Type': 'application/vnd.cora.recordGroup+json',
