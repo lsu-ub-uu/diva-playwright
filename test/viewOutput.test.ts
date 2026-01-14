@@ -6,7 +6,7 @@ import {
   getFirstDataGroupWithNameInData,
 } from './util/coraUtils';
 
-test.skip('View output', () => {
+test.describe('View output', () => {
   test('View report', async ({ page, ultimateDivaOutput }) => {
     const recordId = getFirstDataAtomicValueWithNameInData(
       getFirstDataGroupWithNameInData(ultimateDivaOutput, 'recordInfo'),
@@ -22,7 +22,7 @@ test.skip('View output', () => {
     );
 
     const authors = page.getByDefinitionTerm(
-      'Författare, redaktör eller annan roll',
+      'nameText',
     );
 
     await expect(authors.getByText('Sara Hornborg'), {
@@ -38,7 +38,7 @@ test.skip('View output', () => {
       message: 'Author Sepideh hidden',
     }).not.toBeVisible();
 
-    await authors.getByRole('button', { name: 'Visa mer' }).click();
+    await authors.getByRole('button', { name: 'divaClient_showMoreText' }).click();
     await expect(authors.getByText('Sepideh Jafarzadeh (Konstkopist)'), {
       message: 'Author Sepideh',
     }).toBeVisible();
@@ -49,20 +49,20 @@ test.skip('View output', () => {
     await expect(
       organisations.getByText('Nordic Council of Ministers'),
     ).toBeVisible();
-    await organisations.getByRole('button', { name: 'Visa mer' }).click();
+    await organisations.getByRole('button', { name: 'divaClient_showMoreText' }).click();
     await expect(organisations.getByText('(Författare)')).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Antal upphovspersoner'), {
       message: 'Number of authors',
     }).toHaveText('12');
 
-    await expect(page.getByDefinitionTerm('Alternativ titel (Abchaziska)'), {
+    await expect(page.getByDefinitionTerm('titleInfoText (abkLangItemText)'), {
       message: 'Alternative title in Abkhazian',
     }).toHaveText(
       'Ԥхьаҟатәи аԥсыӡкра: Скандинавиатәи арегион ахшыҩзышьҭра аҭаны аԥсыӡкраҿы аенергиа аиҭаҵра иазку аҭагылазаашьа, атрендқәа, ԥхьаҟатәи аперспективақәа еилкаам',
     );
 
-    await expect(page.getByDefinitionTerm('Alternativ titel (Hebreiska)'), {
+    await expect(page.getByDefinitionTerm('titleInfoText (hebLangItemText)'), {
       message: 'Alternative title in Hebreiska',
     }).toHaveText(
       'דיג עתידי: מצב, מגמות ופרספקטיבות עתידיות בנוגע למעבר האנרגטי של דיג בדגש על מדינות סקנדינביות',
@@ -76,14 +76,14 @@ test.skip('View output', () => {
       message: 'Artistic work',
     }).toHaveText('Sant');
 
-    const languages = page.getByDefinitionTerm('Språk');
-    await expect(languages.getByText('Engelska'), {
+    const languages = page.getByDefinitionTerm('languageTermText');
+    await expect(languages.getByText('engValueText'), {
       message: 'Language',
     }).toBeVisible();
-    await expect(languages.getByText('Arabiska'), {
+    await expect(languages.getByText('araValueText'), {
       message: 'Language',
     }).toBeVisible();
-    await expect(languages.getByText('Athapaskiskt språk'), {
+    await expect(languages.getByText('athValueText'), {
       message: 'Language',
     }).toBeVisible();
 
@@ -91,22 +91,22 @@ test.skip('View output', () => {
       message: 'Content type',
     }).toHaveText('Övrigt (populärvetenskap, debatt)');
 
-    const abstractEng = page.getByDefinitionTerm('Abstract (Engelska)');
+    const abstractEng = page.getByDefinitionTerm('abstractText (engLangItemText)');
     await expect(abstractEng, { message: 'Truncated abstract' }).toHaveText(
       expectedAbstractTruncatedEng,
     );
 
-    await abstractEng.getByRole('button', { name: 'Visa mer' }).click();
+    await abstractEng.getByRole('button', { name: 'divaClient_showMoreText' }).click();
 
     await expect(abstractEng, { message: 'Full abstract' }).toHaveText(
       expectedAbstractFullEng,
     );
 
-    await expect(page.getByDefinitionTerm('Typ av resurs'), {
+    await expect(page.getByDefinitionTerm('typeOfResourceText'), {
       message: 'Type of resource',
     }).toHaveText('Artefakt');
 
-    const type = page.getByDefinitionTerm('Typ');
+    const type = page.getByDefinitionTerm('typeText');
     await expect(type.getByText('Partitur', { exact: true }), {
       message: 'Type partitur',
     }).toBeVisible();
@@ -115,7 +115,7 @@ test.skip('View output', () => {
       message: 'Type partiture',
     }).toBeVisible();
 
-    const material = page.getByDefinitionTerm('Material');
+    const material = page.getByDefinitionTerm('materialText');
     await expect(material.getByText('sten'), {
       message: 'Material',
     }).toBeVisible();
@@ -128,35 +128,35 @@ test.skip('View output', () => {
       message: 'Material',
     }).toBeVisible();
 
-    await expect(page.getByDefinitionTerm('Teknik'), {
+    await expect(page.getByDefinitionTerm('techniqueText'), {
       message: 'Technique',
     }).toHaveText('akvarell');
 
-    await expect(page.getByDefinitionTerm('Mått'), {
+    await expect(page.getByDefinitionTerm('sizeText'), {
       message: 'Size',
     }).toHaveText('130*20cm');
 
-    await expect(page.getByDefinitionTerm('Längd'), {
+    await expect(page.getByDefinitionTerm('durationText'), {
       message: 'Duration',
     }).toHaveText('10h 23m 05s');
 
-    await expect(page.getByDefinitionTerm('Fysisk beskrivning'), {
+    await expect(page.getByDefinitionTerm('extentText'), {
       message: 'Physical Description',
     }).toHaveText('239sidor');
 
-    await expect(page.getByDefinitionTerm('Sammanhang (Svenska)'), {
+    await expect(page.getByDefinitionTerm('noteText (sweLangItemText)'), {
       message: 'Context swedish',
     }).toHaveText('Lorem ipsum');
-    await expect(page.getByDefinitionTerm('Sammanhang (Isländska)'), {
+    await expect(page.getByDefinitionTerm('noteText (iceLangItemText)'), {
       message: 'Context icelandic',
     }).toHaveText('Loremur ipsumur');
-    await expect(page.getByDefinitionTerm('Land'), {
+    await expect(page.getByDefinitionTerm('patentCountryText'), {
       message: 'Patent country',
     }).toHaveText('Sverige');
-    await expect(page.getByDefinitionTerm('Konferens'), {
+    await expect(page.getByDefinitionTerm('relatedItemText'), {
       message: 'Conference',
     }).toHaveText('Nordic.js 2025');
-    await expect(page.getByDefinitionTerm('Publikationskanal'), {
+    await expect(page.getByDefinitionTerm('relatedItemText'), {
       message: 'Publication channel',
     }).toHaveText('Radio');
     await expect(page.getByText('Strategiskt initiativ')).toBeVisible();
@@ -408,7 +408,7 @@ test.skip('View output', () => {
       message: 'Patent holder name',
     }).toBeVisible();
 
-    await patentHolder.getByRole('button', { name: 'Visa mer' }).click();
+    await patentHolder.getByRole('button', { name: 'divaClient_showMoreText' }).click();
     await expect(patentHolder.getByText('048a87296'), {
       message: 'Patent holder identifier',
     }).toBeVisible();

@@ -82,11 +82,6 @@ test.describe('Update output', () => {
       getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
       'id',
     );
-    const recordTitle = getFirstDataAtomicValueWithNameInData(
-      getFirstDataGroupWithNameInData(divaOutput, 'titleInfo'),
-      'title',
-    );
-
     await page.goto(createUrl(`/diva-output/${recordId}/update`));
 
     // Log in

@@ -109,8 +109,6 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
         throw new Error(`Playwright user not found in deployment info.`);
       }
 
-      console.log(deploymentInfo);
-
       const loginResponse = await fetch(deploymentInfo.urls.appTokenLogin, {
         method: 'POST',
         body: `${playwrightUser.loginId}\n${playwrightUser.appToken}`,
@@ -160,7 +158,7 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
 
   ultimateDivaOutput: async ({ request, authtoken }, use) => {
     // Set up
-    const { id: publisherId, delete: deletePublisher } =
+    /* const { id: publisherId, delete: deletePublisher } =
       await createRecordFromXML(
         request,
         '../testData/publisher.xml',
@@ -234,14 +232,14 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       '../testData/funder.xml',
       'diva-funder',
       authtoken,
-    );
+    ); */
 
     const xml = fs.readFileSync(
       path.join(__dirname, '../testData/ultimateDivaOutput.xml'),
       'utf-8',
     );
 
-    const updatedXML = xml
+    /* const updatedXML = xml
       .replaceAll('{{LINKED_PUBLISHER_ID}}', publisherId)
       .replaceAll('{{LINKED_SUBJECT_ID}}', subjectId)
       .replaceAll('{{LINKED_COURSE_ID}}', courseId)
@@ -251,16 +249,20 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       .replaceAll('{{LINKED_BOOK_ID}}', bookId)
       .replaceAll('{{LINKED_SERIES_ID}}', seriesId)
       .replaceAll('{{LINKED_PROJECT_ID}}', projectId)
-      .replaceAll('{{LINKED_FUNDER_ID}}', funderId);
-
+      .replaceAll('{{LINKED_FUNDER_ID}}', funderId); */
+    console.log('auth', authtoken)
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
-      data: updatedXML,
+      data: xml,
       headers: {
         Accept: 'application/vnd.cora.record+json',
-        'Content-Type': 'application/vnd.cora.recordGroup+xml',
-        Authtoken: authtoken,
+        'Content-Type': 'application/vnd.cora.recordgroup+xml',
+        Authtoken: '3d1097b5-de35-4eb9-8bbc-69750b0419c2',
       },
     });
+
+    if (!response.ok()) {
+      throw new Error(`Failed to create diva output: ${await response.text()}`);
+    }
 
     const responseBody = await response.json();
 
@@ -271,16 +273,16 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
     await request.delete(responseBody.record.actionLinks.delete.url, {
       headers: { Authtoken: authtoken },
     });
-    await deletePublisher();
-    await deleteSubject();
-    await deleteCourse();
-    await deleteProgramme();
-    await deleteLocalGenericMarkup();
-    await deleteJournal();
-    await deleteBook();
-    await deleteSeries();
-    await deleteProject();
-    await deleteFunder();
+    /*  await deletePublisher();
+     await deleteSubject();
+     await deleteCourse();
+     await deleteProgramme();
+     await deleteLocalGenericMarkup();
+     await deleteJournal();
+     await deleteBook();
+     await deleteSeries();
+     await deleteProject();
+     await deleteFunder(); */
   },
 
   kthDivaOutput: async ({ request, authtoken }, use) => {
@@ -388,7 +390,7 @@ async function createRecordFromXML(
     data: xml,
     headers: {
       Accept: 'application/vnd.cora.record+json',
-      'Content-Type': 'application/vnd.cora.recordGroup+xml',
+      'Content-Type': 'application/vnd.cora.recordgroup+xml',
       Authtoken: authtoken,
     },
   });
