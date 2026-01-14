@@ -26,7 +26,7 @@ test.describe('Error', () => {
     expect(response?.status()).toBe(404);
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      '404 - Hittades inte',
+      'divaClient_error404TitleText',
     );
   });
 
@@ -37,7 +37,7 @@ test.describe('Error', () => {
     expect(response?.status()).toBe(401);
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      '401 - Obehörig',
+      'divaClient_error401TitleText',
     );
   });
 
@@ -47,7 +47,7 @@ test.describe('Error', () => {
     expect(response?.status()).toBe(404);
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      '404 - Hittades inte',
+      'divaClient_error404TitleText',
     );
   });
 
@@ -58,7 +58,7 @@ test.describe('Error', () => {
     expect(response?.status()).toBe(404);
 
     expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      '404 - Hittades inte',
+      'divaClient_error404TitleText',
     );
   });
 });

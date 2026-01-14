@@ -6,7 +6,9 @@ export const logIn = async (
   expectedUserText = 'DiVA Admin',
 ) => {
   // Log in
-  await page.getByRole('button', { name: 'Logga in' }).click();
+  await page
+    .getByRole('button', { name: 'divaClient_LoginButtonText' })
+    .click();
   await page.getByRole('menuitem', { name: userName }).click();
   await expect(
     page.getByRole('button', { name: expectedUserText }),

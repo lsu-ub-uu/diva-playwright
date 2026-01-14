@@ -72,7 +72,19 @@ export const getByDefinitionTerm = (parent: Page | Locator, dtText: string) => {
 };
 
 export const test = base.extend<Fixtures, WorkerFixtures>({
-  page: async ({ page }, use) => {
+  page: async ({ page, context }, use) => {
+    const domain = new URL(TARGET_URL!).hostname;
+    await context.addCookies([
+      {
+        name: 'language',
+        value: base64Encode('"cimode"'),
+        domain,
+        path: '/',
+        httpOnly: false,
+        secure: false,
+        sameSite: 'Lax',
+      },
+    ]);
     await use(
       Object.assign(page, {
         getByDefinitionTerm: (dtText: string) =>
@@ -296,6 +308,19 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
     });
     const page = await context.newPage();
 
+    // Set the language cookie before running the test
+    await context.addCookies([
+      {
+        name: 'language',
+        value: 'ImNpbW9kZSI=',
+        domain: new URL(context.options.baseURL!).hostname,
+        path: '/',
+        httpOnly: false,
+        secure: false,
+        sameSite: 'Lax',
+      },
+    ]);
+
     await use(page);
 
     // Clean up
@@ -387,3 +412,7 @@ async function createRecordFromXML(
       }),
   };
 }
+
+const base64Encode = (str: string) => {
+  return Buffer.from(str).toString('base64');
+};
