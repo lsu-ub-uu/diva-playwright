@@ -21,9 +21,7 @@ test.describe('View output', () => {
       'Future fisheries: Status, trends and future perspectives concerning the energy transition of fisheries with focus on Nordic countries',
     );
 
-    const authors = page.getByDefinitionTerm(
-      'nameText',
-    );
+    const authors = page.getByDefinitionTerm('nameText');
 
     await expect(authors.getByText('Sara Hornborg'), {
       message: 'Author Sara',
@@ -38,7 +36,9 @@ test.describe('View output', () => {
       message: 'Author Sepideh hidden',
     }).not.toBeVisible();
 
-    await authors.getByRole('button', { name: 'divaClient_showMoreText' }).click();
+    await authors
+      .getByRole('button', { name: 'divaClient_showMoreText' })
+      .click();
     await expect(authors.getByText('Sepideh Jafarzadeh (Konstkopist)'), {
       message: 'Author Sepideh',
     }).toBeVisible();
@@ -49,7 +49,9 @@ test.describe('View output', () => {
     await expect(
       organisations.getByText('Nordic Council of Ministers'),
     ).toBeVisible();
-    await organisations.getByRole('button', { name: 'divaClient_showMoreText' }).click();
+    await organisations
+      .getByRole('button', { name: 'divaClient_showMoreText' })
+      .click();
     await expect(organisations.getByText('(Författare)')).toBeVisible();
 
     await expect(page.getByDefinitionTerm('Antal upphovspersoner'), {
@@ -91,12 +93,16 @@ test.describe('View output', () => {
       message: 'Content type',
     }).toHaveText('Övrigt (populärvetenskap, debatt)');
 
-    const abstractEng = page.getByDefinitionTerm('abstractText (engLangItemText)');
+    const abstractEng = page.getByDefinitionTerm(
+      'abstractText (engLangItemText)',
+    );
     await expect(abstractEng, { message: 'Truncated abstract' }).toHaveText(
       expectedAbstractTruncatedEng,
     );
 
-    await abstractEng.getByRole('button', { name: 'divaClient_showMoreText' }).click();
+    await abstractEng
+      .getByRole('button', { name: 'divaClient_showMoreText' })
+      .click();
 
     await expect(abstractEng, { message: 'Full abstract' }).toHaveText(
       expectedAbstractFullEng,
@@ -408,7 +414,9 @@ test.describe('View output', () => {
       message: 'Patent holder name',
     }).toBeVisible();
 
-    await patentHolder.getByRole('button', { name: 'divaClient_showMoreText' }).click();
+    await patentHolder
+      .getByRole('button', { name: 'divaClient_showMoreText' })
+      .click();
     await expect(patentHolder.getByText('048a87296'), {
       message: 'Patent holder identifier',
     }).toBeVisible();
@@ -437,17 +445,22 @@ test.describe('View output', () => {
     ).toHaveAttribute('href', 'https://google.com');
 
     // Identifiers
-    const identifiers = page.getByRole('region', { name: 'Identifierare' });
+    const identifiers = page.getByRole('region', {
+      name: 'divaClient_identifierText',
+    });
     await expect(
-      identifiers.getByRole('heading', { level: 2, name: 'Identifierare' }),
+      identifiers.getByRole('heading', {
+        level: 2,
+        name: 'divaClient_identifierText',
+      }),
     ).toBeVisible();
-    await expect(getByDefinitionTerm(identifiers, 'DiVA-id'), {
+    await expect(getByDefinitionTerm(identifiers, 'divaClient_divaIdText'), {
       message: 'DiVA-id',
     }).toHaveText(recordId);
-    await expect(getByDefinitionTerm(identifiers, 'ISBN (print)'), {
+    await expect(getByDefinitionTerm(identifiers, 'identifierText (print)'), {
       message: 'ISBN print',
     }).toHaveText('978-92-893-8293-9');
-    await expect(getByDefinitionTerm(identifiers, 'ISBN (online)'), {
+    await expect(getByDefinitionTerm(identifiers, 'identifierText (online)'), {
       message: 'ISBN online',
     }).toHaveText('978-92-893-8293-2');
     await expect(getByDefinitionTerm(identifiers, 'ISRN'), {

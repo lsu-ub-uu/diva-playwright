@@ -250,13 +250,14 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       .replaceAll('{{LINKED_SERIES_ID}}', seriesId)
       .replaceAll('{{LINKED_PROJECT_ID}}', projectId)
       .replaceAll('{{LINKED_FUNDER_ID}}', funderId); */
-    console.log('auth', authtoken)
+
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
       data: xml,
       headers: {
         Accept: 'application/vnd.cora.record+json',
         'Content-Type': 'application/vnd.cora.recordgroup+xml',
-        Authtoken: '3d1097b5-de35-4eb9-8bbc-69750b0419c2',
+        Authtoken: '8d849522-e3d0-4796-8536-85469b4f88e1',
+        /* Authtoken: authtoken, */
       },
     });
 
