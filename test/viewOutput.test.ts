@@ -15,13 +15,15 @@ test.describe('View output', () => {
 
     await page.goto(createUrl(`/diva-output/${recordId}`));
 
+    // Title
     await expect(page.getByRole('heading', { level: 1 }), {
       message: 'Title',
     }).toHaveText(
       'Future fisheries: Status, trends and future perspectives concerning the energy transition of fisheries with focus on Nordic countries',
     );
 
-    const authors = page.getByDefinitionTerm('nameText');
+    // Authors
+    const authors = page.getByDefinitionTerm('name_type_personalText');
 
     await expect(authors.getByText('Sara Hornborg'), {
       message: 'Author Sara',
@@ -36,49 +38,69 @@ test.describe('View output', () => {
       message: 'Author Sepideh hidden',
     }).not.toBeVisible();
 
+    // Show more authors
     await authors
       .getByRole('button', { name: 'divaClient_showMoreText' })
       .click();
-    await expect(authors.getByText('Sepideh Jafarzadeh (Konstkopist)'), {
+    await expect(authors.getByText('Sepideh Jafarzadeh (acpValueText)'), {
       message: 'Author Sepideh',
     }).toBeVisible();
 
-    const organisations = page.getByDefinitionTerm(
-      'Organisation som författare, redaktör eller annan roll',
-    );
+    // Organisation as author
+    const organisations = page.getByDefinitionTerm('name_type_corporateText');
     await expect(
       organisations.getByText('Nordic Council of Ministers'),
     ).toBeVisible();
+
+    // Show more organisation info
     await organisations
       .getByRole('button', { name: 'divaClient_showMoreText' })
       .click();
-    await expect(organisations.getByText('(Författare)')).toBeVisible();
+    await expect(organisations.getByText('(autValueText)')).toBeVisible();
 
-    await expect(page.getByDefinitionTerm('Antal upphovspersoner'), {
+    // Creator count
+    await expect(page.getByDefinitionTerm('note_type_creatorCountText'), {
       message: 'Number of authors',
     }).toHaveText('12');
 
-    await expect(page.getByDefinitionTerm('titleInfoText (abkLangItemText)'), {
-      message: 'Alternative title in Abkhazian',
-    }).toHaveText(
+    // Alternative title 1
+    await expect(
+      page.getByDefinitionTerm(
+        'titleInfo_lang_abk_type_alternativeText (abkLangItemText)',
+      ),
+      {
+        message: 'Alternative title in Abkhazian',
+      },
+    ).toHaveText(
       'Ԥхьаҟатәи аԥсыӡкра: Скандинавиатәи арегион ахшыҩзышьҭра аҭаны аԥсыӡкраҿы аенергиа аиҭаҵра иазку аҭагылазаашьа, атрендқәа, ԥхьаҟатәи аперспективақәа еилкаам',
     );
 
-    await expect(page.getByDefinitionTerm('titleInfoText (hebLangItemText)'), {
-      message: 'Alternative title in Hebreiska',
-    }).toHaveText(
+    // Alternative title 2
+    await expect(
+      page.getByDefinitionTerm(
+        'titleInfo_lang_heb_type_alternativeText (hebLangItemText)',
+      ),
+      {
+        message: 'Alternative title in Hebreiska',
+      },
+    ).toHaveText(
       'דיג עתידי: מצב, מגמות ופרספקטיבות עתידיות בנוגע למעבר האנרגטי של דיג בדגש על מדינות סקנדינביות',
     );
 
-    await expect(page.getByDefinitionTerm('Publikationstyp'), {
+    // Output type
+    await expect(page.getByDefinitionTerm('genre_type_outputTypeText'), {
       message: 'Output type',
-    }).toHaveText('Rapport');
+    }).toHaveText('publication_reportValueText');
 
-    await expect(page.getByDefinitionTerm('Baserat på konstnärlig grund'), {
-      message: 'Artistic work',
-    }).toHaveText('Sant');
+    // Subcategory
+    await expect(page.getByDefinitionTerm('genre_type_subcategoryText'), {
+      message: 'Subcategory',
+    }).toHaveText('policyDocumentValueText');
 
-    const languages = page.getByDefinitionTerm('languageTermText');
+    // Languages
+    const languages = page.getByDefinitionTerm(
+      'languageTerm_authority_iso639-2b_type_codeText',
+    );
     await expect(languages.getByText('engValueText'), {
       message: 'Language',
     }).toBeVisible();
@@ -89,9 +111,25 @@ test.describe('View output', () => {
       message: 'Language',
     }).toBeVisible();
 
-    await expect(page.getByDefinitionTerm('Typ av innehåll'), {
+    // Artistic work
+    await expect(page.getByDefinitionTerm('artisticWork_type_outputTypeText'), {
+      message: 'Artistic work',
+    }).toHaveText('trueValueText');
+
+    // Content type
+    await expect(page.getByDefinitionTerm('genre_type_contentTypeText'), {
       message: 'Content type',
-    }).toHaveText('Övrigt (populärvetenskap, debatt)');
+    }).toHaveText('popValueText');
+
+    // Extent (number of pages)
+    await expect(page.getByDefinitionTerm('extent_unit_pagesText'), {
+      message: 'Extent (number of pages)',
+    }).toHaveText('239sidor');
+
+    // Type of resource
+    await expect(page.getByDefinitionTerm('typeOfResourceText'), {
+      message: 'Type of resource',
+    }).toHaveText('artifactValueText');
 
     const abstractEng = page.getByDefinitionTerm(
       'abstractText (engLangItemText)',
@@ -107,10 +145,6 @@ test.describe('View output', () => {
     await expect(abstractEng, { message: 'Full abstract' }).toHaveText(
       expectedAbstractFullEng,
     );
-
-    await expect(page.getByDefinitionTerm('typeOfResourceText'), {
-      message: 'Type of resource',
-    }).toHaveText('Artefakt');
 
     const type = page.getByDefinitionTerm('typeText');
     await expect(type.getByText('Partitur', { exact: true }), {
@@ -145,10 +179,6 @@ test.describe('View output', () => {
     await expect(page.getByDefinitionTerm('durationText'), {
       message: 'Duration',
     }).toHaveText('10h 23m 05s');
-
-    await expect(page.getByDefinitionTerm('extentText'), {
-      message: 'Physical Description',
-    }).toHaveText('239sidor');
 
     await expect(page.getByDefinitionTerm('noteText (sweLangItemText)'), {
       message: 'Context swedish',
