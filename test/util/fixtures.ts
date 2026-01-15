@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import {
   APIRequestContext,
   test as base,
@@ -7,11 +8,8 @@ import {
 import fs from 'fs';
 import path from 'path';
 import { createDivaOutput } from '../testData/divaOutput';
-import { createLocalGenericMarkup } from '../testData/localGenericMarkup';
-import { addSubdomain } from './addSubdomain';
 import type { DataGroup } from './coraTypes';
 import { getFirstDataAtomicValueWithNameInData } from './coraUtils';
-import { faker } from '@faker-js/faker';
 
 interface CoraData {
   name: string;
@@ -57,11 +55,7 @@ interface WorkerFixtures {
 
 interface Fixtures {
   page: CustomPage;
-  kthPage: Page;
   divaOutput: DataGroup;
-  kthDivaOutput: DataGroup;
-  uuLocalGenericMarkup: DataGroup;
-  kthLocalGenericMarkup: DataGroup;
   ultimateDivaOutput: DataGroup;
 }
 
@@ -158,7 +152,7 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
 
   ultimateDivaOutput: async ({ request, authtoken }, use) => {
     // Set up
-    /* const { id: publisherId, delete: deletePublisher } =
+    const { id: publisherId, delete: deletePublisher } =
       await createRecordFromXML(
         request,
         '../testData/publisher.xml',
@@ -188,11 +182,11 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
         authtoken,
       );
 
-    const { id: localGenericMarkupId, delete: deleteLocalGenericMarkup } =
+    const { id: localLabelId, delete: deleteLocalLabel } =
       await createRecordFromXML(
         request,
-        '../testData/localGenericMarkup.xml',
-        'diva-localGenericMarkup',
+        '../testData/localLabel.xml',
+        'diva-localLabel',
         authtoken,
       );
 
@@ -232,32 +226,31 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       '../testData/funder.xml',
       'diva-funder',
       authtoken,
-    ); */
+    );
 
     const xml = fs.readFileSync(
       path.join(__dirname, '../testData/ultimateDivaOutput.xml'),
       'utf-8',
     );
 
-    /* const updatedXML = xml
+    const updatedXML = xml
       .replaceAll('{{LINKED_PUBLISHER_ID}}', publisherId)
       .replaceAll('{{LINKED_SUBJECT_ID}}', subjectId)
       .replaceAll('{{LINKED_COURSE_ID}}', courseId)
       .replaceAll('{{LINKED_PROGRAMME_ID}}', programmeId)
-      .replaceAll('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId)
+      .replaceAll('{{LINKED_LOCAL_LABEL_ID}}', localLabelId)
       .replaceAll('{{LINKED_JOURNAL_ID}}', journalId)
       .replaceAll('{{LINKED_BOOK_ID}}', bookId)
       .replaceAll('{{LINKED_SERIES_ID}}', seriesId)
       .replaceAll('{{LINKED_PROJECT_ID}}', projectId)
-      .replaceAll('{{LINKED_FUNDER_ID}}', funderId); */
+      .replaceAll('{{LINKED_FUNDER_ID}}', funderId);
 
     const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
-      data: xml,
+      data: updatedXML,
       headers: {
         Accept: 'application/vnd.cora.record+json',
         'Content-Type': 'application/vnd.cora.recordgroup+xml',
-        Authtoken: '8d849522-e3d0-4796-8536-85469b4f88e1',
-        /* Authtoken: authtoken, */
+        Authtoken: authtoken
       },
     });
 
@@ -274,106 +267,19 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
     await request.delete(responseBody.record.actionLinks.delete.url, {
       headers: { Authtoken: authtoken },
     });
-    /*  await deletePublisher();
+     await deletePublisher();
      await deleteSubject();
      await deleteCourse();
      await deleteProgramme();
-     await deleteLocalGenericMarkup();
+     await deleteLocalLabel();
      await deleteJournal();
      await deleteBook();
      await deleteSeries();
      await deleteProject();
-     await deleteFunder(); */
+     await deleteFunder();
   },
 
-  kthDivaOutput: async ({ request, authtoken }, use) => {
-    const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
-      data: createDivaOutput(),
-      headers: {
-        Accept: 'application/vnd.cora.record+json',
-        'Content-Type': 'application/vnd.cora.recordGroup+json',
-        Authtoken: authtoken,
-      },
-    });
-    const responseBody = await response.json();
 
-    await use(responseBody.record.data);
-
-    await request.delete(responseBody.record.actionLinks.delete.url, {
-      headers: { Authtoken: authtoken },
-    });
-  },
-
-  kthPage: async ({ browser }, use) => {
-    // Set up
-    const context = await browser.newContext({
-      baseURL: addSubdomain(TARGET_URL!, 'kth'),
-    });
-    const page = await context.newPage();
-
-    // Set the language cookie before running the test
-    await context.addCookies([
-      {
-        name: 'language',
-        value: 'ImNpbW9kZSI=',
-        domain: new URL(context.options.baseURL!).hostname,
-        path: '/',
-        httpOnly: false,
-        secure: false,
-        sameSite: 'Lax',
-      },
-    ]);
-
-    await use(page);
-
-    // Clean up
-    await page.close();
-    await context.close();
-  },
-
-  uuLocalGenericMarkup: async ({ request, authtoken }, use) => {
-    const response = await request.post(
-      `${CORA_API_URL}/record/diva-localGenericMarkup`,
-      {
-        data: createLocalGenericMarkup('uu'),
-        headers: {
-          Accept: 'application/vnd.cora.record+json',
-          'Content-Type': 'application/vnd.cora.recordGroup+json',
-          Authtoken: authtoken,
-        },
-      },
-    );
-
-    const responseBody = await response.json();
-
-    await use(responseBody.record.data);
-
-    await request.delete(responseBody.record.actionLinks.delete.url, {
-      headers: { Authtoken: authtoken },
-    });
-  },
-
-  kthLocalGenericMarkup: async ({ request, authtoken }, use) => {
-    const response = await request.post(
-      `${CORA_API_URL}/record/diva-localGenericMarkup`,
-      {
-        data: createLocalGenericMarkup('kth'),
-        headers: {
-          Accept: 'application/vnd.cora.record+json',
-          'Content-Type': 'application/vnd.cora.recordGroup+json',
-          Authtoken: authtoken,
-        },
-      },
-    );
-
-    const responseBody = await response.json();
-
-    await use(responseBody.record.data);
-
-    await request.delete(responseBody.record.actionLinks.delete.url, {
-      headers: { Authtoken: authtoken },
-    });
-  },
 });
 
 async function createRecordFromXML(

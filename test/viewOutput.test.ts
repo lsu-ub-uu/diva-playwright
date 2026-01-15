@@ -548,7 +548,7 @@ test.describe('View output', () => {
         .getByRole('list', { name: 'DiVA-lokal generisk uppmärkning' })
         .getByText('Extra viktig publikation'),
       {
-        message: 'Local generic markup',
+        message: 'Local label',
       },
     ).toBeVisible();
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<localGenericMarkup>
+<localLabel>
     <recordInfo>
         <validationType>
             <linkedRecordType>validationType</linkedRecordType>
-            <linkedRecordId>diva-localGenericMarkup</linkedRecordId>
+            <linkedRecordId>diva-localLabel</linkedRecordId>
         </validationType>
         <dataDivider>
             <linkedRecordType>system</linkedRecordType>
@@ -11,9 +11,9 @@
         </dataDivider>
         <permissionUnit>
             <linkedRecordType>permissionUnit</linkedRecordType>
-            <linkedRecordId>norden</linkedRecordId>
+            <linkedRecordId>diva</linkedRecordId>
         </permissionUnit>
     </recordInfo>
-    <localGenericMarkup>Extra viktig publikation</localGenericMarkup>
+    <localLabel>Extra viktig publikation</localLabel>
     <description>Denna publikation är extra viktig eftersom...</description>
-</localGenericMarkup>
+</localLabel>

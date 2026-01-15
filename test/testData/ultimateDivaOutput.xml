@@ -11,10 +11,11 @@
         </dataDivider>
         <permissionUnit>
             <linkedRecordType>permissionUnit</linkedRecordType>
-            <linkedRecordId>norden</linkedRecordId>
+            <linkedRecordId>diva</linkedRecordId>
         </permissionUnit>
         <visibility>published</visibility>
     </recordInfo>
+    <dataQuality>2026</dataQuality>
     <genre type="outputType">publication_report</genre>
     <language repeatId="0">
         <languageTerm authority="iso639-2b" type="code">eng</languageTerm>
@@ -24,7 +25,7 @@
     </language>
     <language repeatId="20">
         <languageTerm authority="iso639-2b" type="code">ath</languageTerm>
-    </language>
+    </language> 
     <artisticWork type="outputType">true</artisticWork>
     <titleInfo lang="eng">
         <title>Future fisheries</title>
@@ -38,7 +39,6 @@
         <title>דיג עתידי</title>
         <subtitle>מצב, מגמות ופרספקטיבות עתידיות בנוגע למעבר האנרגטי של דיג בדגש על מדינות סקנדינביות</subtitle>
     </titleInfo>
-    <dataQuality>2026</dataQuality>
 	<abstract lang="eng" repeatId="0">The energy transition of the fishing sector has gained
 increasing attention in recent years. With focus on Nordic countries, status,
 trends, opportunities and challenges are summarized to provide recommendations for
@@ -152,6 +152,27 @@ sector will be essential.
             <month>01</month>
             <day>02</day>
         </dateOther>
+        <agent repeatId="0">
+			<publisher>
+				<linkedRecordType>diva-publisher</linkedRecordType>
+				<linkedRecordId>{{LINKED_PUBLISHER_ID}}</linkedRecordId>
+			</publisher>
+			<role>
+				<roleTerm>pbl</roleTerm>
+			</role>
+		</agent>
+          <agent repeatId="1">
+			<namePart>Penguin</namePart>
+			<role>
+				<roleTerm>pbl</roleTerm>
+			</role>
+		</agent>
+          <agent repeatId="2">
+			<namePart>Bloomsbury</namePart>
+			<role>
+				<roleTerm>pbl</roleTerm>
+			</role>
+		</agent>
         <place repeatId="0">
             <placeTerm>Uppsala</placeTerm>
         </place>
@@ -179,12 +200,19 @@ sector will be essential.
     <subject lang="alb" repeatId="9">
         <topic>Digitization, Integration, Welfare and Gender Equality</topic>
     </subject>
+    <subject authority="diva">
+		<topic repeatId="0">
+			<linkedRecordType>diva-subject</linkedRecordType>
+			<linkedRecordId>{{LINKED_SUBJECT_ID}}</linkedRecordId>
+		</topic>
+	</subject>
     <note type="external">External note</note>
     <dateOther type="patent">
         <year>2012</year>
         <month>10</month>
         <day>23</day>
     </dateOther>
+    
     <name type="corporate" otherType="patentHolder">
         <namePart>Uppsala universitet</namePart>
         <role>
@@ -209,6 +237,18 @@ sector will be essential.
         <year>1234</year>
         <academicSemester>vt</academicSemester>
     </academicSemester>
+    <studentDegree repeatId="0">
+		<degreeLevel>M1</degreeLevel>
+		<universityPoints>7,5</universityPoints>
+		<programme>
+			<linkedRecordType>diva-programme</linkedRecordType>
+			<linkedRecordId>{{LINKED_PROGRAMME_ID}}</linkedRecordId>
+		</programme>
+		<course>
+			<linkedRecordType>diva-course</linkedRecordType>
+			<linkedRecordId>{{LINKED_COURSE_ID}}</linkedRecordId>
+		</course>
+	</studentDegree>
     <name type="personal" repeatId="1" otherType="thesisAdvisor">
         <namePart type="given">Supervisorförnamn</namePart>
         <namePart type="family">Efternamn</namePart>
@@ -262,6 +302,87 @@ sector will be essential.
         <reviewed>true</reviewed>
         <note type="internal">Leo och Egil was here</note>
     </adminInfo>
+    <localLabel repeatId="0">
+		<linkedRecordType>diva-localLabel</linkedRecordType>
+		<linkedRecordId>{{LINKED_LOCAL_LABEL_ID}}</linkedRecordId>
+	</localLabel>
+    <relatedItem type="journal" otherType="link">
+		<journal>
+			<linkedRecordType>diva-journal</linkedRecordType>
+			<linkedRecordId>{{LINKED_JOURNAL_ID}}</linkedRecordId>
+		</journal>
+		<part>
+			<detail type="volume">
+				<number>586</number>
+			</detail>
+			<detail type="issue">
+				<number>1</number>
+			</detail>
+			<detail type="artNo">
+				<number>1234</number>
+			</detail>
+			<extent>
+				<start>12</start>
+				<end>34</end>
+			</extent>
+		</part>
+	</relatedItem>
+	<relatedItem type="book" otherType="link">
+		<book>
+			<linkedRecordType>diva-output</linkedRecordType>
+			<linkedRecordId>{{LINKED_BOOK_ID}}</linkedRecordId>
+		</book>
+		
+	</relatedItem>
+    <relatedItem type="book" otherType="text">
+        <titleInfo>
+			<title>BookTitle</title>
+			<subtitle>BookSubtitle</subtitle>
+		</titleInfo>
+		<note type="statementOfResponsibility">Edited by Sara Hornborg and Karl Gunnar Aarsæther</note>
+		<identifier type="isbn" displayLabel="print" repeatId="0">978-92-893-8293-9</identifier>
+		<part>
+			<extent>
+				<start>45</start>
+				<end>67</end>
+			</extent>
+		</part>
+		<relatedItem type="series" otherType="link" repeatId="0">
+			<series>
+				<linkedRecordType>diva-series</linkedRecordType>
+				<linkedRecordId>{{LINKED_SERIES_ID}}</linkedRecordId>
+			</series>
+			<partNumber>14</partNumber>
+		</relatedItem>
+    </relatedItem>
+	<relatedItem type="proceeding" otherType="link">
+		<proceeding>
+			<linkedRecordType>diva-output</linkedRecordType>
+			<linkedRecordId>{{LINKED_BOOK_ID}}</linkedRecordId>
+		</proceeding>
+	</relatedItem>
+    <relatedItem type="proceeding" otherType="text">
+		<titleInfo>
+			<title>ConferenceBookTitle</title>
+			<subtitle>ConferenceBookSubtitle</subtitle>
+		</titleInfo>
+		<note type="statementOfResponsibility">Edited by Sara Hornborg and Karl Gunnar</note>
+		<identifier type="isbn" displayLabel="print" repeatId="0">978-92-893-8293-9</identifier>
+		<identifier type="doi">10.1234/conference.doi/5678</identifier>
+		<part>
+			<extent>
+				<start>89</start>
+				<end>101</end>
+			</extent>
+		</part>
+		<relatedItem type="series" otherType="link" repeatId="0">
+			<series>
+				<linkedRecordType>diva-series</linkedRecordType>
+				<linkedRecordId>{{LINKED_SERIES_ID}}</linkedRecordId>
+			</series>
+			<partNumber>7</partNumber>
+		</relatedItem>
+	</relatedItem>
     <relatedItem type="conference">
         <conference>Nordic.js 2025</conference>
     </relatedItem>
