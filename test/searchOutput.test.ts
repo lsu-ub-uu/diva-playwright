@@ -12,16 +12,22 @@ test.describe('Search output', () => {
       getFirstDataGroupWithNameInData(divaOutput, 'titleInfo'),
       'title',
     );
-    
+
     await goToPage(page, '/diva-output');
 
-    await page.getByRole('textbox', { name: 'Fritext' }).fill(recordTitle);
+    await page
+      .getByRole('textbox', { name: 'genericSearchTextVarText' })
+      .fill(recordTitle);
 
     await expect(
-      await page.getByRole('textbox', { name: 'Fritext' }),
+      await page.getByRole('textbox', { name: 'genericSearchTextVarText' }),
     ).toHaveValue(recordTitle);
-    await page.getByRole('button', { name: 'Sök', exact: true }).click();
+    await page
+      .getByRole('button', { name: 'divaClient_SearchButtonText', exact: true })
+      .click();
 
-    await expect(await page.getByText(recordTitle, {exact: true})).toBeVisible();
+    await expect(
+      await page.getByText(recordTitle, { exact: true }),
+    ).toBeVisible();
   });
 });

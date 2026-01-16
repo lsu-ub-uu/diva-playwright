@@ -1,7 +1,7 @@
 import type { DataGroup } from '../util/coraTypes';
 
-export const createLocalGenericMarkup = (permissionUnit = 'uu'): DataGroup => ({
-  name: 'localGenericMarkup',
+export const createLocalLabel = (permissionUnit = 'uu'): DataGroup => ({
+  name: 'localLabel',
   children: [
     {
       name: 'recordInfo',
@@ -10,7 +10,7 @@ export const createLocalGenericMarkup = (permissionUnit = 'uu'): DataGroup => ({
           name: 'validationType',
           children: [
             { name: 'linkedRecordType', value: 'validationType' },
-            { name: 'linkedRecordId', value: 'diva-localGenericMarkup' },
+            { name: 'linkedRecordId', value: 'diva-localLabel' },
           ],
         },
         {
@@ -29,7 +29,7 @@ export const createLocalGenericMarkup = (permissionUnit = 'uu'): DataGroup => ({
         },
       ],
     },
-    { name: 'localGenericMarkup', value: 'Lorem ipsum' },
+    { name: 'localLabel', value: 'Lorem ipsum' },
     { name: 'description', value: 'Lorem ipsum dolor sit amet' },
   ],
 });

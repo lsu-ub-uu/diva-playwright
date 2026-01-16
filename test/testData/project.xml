@@ -17,6 +17,7 @@
     <name type="personal" repeatId="0"> 
         <namePart type="given">Leo</namePart>
         <namePart type="family">Wessman</namePart>
+        <role><roleTerm repeatId="0">principalInvestigator</roleTerm></role>
     </name>
     <identifier type="project">123456789</identifier>
     <typeOfAward>euGrant</typeOfAward>

@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import {
   APIRequestContext,
   test as base,
@@ -7,11 +8,8 @@ import {
 import fs from 'fs';
 import path from 'path';
 import { createDivaOutput } from '../testData/divaOutput';
-import { createLocalGenericMarkup } from '../testData/localGenericMarkup';
-import { addSubdomain } from './addSubdomain';
 import type { DataGroup } from './coraTypes';
 import { getFirstDataAtomicValueWithNameInData } from './coraUtils';
-import { faker } from '@faker-js/faker';
 
 interface CoraData {
   name: string;
@@ -57,11 +55,7 @@ interface WorkerFixtures {
 
 interface Fixtures {
   page: CustomPage;
-  kthPage: Page;
   divaOutput: DataGroup;
-  kthDivaOutput: DataGroup;
-  uuLocalGenericMarkup: DataGroup;
-  kthLocalGenericMarkup: DataGroup;
   ultimateDivaOutput: DataGroup;
 }
 
@@ -72,7 +66,19 @@ export const getByDefinitionTerm = (parent: Page | Locator, dtText: string) => {
 };
 
 export const test = base.extend<Fixtures, WorkerFixtures>({
-  page: async ({ page }, use) => {
+  page: async ({ page, context }, use) => {
+    const domain = new URL(TARGET_URL!).hostname;
+    await context.addCookies([
+      {
+        name: 'language',
+        value: base64Encode('"cimode"'),
+        domain,
+        path: '/',
+        httpOnly: false,
+        secure: false,
+        sameSite: 'Lax',
+      },
+    ]);
     await use(
       Object.assign(page, {
         getByDefinitionTerm: (dtText: string) =>
@@ -96,8 +102,6 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       if (!playwrightUser) {
         throw new Error(`Playwright user not found in deployment info.`);
       }
-
-      console.log(deploymentInfo);
 
       const loginResponse = await fetch(deploymentInfo.urls.appTokenLogin, {
         method: 'POST',
@@ -178,11 +182,11 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
         authtoken,
       );
 
-    const { id: localGenericMarkupId, delete: deleteLocalGenericMarkup } =
+    const { id: localLabelId, delete: deleteLocalLabel } =
       await createRecordFromXML(
         request,
-        '../testData/localGenericMarkup.xml',
-        'diva-localGenericMarkup',
+        '../testData/localLabel.xml',
+        'diva-localLabel',
         authtoken,
       );
 
@@ -234,7 +238,7 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       .replaceAll('{{LINKED_SUBJECT_ID}}', subjectId)
       .replaceAll('{{LINKED_COURSE_ID}}', courseId)
       .replaceAll('{{LINKED_PROGRAMME_ID}}', programmeId)
-      .replaceAll('{{LINKED_LOCAL_GENERIC_MARKUP_ID}}', localGenericMarkupId)
+      .replaceAll('{{LINKED_LOCAL_LABEL_ID}}', localLabelId)
       .replaceAll('{{LINKED_JOURNAL_ID}}', journalId)
       .replaceAll('{{LINKED_BOOK_ID}}', bookId)
       .replaceAll('{{LINKED_SERIES_ID}}', seriesId)
@@ -245,10 +249,14 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       data: updatedXML,
       headers: {
         Accept: 'application/vnd.cora.record+json',
-        'Content-Type': 'application/vnd.cora.recordGroup+xml',
-        Authtoken: authtoken,
+        'Content-Type': 'application/vnd.cora.recordgroup+xml',
+        Authtoken: authtoken
       },
     });
+
+    if (!response.ok()) {
+      throw new Error(`Failed to create diva output: ${await response.text()}`);
+    }
 
     const responseBody = await response.json();
 
@@ -259,93 +267,19 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
     await request.delete(responseBody.record.actionLinks.delete.url, {
       headers: { Authtoken: authtoken },
     });
-    await deletePublisher();
-    await deleteSubject();
-    await deleteCourse();
-    await deleteProgramme();
-    await deleteLocalGenericMarkup();
-    await deleteJournal();
-    await deleteBook();
-    await deleteSeries();
-    await deleteProject();
-    await deleteFunder();
+     await deletePublisher();
+     await deleteSubject();
+     await deleteCourse();
+     await deleteProgramme();
+     await deleteLocalLabel();
+     await deleteJournal();
+     await deleteBook();
+     await deleteSeries();
+     await deleteProject();
+     await deleteFunder();
   },
 
-  kthDivaOutput: async ({ request, authtoken }, use) => {
-    const response = await request.post(`${CORA_API_URL}/record/diva-output`, {
-      data: createDivaOutput(),
-      headers: {
-        Accept: 'application/vnd.cora.record+json',
-        'Content-Type': 'application/vnd.cora.recordGroup+json',
-        Authtoken: authtoken,
-      },
-    });
-    const responseBody = await response.json();
 
-    await use(responseBody.record.data);
-
-    await request.delete(responseBody.record.actionLinks.delete.url, {
-      headers: { Authtoken: authtoken },
-    });
-  },
-
-  kthPage: async ({ browser }, use) => {
-    // Set up
-    const context = await browser.newContext({
-      baseURL: addSubdomain(TARGET_URL!, 'kth'),
-    });
-    const page = await context.newPage();
-
-    await use(page);
-
-    // Clean up
-    await page.close();
-    await context.close();
-  },
-
-  uuLocalGenericMarkup: async ({ request, authtoken }, use) => {
-    const response = await request.post(
-      `${CORA_API_URL}/record/diva-localGenericMarkup`,
-      {
-        data: createLocalGenericMarkup('uu'),
-        headers: {
-          Accept: 'application/vnd.cora.record+json',
-          'Content-Type': 'application/vnd.cora.recordGroup+json',
-          Authtoken: authtoken,
-        },
-      },
-    );
-
-    const responseBody = await response.json();
-
-    await use(responseBody.record.data);
-
-    await request.delete(responseBody.record.actionLinks.delete.url, {
-      headers: { Authtoken: authtoken },
-    });
-  },
-
-  kthLocalGenericMarkup: async ({ request, authtoken }, use) => {
-    const response = await request.post(
-      `${CORA_API_URL}/record/diva-localGenericMarkup`,
-      {
-        data: createLocalGenericMarkup('kth'),
-        headers: {
-          Accept: 'application/vnd.cora.record+json',
-          'Content-Type': 'application/vnd.cora.recordGroup+json',
-          Authtoken: authtoken,
-        },
-      },
-    );
-
-    const responseBody = await response.json();
-
-    await use(responseBody.record.data);
-
-    await request.delete(responseBody.record.actionLinks.delete.url, {
-      headers: { Authtoken: authtoken },
-    });
-  },
 });
 
 async function createRecordFromXML(
@@ -363,7 +297,7 @@ async function createRecordFromXML(
     data: xml,
     headers: {
       Accept: 'application/vnd.cora.record+json',
-      'Content-Type': 'application/vnd.cora.recordGroup+xml',
+      'Content-Type': 'application/vnd.cora.recordgroup+xml',
       Authtoken: authtoken,
     },
   });
@@ -387,3 +321,7 @@ async function createRecordFromXML(
       }),
   };
 }
+
+const base64Encode = (str: string) => {
+  return Buffer.from(str).toString('base64');
+};

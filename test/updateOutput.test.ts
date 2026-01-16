@@ -27,7 +27,7 @@ import {
 } from './util/coraUtils';
 import path from 'node:path';
 
-test.skip('Update output', () => {
+test.describe('Update output', () => {
   test('updates an existing report', async ({ page, divaOutput }) => {
     const recordId = getFirstDataAtomicValueWithNameInData(
       getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
@@ -44,22 +44,31 @@ test.skip('Update output', () => {
     await logIn(page);
 
     //Assert update page info
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Rapport');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'reportUpdateGroupText',
+    );
+
+    await page.getByRole('button', { name: 'titleInfoLangGroupText' }).click();
+    const titleGroup = page.getByRole('region', {
+      name: 'titleInfoLangGroupText',
+    });
     await expect(
-      page.getByRole('group', { name: 'Huvudtitel' }).getByLabel('Huvudtitel'),
+      titleGroup.getByLabel('titleTextVarText', { exact: true }),
     ).toHaveValue(recordTitle);
 
     // Update year
+    await page.getByRole('button', { name: 'originInfoGroupText' }).click();
     await page
-      .getByRole('region', { name: 'Utgivningsdatum' })
-      .getByRole('textbox', { name: 'År' })
-
+      .getByRole('region', { name: 'dateIssuedGroupText' })
+      .getByRole('textbox', { name: 'yearTextVarText' })
       .fill(faker.date.recent().getFullYear().toString());
 
-    await page.getByRole('button', { name: 'Skicka in' }).click();
+    await page
+      .getByRole('button', { name: 'divaClient_SubmitButtonText' })
+      .click();
 
     await expect(
-      page.getByText(/^Record was successfully updated/),
+      page.getByText('divaClient_recordSuccessfullyUpdatedText'),
     ).toBeVisible();
   });
 
@@ -73,59 +82,52 @@ test.skip('Update output', () => {
       getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
       'id',
     );
-    const recordTitle = getFirstDataAtomicValueWithNameInData(
-      getFirstDataGroupWithNameInData(divaOutput, 'titleInfo'),
-      'title',
-    );
-
     await page.goto(createUrl(`/diva-output/${recordId}/update`));
 
     // Log in
-    await page.getByRole('button', { name: 'Logga in' }).click();
-    await page.getByRole('menuitem', { name: 'DiVA Admin' }).click();
-    await expect(
-      page.getByRole('button', { name: 'DiVA Admin' }),
-    ).toBeVisible();
+    await logIn(page);
 
     //Assert update page info
-    await expect(page.getByRole('textbox', { name: 'Huvudtitel' })).toHaveValue(
-      recordTitle,
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'reportUpdateGroupText',
     );
-
     // Upload file
+    await page.getByRole('button', { name: 'attachmentHeadlineText' }).click();
     await page
-      .getByLabel('Bifogad fil')
+      .getByLabel('attachmentFileLinkText')
       .setInputFiles(path.join(__dirname, 'assets/dog.jpg'));
+
     await expect(
       page
-        .getByRole('region', { name: 'Master' })
-        .getByLabel('Originalfilnamn'),
+        .getByRole('region', { name: 'masterGroupText' })
+        .getByLabel('originalFileNameTextVarText'),
     ).toHaveText('dog.jpg');
 
-    // Select file type
     await page
-      .getByRole('region', {
-        name: 'Fil',
-      })
-      .getByRole('combobox', { name: 'Typ' })
-      .selectOption({ label: 'Bild' });
+      .getByRole('combobox', { name: 'attachmentTypeCollectionVarText' })
+      .selectOption({ label: 'fullTextItemText' });
 
     // Select binary visibility
     await page
-      .getByRole('combobox', { name: 'Filens synlighet' })
-      .selectOption({ label: 'Gör fritt tillgänglig nu' });
+      .getByRole('combobox', {
+        name: 'attachmentAvailabilityCollectionVarText',
+      })
+      .selectOption({ label: 'availableNowItemText' });
 
     // Submit form
-    await page.getByRole('button', { name: 'Skicka in' }).click();
+    await page
+      .getByRole('button', { name: 'divaClient_SubmitButtonText' })
+      .click();
 
     // Assert update snackbar
     await expect(
-      page.getByText(/^Record was successfully updated/),
+      page.getByText('divaClient_recordSuccessfullyUpdatedText'),
     ).toBeVisible();
 
     // Store binary record URL to use in cleanup step.
+    await page.getByRole('button', { name: 'attachmentHeadlineText' }).click();
     downloadLink = await page
-      .getByRole('link', { name: 'Ladda ner' })
+      .getByRole('link', { name: 'resourceLinkDownloadText' })
       .getAttribute('href');
   });
 
