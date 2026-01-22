@@ -34,7 +34,16 @@ test.describe('Search output', () => {
       await page.getByText(recordTitle, { exact: true }),
     ).toBeVisible();
     await expect(page).toHaveURL(
-      new RegExp(`.*\\/diva-output\\?q=${encodedRecordTitle}&start=1&rows=10`),
+      new RegExp(`.*\\/diva-output\\?q=${encodedRecordTitle}&start=1&rows=20`),
+    );
+
+    await page
+      .getByRole('combobox', { name: 'divaClient_paginationRowsPerPageText' })
+      .first()
+      .selectOption({ label: '40' });
+
+    await expect(page).toHaveURL(
+      new RegExp(`.*\\/diva-output\\?rows=40&q=${encodedRecordTitle}&start=1`),
     );
 
     await page
@@ -51,7 +60,7 @@ test.describe('Search output', () => {
 
     await expect(page).toHaveURL(
       new RegExp(
-        `.*\\/diva-output\\?q=${encodedRecordTitle}&start=1&rows=10&recordIdSearchTerm=${recordId}&oldIdSearchTerm=${oldId}`,
+        `.*\\/diva-output\\?q=${encodedRecordTitle}&start=1&rows=40&recordIdSearchTerm=${recordId}&oldIdSearchTerm=${oldId}`,
       ),
     );
   });
