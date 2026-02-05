@@ -38,7 +38,7 @@ test.describe('Create output', () => {
       .getByRole('menuitem', { name: 'publication_reportText', exact: true })
       .click();
 
-    await expect(page).toHaveTitle('divaClient_createRecordText');
+    await expect(page).toHaveTitle('divaClient_createRecordText | DiVA');
 
     // Language
     await page

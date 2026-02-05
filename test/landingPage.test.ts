@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from './util/fixtures';
 
-test.describe('landing page', () => {
-  test('should load the landing pate', async ({ page }) => {
+test.describe('Landing page', () => {
+  test('Should load the landing page', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle('divaText');
 
@@ -12,17 +12,17 @@ test.describe('landing page', () => {
 
     await expect(
       page.getByRole('link', {
-        name: 'divaClient_navigationCardPublicationTitleText',
+        name: 'diva-outputPluralText divaClient_navigationCardPublicationDescriptionText',
       }),
     ).toBeVisible();
     await expect(
       page.getByRole('link', {
-        name: 'divaClient_navigationCardPersonTitleText',
+        name: 'diva-personPluralText divaClient_navigationCardPersonDescriptionText',
       }),
     ).toBeVisible();
     await expect(
       page.getByRole('link', {
-        name: 'divaClient_navigationCardProjectTitleText',
+        name: 'diva-projectPluralText divaClient_navigationCardProjectDescriptionText',
       }),
     ).toBeVisible();
   });

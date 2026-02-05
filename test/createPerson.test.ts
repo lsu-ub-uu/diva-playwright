@@ -36,7 +36,7 @@ test.describe('Create person', () => {
     // Select validation type
     await page.getByRole('link', { name: 'divaClient_createText' }).click();
 
-    await expect(page).toHaveTitle('divaClient_createRecordText');
+    await expect(page).toHaveTitle('divaClient_createRecordText | DiVA');
 
     await page
       .getByRole('textbox', { name: 'namePartFamilyTextVarText', exact: true })

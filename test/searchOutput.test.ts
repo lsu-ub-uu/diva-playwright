@@ -26,29 +26,34 @@ test.describe('Search output', () => {
     await page
       .getByRole('button', { name: 'divaClient_SearchButtonText', exact: true })
       .click();
-    const encodedRecordTitle = encodeURIComponent(recordTitle).replaceAll(
-      '%20',
-      '\\+',
-    );
+
+    await expect(page).toHaveURL((url) => {
+      const params = url.searchParams;
+      return (
+        params.get('q') === recordTitle &&
+        params.get('start') === '1' &&
+        params.get('rows') === '20'
+      );
+    });
+
     await expect(
       await page.getByText(recordTitle, { exact: true }),
     ).toBeVisible();
-    await expect(page).toHaveURL(
-      new RegExp(`.*\\/diva-output\\?q=${encodedRecordTitle}&start=1&rows=20`),
-    );
 
     await page
       .getByRole('combobox', { name: 'divaClient_paginationRowsPerPageText' })
       .first()
       .selectOption({ label: '40' });
 
-    await expect(page).toHaveURL(
-      new RegExp(`.*\\/diva-output\\?rows=40&q=${encodedRecordTitle}&start=1`),
-    );
+    await expect(page).toHaveURL((url) => {
+      const params = url.searchParams;
+      return (
+        params.get('q') === recordTitle &&
+        params.get('start') === '1' &&
+        params.get('rows') === '40'
+      );
+    });
 
-    await page
-      .getByRole('button', { name: 'divaClient_showFiltersText', exact: true })
-      .click();
     await page
       .getByRole('textbox', { name: 'searchRecordIdTextVarText' })
       .fill(recordId);
@@ -58,10 +63,15 @@ test.describe('Search output', () => {
       .getByRole('textbox', { name: 'oldIdSearchTextVarText' })
       .fill(oldId);
 
-    await expect(page).toHaveURL(
-      new RegExp(
-        `.*\\/diva-output\\?q=${encodedRecordTitle}&start=1&rows=40&recordIdSearchTerm=${recordId}&oldIdSearchTerm=${oldId}`,
-      ),
-    );
+    await expect(page).toHaveURL((url) => {
+      const params = url.searchParams;
+      return (
+        params.get('q') === recordTitle &&
+        params.get('start') === '1' &&
+        params.get('rows') === '40' &&
+        params.get('oldIdSearchTerm') === oldId &&
+        params.get('recordIdSearchTerm') === recordId
+      );
+    });
   });
 });
