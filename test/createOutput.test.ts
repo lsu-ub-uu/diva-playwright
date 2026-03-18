@@ -118,7 +118,7 @@ test.describe('Create output', () => {
     await page
       .getByRole('combobox', { name: 'permissionUnitLinkText' })
       .fill('uu');
-    await page.getByRole('option', { name: 'permissionUnitGroupText' }).click();
+    await page.getByRole('option', { name: 'uuPermissionUnitText' }).click();
 
     // Submit
     await page
