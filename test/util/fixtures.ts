@@ -70,8 +70,8 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
     const domain = new URL(TARGET_URL!).hostname;
     await context.addCookies([
       {
-        name: 'language',
-        value: base64Encode('"cimode"'),
+        name: 'userPreferences',
+        value: base64Encode('{"language":"cimode"}'),
         domain,
         path: '/',
         httpOnly: false,
@@ -250,7 +250,7 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
       headers: {
         Accept: 'application/vnd.cora.record+json',
         'Content-Type': 'application/vnd.cora.recordgroup+xml',
-        Authtoken: authtoken
+        Authtoken: authtoken,
       },
     });
 
@@ -267,19 +267,17 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
     await request.delete(responseBody.record.actionLinks.delete.url, {
       headers: { Authtoken: authtoken },
     });
-     await deletePublisher();
-     await deleteSubject();
-     await deleteCourse();
-     await deleteProgramme();
-     await deleteLocalLabel();
-     await deleteJournal();
-     await deleteBook();
-     await deleteSeries();
-     await deleteProject();
-     await deleteFunder();
+    await deletePublisher();
+    await deleteSubject();
+    await deleteCourse();
+    await deleteProgramme();
+    await deleteLocalLabel();
+    await deleteJournal();
+    await deleteBook();
+    await deleteSeries();
+    await deleteProject();
+    await deleteFunder();
   },
-
-
 });
 
 async function createRecordFromXML(
