@@ -4,11 +4,11 @@ import { test } from './util/fixtures';
 test.describe('Landing page', () => {
   test('Should load the landing page', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle('pageTitle');
+    await expect(page).toHaveTitle('divaText');
 
     await expect(page.getByRole('heading', { level: 1 }), {
       message: 'Title',
-    }).toHaveText('title');
+    }).toHaveText('DiVA');
 
     await expect(
       page.getByRole('link', {
