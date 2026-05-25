@@ -58,10 +58,10 @@ test.describe('Search output', () => {
       .getByRole('textbox', { name: 'searchRecordIdTextVarText' })
       .fill(recordId);
 
-    const oldId = 'oldId123';
+    const genericId = 'genericId123';
     await page
-      .getByRole('textbox', { name: 'oldIdSearchTextVarText' })
-      .fill(oldId);
+      .getByRole('textbox', { name: 'genericIdSearchTextVarText' })
+      .fill(genericId);
 
     await expect(page).toHaveURL((url) => {
       const params = url.searchParams;
@@ -69,7 +69,7 @@ test.describe('Search output', () => {
         params.get('q') === recordTitle &&
         params.get('start') === '1' &&
         params.get('rows') === '40' &&
-        params.get('oldIdSearchTerm') === oldId &&
+        params.get('genericIdSearchTerm') === genericId &&
         params.get('recordIdSearchTerm') === recordId
       );
     });
