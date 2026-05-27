@@ -4,7 +4,7 @@ import {
   getFirstDataGroupWithNameInData,
 } from './util/coraUtils';
 import { test } from './util/fixtures';
-import { goToPage } from './util/goToPage';
+import { goToPageAndWaitForHydration } from './util/goToPage';
 
 test.describe('Search output', () => {
   test('Search for records', async ({ page, divaOutput }) => {
@@ -18,7 +18,7 @@ test.describe('Search output', () => {
       'id',
     );
 
-    await goToPage(page, '/diva-output');
+    await goToPageAndWaitForHydration(page, '/diva-output');
 
     await page.getByRole('searchbox').fill(recordTitle);
 
