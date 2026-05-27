@@ -63,6 +63,23 @@ test.describe('Search output', () => {
       .getByRole('textbox', { name: 'genericIdSearchTextVarText' })
       .fill(genericId);
 
+    await page
+      .getByRole('combobox', {
+        name: 'outputTypeSearchCollectionVarText',
+      })
+      .click();
+    await page
+      .getByRole('option', { name: 'publicationReportItemText' })
+      .click();
+
+    await page
+      .getByRole('combobox', {
+        name: 'ssifSearchCollectionVarText',
+      })
+      .fill('101');
+
+    await page.keyboard.press('Enter');
+
     await expect(page).toHaveURL((url) => {
       const params = url.searchParams;
       return (
@@ -70,7 +87,9 @@ test.describe('Search output', () => {
         params.get('start') === '1' &&
         params.get('rows') === '40' &&
         params.get('genericIdSearchTerm') === genericId &&
-        params.get('recordIdSearchTerm') === recordId
+        params.get('recordIdSearchTerm') === recordId &&
+        params.get('outputTypeSearchTerm') === 'publication_report' &&
+        params.get('ssifSearchTerm') === '101'
       );
     });
   });
