@@ -78,6 +78,10 @@ test.describe('Search output', () => {
       })
       .fill('101');
 
+    await page
+      .getByRole('option', { name: '101ItemText', exact: true })
+      .waitFor();
+
     await page.keyboard.press('Enter');
 
     await expect(page).toHaveURL((url) => {
