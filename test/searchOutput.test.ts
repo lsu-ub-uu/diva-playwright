@@ -55,7 +55,7 @@ test.describe('Search output', () => {
     });
 
     await page
-      .getByRole('textbox', { name: 'searchRecordIdTextVarText' })
+      .getByRole('textbox', { name: 'searchRecordIdDivaTextVarText' })
       .fill(recordId);
 
     const genericId = 'genericId123';

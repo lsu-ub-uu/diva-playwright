@@ -40,11 +40,13 @@ test.describe('Create output', () => {
 
     await expect(page).toHaveTitle('divaClient_createRecordText | DiVA');
 
+    const form = page.getByRole('main');
+
     // Language
-    await page
+    await form
       .getByRole('button', { name: 'languageGroupText', exact: true })
       .click();
-    await page
+    await form
       .getByRole('region', {
         name: 'languageGroupText',
       })
@@ -55,16 +57,16 @@ test.describe('Create output', () => {
       .click();
 
     // Content type
-    await page
+    await form
       .getByRole('button', { name: 'genreContentTypeCollectionText' })
       .click();
-    await page
+    await form
       .getByRole('combobox', { name: 'genreContentTypeCollectionText' })
       .selectOption({ label: 'peerReviewedItemText' });
 
     // Title info
-    await page.getByRole('button', { name: 'titleInfoLangGroupText' }).click();
-    const titleGroup = page.getByRole('region', {
+    await form.getByRole('button', { name: 'titleInfoLangGroupText' }).click();
+    const titleGroup = form.getByRole('region', {
       name: 'titleInfoLangGroupText',
     });
     await titleGroup
@@ -78,15 +80,15 @@ test.describe('Create output', () => {
       .fill(mockTitle);
 
     // Origin info
-    await page.getByRole('button', { name: 'originInfoGroupText' }).click();
-    await page
+    await form.getByRole('button', { name: 'originInfoGroupText' }).click();
+    await form
       .getByRole('region', { name: 'dateIssuedGroupText' })
       .getByRole('textbox', { name: 'yearTextVarText' })
       .fill(faker.date.recent().getFullYear().toString());
 
     // SSIF
-    await page.getByRole('button', { name: 'ssifCollectionVarText' }).click();
-    await page
+    await form.getByRole('button', { name: 'ssifCollectionVarText' }).click();
+    await form
       .getByRole('region', { name: 'ssifCollectionVarText' })
       .getByRole('combobox', {
         name: 'ssifCollectionVarText',
@@ -100,32 +102,32 @@ test.describe('Create output', () => {
       .click();
 
     //Admin info
-    await page
+    await form
       .getByRole('button', { name: 'adminInfoDivaGroupText', exact: true })
       .click();
-    await page
+    await form
       .getByRole('combobox', { name: 'reviewedCollectionVarText' })
       .selectOption({ label: 'trueDivaItemText' });
 
     // Record info
-    await page
+    await form
       .getByRole('button', { name: 'recordInfoOutputUpdateGroupText' })
       .click();
 
-    await page
+    await form
       .getByRole('combobox', { name: 'visibilityCollectionVarText' })
       .selectOption({ label: 'publishedItemText' });
-    await page
+    await form
       .getByRole('combobox', { name: 'permissionUnitLinkText' })
       .fill('uu');
     await page.getByRole('option', { name: 'uuPermissionUnitText' }).click();
 
     // Submit
-    await page
+    await form
       .getByRole('button', { name: 'divaClient_SubmitButtonText' })
       .click();
 
-    // Assert redirected to update page
+    // Assert redirected to update form
     await expect(
       page.getByText('divaClient_recordSuccessfullyCreatedText'),
     ).toBeVisible();
