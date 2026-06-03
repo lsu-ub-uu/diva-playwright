@@ -8,7 +8,7 @@ test.describe('Landing page', () => {
 
     await expect(page.getByRole('heading', { level: 1 }), {
       message: 'Title',
-    }).toHaveText('title');
+    }).toHaveText('titleText');
 
     await expect(
       page.getByRole('link', {
