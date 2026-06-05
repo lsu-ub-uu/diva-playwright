@@ -65,15 +65,6 @@ test.describe('Search output', () => {
 
     await page
       .getByRole('combobox', {
-        name: 'outputTypeSearchCollectionVarText',
-      })
-      .click();
-    await page
-      .getByRole('option', { name: 'publicationReportItemText' })
-      .click();
-
-    await page
-      .getByRole('combobox', {
         name: 'ssifSearchCollectionVarText',
       })
       .fill('101');
@@ -92,7 +83,6 @@ test.describe('Search output', () => {
         params.get('rows') === '40' &&
         params.get('genericIdSearchTerm') === genericId &&
         params.get('recordIdSearchTerm') === recordId &&
-        params.get('outputTypeSearchTerm') === 'publication_report' &&
         params.get('ssifSearchTerm') === '101'
       );
     });
