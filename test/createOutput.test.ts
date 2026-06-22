@@ -29,354 +29,175 @@ const VALIDATION_TYPES_WITH_POPULAR_GENRE_CONTENT_TYPE = [
   'diva_manuscript',
 ];
 
-test.describe('Create output', () => {
-  test('Create Patent', async ({ page, request, authtoken }) => {
-    await createOutputOfType(
-      'intellectual-property_patent',
-      page,
-      request,
-      authtoken,
-    );
-  });
+const testCases = [
+  {
+    name: 'Patent',
+    validationType: 'intellectual-property_patent',
+    additionalFields: undefined,
+  },
+  {
+    name: 'Editorial proceeding',
+    validationType: 'conference_proceeding',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Licentiate thesis (compilation)',
+    validationType: 'publication_licentiate-thesis-compilation',
+    additionalFields: undefined,
+  },
+  {
+    name: 'Article in daily/newspaper',
+    validationType: 'publication_newspaper-article',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Paper in proceeding Scholarly or annotated edition',
+    validationType: 'conference_paper',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Scholarly or annotated edition',
+    validationType: 'publication_critical-edition',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Report',
+    validationType: 'publication_report',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Chapter in collected works',
+    validationType: 'publication_book-chapter',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Article in scientific journal',
+    validationType: 'publication_journal-article',
+    additionalFields: ['publicationStatus', 'genreContentType'],
+  },
+  {
+    name: 'Dissertation (older thesis)',
+    validationType: 'diva_dissertation',
+    additionalFields: undefined,
+  },
+  {
+    name: 'Licentiate thesis (monograph)',
+    validationType: 'publication_licentiate-thesis-monograph',
+    additionalFields: undefined,
+  },
+  {
+    name: 'Artistic work',
+    validationType: 'artistic-work_original-creative-work',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Review article',
+    validationType: 'publication_review-article',
+    additionalFields: ['publicationStatus', 'genreContentType'],
+  },
+  {
+    name: 'Chapter in report',
+    validationType: 'publication_report-chapter',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Degree project (independent project)',
+    validationType: 'diva_degree-project',
+    additionalFields: ['studentDegree'],
+  },
+  {
+    name: 'Introductory text in journal / proceeding (letters, editorials, comments, notes)',
+    validationType: 'publication_editorial-letter',
+    additionalFields: ['publicationStatus', 'genreContentType'],
+  },
+  {
+    name: 'Contribution to an encyclopedia',
+    validationType: 'publication_encyclopedia-entry',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Poster',
+    validationType: 'conference_poster',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Editorial collection',
+    validationType: 'publication_edited-book',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Documented artistic research project (doctoral thesis)',
+    validationType: 'artistic-work_artistic-thesis',
+    additionalFields: undefined,
+  },
+  {
+    name: 'Review',
+    validationType: 'publication_book-review',
+    additionalFields: ['publicationStatus', 'genreContentType'],
+  },
+  {
+    name: 'Other conference contributions',
+    validationType: 'conference_other',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Article in other journals',
+    validationType: 'publication_magazine-article',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Preprint',
+    validationType: 'publication_preprint',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Book',
+    validationType: 'publication_book',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Manuscript',
+    validationType: 'diva_manuscript',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Other publication',
+    validationType: 'publication_other',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Working paper',
+    validationType: 'publication_working-paper',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Foreword/Afterword',
+    validationType: 'publication_foreword-afterword',
+    additionalFields: ['genreContentType'],
+  },
+  {
+    name: 'Doctoral thesis (monograph)',
+    validationType: 'publication_doctoral-thesis-monograph',
+    additionalFields: undefined,
+  },
+  {
+    name: 'Doctoral thesis (compilation)',
+    validationType: 'publication_doctoral-thesis-compilation',
+    additionalFields: undefined,
+  },
+];
 
-  test('Create Editorial proceeding', async ({ page, request, authtoken }) => {
-    await createOutputOfType(
-      'conference_proceeding',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Licentiate thesis (compilation)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    await createOutputOfType(
-      'publication_licentiate-thesis-compilation',
-      page,
-      request,
-      authtoken,
-    );
-  });
-
-  test('Create Article in daily/newspaper', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    await createOutputOfType(
-      'publication_newspaper-article',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Paper in proceeding Scholarly or annotated edition', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    await createOutputOfType('conference_paper', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Scholarly or annotated edition', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //
-    await createOutputOfType(
-      'publication_critical-edition',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Report', async ({ page, request, authtoken }) => {
-    await createOutputOfType('publication_report', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Chapter in collected works', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    await createOutputOfType(
-      'publication_book-chapter',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Article in scientific journal', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    await createOutputOfType(
-      'publication_journal-article',
-      page,
-      request,
-      authtoken,
-      ['publicationStatus', 'genreContentType'],
-    );
-  });
-
-  test('Create Dissertation (older thesis)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //diva_dissertation
-    await createOutputOfType('diva_dissertation', page, request, authtoken);
-  });
-
-  test('Create Licentiate thesis (monograph)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //publication_licentiate-thesis-monograph
-    await createOutputOfType(
-      'publication_licentiate-thesis-monograph',
-      page,
-      request,
-      authtoken,
-    );
-  });
-
-  test('Create Artistic work', async ({ page, request, authtoken }) => {
-    //artistic-work_original-creative-work
-    await createOutputOfType(
-      'artistic-work_original-creative-work',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Review article', async ({ page, request, authtoken }) => {
-    //publication_review-article
-    await createOutputOfType(
-      'publication_review-article',
-      page,
-      request,
-      authtoken,
-      ['publicationStatus', 'genreContentType'],
-    );
-  });
-
-  test('Create Chapter in report', async ({ page, request, authtoken }) => {
-    //publication_report-chapter
-    await createOutputOfType(
-      'publication_report-chapter',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Degree project (independent project)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //diva_degree-project
-    await createOutputOfType('diva_degree-project', page, request, authtoken, [
-      'studentDegree',
-    ]);
-  });
-
-  test('Create Introductory text in journal / proceeding (letters, editorials, comments, notes)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //publication_editorial-letter
-    await createOutputOfType(
-      'publication_editorial-letter',
-      page,
-      request,
-      authtoken,
-      ['publicationStatus', 'genreContentType'],
-    );
-  });
-
-  test('Create Contribution to an encyclopedia', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //publication_encyclopedia-entry
-    await createOutputOfType(
-      'publication_encyclopedia-entry',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Poster', async ({ page, request, authtoken }) => {
-    //conference_poster
-    await createOutputOfType('conference_poster', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Editorial collection', async ({ page, request, authtoken }) => {
-    //publication_edited-book
-    await createOutputOfType(
-      'publication_edited-book',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Documented artistic research project (doctoral thesis)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //artistic-work_artistic-thesis
-    await createOutputOfType(
-      'artistic-work_artistic-thesis',
-      page,
-      request,
-      authtoken,
-    );
-  });
-
-  test('Create Review', async ({ page, request, authtoken }) => {
-    //publication_book-review
-    await createOutputOfType(
-      'publication_book-review',
-      page,
-      request,
-      authtoken,
-      ['publicationStatus', 'genreContentType'],
-    );
-  });
-
-  test('Create Other conference contributions', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //conference_other
-    await createOutputOfType('conference_other', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Article in other journals', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //publication_magazine-article
-    await createOutputOfType(
-      'publication_magazine-article',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Preprint', async ({ page, request, authtoken }) => {
-    //publication_preprint
-    await createOutputOfType('publication_preprint', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Book', async ({ page, request, authtoken }) => {
-    //publication_book
-    await createOutputOfType('publication_book', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Manuscript', async ({ page, request, authtoken }) => {
-    //diva_manuscript
-    await createOutputOfType('diva_manuscript', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Other publication', async ({ page, request, authtoken }) => {
-    //publication_other
-    await createOutputOfType('publication_other', page, request, authtoken, [
-      'genreContentType',
-    ]);
-  });
-
-  test('Create Working paper', async ({ page, request, authtoken }) => {
-    //publication_working-paper
-    await createOutputOfType(
-      'publication_working-paper',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Foreword/Afterword', async ({ page, request, authtoken }) => {
-    //publication_foreword-afterword
-    await createOutputOfType(
-      'publication_foreword-afterword',
-      page,
-      request,
-      authtoken,
-      ['genreContentType'],
-    );
-  });
-
-  test('Create Doctoral thesis (monograph)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //publication_doctoral-thesis-monograph
-    await createOutputOfType(
-      'publication_doctoral-thesis-monograph',
-      page,
-      request,
-      authtoken,
-    );
-  });
-
-  test('Create Doctoral thesis (compilation)', async ({
-    page,
-    request,
-    authtoken,
-  }) => {
-    //publication_doctoral-thesis-compilation
-    await createOutputOfType(
-      'publication_doctoral-thesis-compilation',
-      page,
-      request,
-      authtoken,
-    );
+test.describe('Output', () => {
+  testCases.forEach(({ name, validationType, additionalFields }) => {
+    test(`Create ${name}`, async ({ page, request, authtoken }) => {
+      await createOutputOfType(
+        validationType,
+        page,
+        request,
+        authtoken,
+        additionalFields,
+      );
+    });
   });
 });
 
