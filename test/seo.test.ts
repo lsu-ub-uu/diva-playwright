@@ -20,8 +20,13 @@ test.describe('SEO', () => {
       new RegExp(
         [
           'User-agent: \\*\\s*',
-          'Allow: /divaclient\\s*',
-          'Disallow: /\\s*',
+          'Allow: /\\s*',
+          'Disallow: /divaclient/metrics\\s*',
+          'Disallow: /login\\s*',
+          'Disallow: /Shibboleth\\.sso\\s*',
+          'Disallow: /idplogin\\s*',
+          'Disallow: /playwright\\s*',
+          'Disallow: /fitnesse\\s*',
           'Sitemap: .*/divaclient/sitemap\\.xml',
         ].join(''),
       ),
