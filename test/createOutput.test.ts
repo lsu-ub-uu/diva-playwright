@@ -17,7 +17,7 @@
  */
 
 import { test } from './util/fixtures';
-import { APIRequestContext, expect, type Page } from '@playwright/test';
+import { APIRequestContext, expect, type Locator, type Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { createUrl } from './util/createUrl';
 import { logIn } from './util/logIn';
@@ -207,6 +207,24 @@ const getRecordIdFromUpdatePageUrl = (page: Page) => {
   return segments[segments.length - 2];
 };
 
+const selectComboboxOption = async (
+  scope: Locator,
+  comboboxName: string,
+  optionName: string,
+  filterText = optionName,
+) => {
+  const combobox = scope.getByRole('combobox', {
+    name: comboboxName,
+    exact: true,
+  });
+
+  await combobox.click();
+  const filter = scope.getByRole('textbox', { name: /Filtrera alternativ/i });
+  await filter.fill(filterText);
+  await filter.press('Enter');
+  await expect(combobox).toContainText(optionName);
+};
+
 const createOutputOfType = async (
   validationType: string,
   page: Page,
@@ -239,15 +257,7 @@ const createOutputOfType = async (
   await form
     .getByRole('button', { name: 'languageGroupText', exact: true })
     .click();
-  await form
-    .getByRole('region', {
-      name: 'languageGroupText',
-    })
-    .getByRole('combobox', { name: 'languageTermCollectionVarText' })
-    .fill('gerLangItemText');
-  await page
-    .getByRole('option', { name: 'gerLangItemText', exact: true })
-    .click();
+  await selectComboboxOption(form, 'languageTermCollectionVarText', 'gerLangItemText', 'ger');
 
   // Publication Status
   if (additionalFields?.includes('publicationStatus')) {
@@ -299,12 +309,7 @@ const createOutputOfType = async (
   const titleGroup = form.getByRole('region', {
     name: 'titleInfoLangGroupText',
   });
-  await titleGroup
-    .getByRole('combobox', { name: 'languageCollectionVarText' })
-    .fill('gerLangItemText');
-  await page
-    .getByRole('option', { name: 'gerLangItemText', exact: true })
-    .click();
+  await selectComboboxOption(titleGroup, 'languageCollectionVarText', 'gerLangItemText', 'ger');
   await titleGroup
     .getByRole('textbox', { name: 'titleTextVarText', exact: true })
     .fill(mockTitle);
@@ -337,18 +342,14 @@ const createOutputOfType = async (
   }
   // SSIF
   await form.getByRole('button', { name: 'ssifCollectionVarText' }).click();
-  await form
-    .getByRole('region', { name: 'ssifCollectionVarText' })
-    .getByRole('combobox', {
-      name: 'ssifCollectionVarText',
-    })
-    .fill('1ItemText');
-  await page
-    .getByRole('option', {
-      name: '1ItemText',
-      exact: true,
-    })
-    .click();
+  const ssif = form.getByRole('region', { name: 'ssifCollectionVarText' });
+  await selectComboboxOption(
+    ssif,
+    'ssifCollectionVarText',
+    '1ItemText',
+    '1',
+  );
+
   if (additionalFields?.includes('studentDegree')) {
     await form
       .getByRole('button', { name: 'studentDegreeHeadlineText' })
@@ -358,17 +359,12 @@ const createOutputOfType = async (
       .getByRole('combobox', { name: 'degreeLevelCollectionVarText' })
       .selectOption({ label: 'H2ItemText' });
 
-    await form
-      .getByRole('combobox', {
-        name: 'creditsCollectionVarText',
-      })
-      .fill('15hpItemText');
-    await page
-      .getByRole('option', {
-        name: '15hpItemText',
-        exact: true,
-      })
-      .click();
+    await selectComboboxOption(
+      form,
+      'creditsCollectionVarText',
+      '15hpItemText',
+      '15',
+    );
   }
 
   //Admin info
@@ -387,10 +383,6 @@ const createOutputOfType = async (
   await form
     .getByRole('combobox', { name: 'visibilityCollectionVarText' })
     .selectOption({ label: 'publishedItemText' });
-  await form
-    .getByRole('combobox', { name: 'permissionUnitLinkText' })
-    .fill('uu');
-  await page.getByRole('option', { name: 'uuPermissionUnitText' }).click();
 
   // Submit
   await form
