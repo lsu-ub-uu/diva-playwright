@@ -59,7 +59,7 @@ export const createDivaOutput = (): DataGroup => ({
     { name: 'genre', value: 'ref', attributes: { type: 'contentType' } },
     {
       name: 'titleInfo',
-      children: [{ name: 'title', value: faker.book.title() }],
+      children: [{ name: 'title', value: 'Some Title for Output' }],
       attributes: { lang: 'swe' },
     },
     {
