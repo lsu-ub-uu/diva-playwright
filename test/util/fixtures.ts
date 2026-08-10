@@ -56,6 +56,7 @@ interface WorkerFixtures {
 interface Fixtures {
   page: CustomPage;
   divaOutput: DataGroup;
+  divaOutputFactory: (xmlFile: string) => Promise<DataGroup>;
   ultimateDivaOutput: DataGroup;
 }
 
@@ -148,6 +149,41 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
     await request.delete(responseBody.record.actionLinks.delete.url, {
       headers: { Authtoken: authtoken },
     });
+  },
+
+  divaOutputFactory: async ({ request, authtoken }, use) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let responseBody: any;
+
+    const createDivaOutputRecord = async (xmlFile: string) => {
+      const xml = fs.readFileSync(
+        path.join(__dirname, `../testData/validationTypes/${xmlFile}`),
+        'utf-8',
+      );
+
+      const response = await request.post(
+        `${CORA_API_URL}/record/diva-output`,
+        {
+          data: xml,
+          headers: {
+            Accept: 'application/vnd.cora.record+json',
+            'Content-Type': 'application/vnd.cora.recordgroup+xml',
+            Authtoken: authtoken,
+          },
+        },
+      );
+
+      responseBody = await response.json();
+      return responseBody.record.data as DataGroup;
+    };
+
+    await use(createDivaOutputRecord);
+
+    if (responseBody) {
+      await request.delete(responseBody.record.actionLinks.delete.url, {
+        headers: { Authtoken: authtoken },
+      });
+    }
   },
 
   ultimateDivaOutput: async ({ request, authtoken }, use) => {

@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker';
 import type { DataGroup } from '../util/coraTypes';
 
-export const createDivaOutput = (): DataGroup => ({
+export const createDivaOutput = (
+  validationType = 'publication_report',
+): DataGroup => ({
   name: 'output',
   children: [
     {
@@ -11,7 +13,7 @@ export const createDivaOutput = (): DataGroup => ({
           name: 'validationType',
           children: [
             { name: 'linkedRecordType', value: 'validationType' },
-            { name: 'linkedRecordId', value: 'publication_report' },
+            { name: 'linkedRecordId', value: validationType },
           ],
         },
         {

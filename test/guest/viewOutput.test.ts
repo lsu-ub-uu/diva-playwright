@@ -24,4 +24,25 @@ test.describe('View output', () => {
       message: 'Title',
     }).toHaveText(recordTitle);
   });
+
+  test('View Documented artistic research project (doctoral thesis)', async ({
+    page,
+    divaOutputFactory,
+  }) => {
+    const divaOutput = await divaOutputFactory(
+      'artistic-work_artistic-thesis.xml',
+    );
+
+    const recordId = getFirstDataAtomicValueWithNameInData(
+      getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
+      'id',
+    );
+
+    await page.goto(createUrl(`/diva-output/${recordId}`));
+
+    // Title
+    await expect(page.getByRole('heading', { level: 1 }), {
+      message: 'Title',
+    }).toHaveText('TestTitle: TestSubtitle');
+  });
 });

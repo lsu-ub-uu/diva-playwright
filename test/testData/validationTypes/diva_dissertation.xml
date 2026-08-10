@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<output>
+	<recordInfo>
+		<validationType>
+			<linkedRecordType>validationType</linkedRecordType>
+			<linkedRecordId>diva_dissertation</linkedRecordId>
+		</validationType>
+		<dataDivider>
+			<linkedRecordType>system</linkedRecordType>
+			<linkedRecordId>divaData</linkedRecordId>
+		</dataDivider>
+		<permissionUnit>
+			<linkedRecordType>permissionUnit</linkedRecordType>
+			<linkedRecordId>diva</linkedRecordId>
+		</permissionUnit>
+		<visibility>published</visibility>
+	</recordInfo>
+	<genre type="outputType">diva_dissertation</genre>
+	<language repeatId="0">
+		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
+	</language>
+	<originInfo>
+		<dateIssued>
+			<year>2025</year>
+		</dateIssued>
+	</originInfo>
+	<classification authority="ssif" repeatId="0">1</classification>
+	<titleInfo lang="ger">
+		<title>TestTitle</title>
+	</titleInfo>
+</output>

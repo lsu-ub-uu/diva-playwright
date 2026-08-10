@@ -33,7 +33,7 @@ const VALIDATION_TYPES_WITH_POPULAR_GENRE_CONTENT_TYPE = [
   'diva_manuscript',
 ];
 
-const testCases = [
+const validationTypes = [
   {
     name: 'Patent',
     validationType: 'intellectual-property_patent',
@@ -192,7 +192,7 @@ const testCases = [
 ];
 
 test.describe('Output', () => {
-  testCases.forEach(({ name, validationType, additionalFields }) => {
+  validationTypes.forEach(({ name, validationType, additionalFields }) => {
     test(`Create ${name}`, async ({ page, request, authtoken }) => {
       await createOutputOfType(
         validationType,

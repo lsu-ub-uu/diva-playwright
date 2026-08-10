@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<output>
+	<recordInfo>
+		<validationType>
+			<linkedRecordType>validationType</linkedRecordType>
+			<linkedRecordId>publication_newspaper-article</linkedRecordId>
+		</validationType>
+		<dataDivider>
+			<linkedRecordType>system</linkedRecordType>
+			<linkedRecordId>divaData</linkedRecordId>
+		</dataDivider>
+		<permissionUnit>
+			<linkedRecordType>permissionUnit</linkedRecordType>
+			<linkedRecordId>diva</linkedRecordId>
+		</permissionUnit>
+		<visibility>published</visibility>
+	</recordInfo>
+	<genre type="outputType">publication_newspaper-article</genre>
+	<language repeatId="0">
+		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
+	</language>
+	<genre type="contentType">pop</genre>
+	<originInfo>
+		<dateIssued>
+			<year>2020</year>
+			<month>01</month>
+			<day>01</day>
+		</dateIssued>
+	</originInfo>
+	<classification authority="ssif" repeatId="0">1</classification>
+	<titleInfo lang="ger">
+		<title>TestTitle</title>
+	</titleInfo>
+</output>
