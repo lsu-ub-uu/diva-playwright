@@ -17,7 +17,12 @@
  */
 
 import { test } from './util/fixtures';
-import { APIRequestContext, expect, type Locator, type Page } from '@playwright/test';
+import {
+  APIRequestContext,
+  expect,
+  type Locator,
+  type Page,
+} from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { createUrl } from './util/createUrl';
 import { logIn } from './util/logIn';
@@ -243,10 +248,10 @@ const createOutputOfType = async (
   // Select validation type
   await page.getByRole('button', { name: 'divaClient_createText' }).click();
   await page
-    .getByRole('menuitem', {
-      name: `${validationType}Text`,
-      exact: true,
-    })
+    .getByRole('textbox', { name: 'divaClient_filteringText' })
+    .fill(validationType);
+  await page
+    .getByRole('menuitem', { name: `${validationType}Text`, exact: true })
     .click();
 
   await expect(page).toHaveTitle('divaClient_createRecordText | DiVA');
@@ -257,7 +262,12 @@ const createOutputOfType = async (
   await form
     .getByRole('button', { name: 'languageGroupText', exact: true })
     .click();
-  await selectComboboxOption(form, 'languageTermCollectionVarText', 'gerLangItemText', 'ger');
+  await selectComboboxOption(
+    form,
+    'languageTermCollectionVarText',
+    'gerLangItemText',
+    'ger',
+  );
 
   // Publication Status
   if (additionalFields?.includes('publicationStatus')) {
@@ -309,7 +319,12 @@ const createOutputOfType = async (
   const titleGroup = form.getByRole('region', {
     name: 'titleInfoLangGroupText',
   });
-  await selectComboboxOption(titleGroup, 'languageCollectionVarText', 'gerLangItemText', 'ger');
+  await selectComboboxOption(
+    titleGroup,
+    'languageCollectionVarText',
+    'gerLangItemText',
+    'ger',
+  );
   await titleGroup
     .getByRole('textbox', { name: 'titleTextVarText', exact: true })
     .fill(mockTitle);
@@ -343,12 +358,7 @@ const createOutputOfType = async (
   // SSIF
   await form.getByRole('button', { name: 'ssifCollectionVarText' }).click();
   const ssif = form.getByRole('region', { name: 'ssifCollectionVarText' });
-  await selectComboboxOption(
-    ssif,
-    'ssifCollectionVarText',
-    '1ItemText',
-    '1',
-  );
+  await selectComboboxOption(ssif, 'ssifCollectionVarText', '1ItemText', '1');
 
   if (additionalFields?.includes('studentDegree')) {
     await form
