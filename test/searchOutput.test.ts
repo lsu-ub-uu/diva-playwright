@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import {
   getFirstDataAtomicValueWithNameInData,
   getFirstDataGroupWithNameInData,
@@ -63,17 +63,12 @@ test.describe('Search output', () => {
       .getByRole('textbox', { name: 'genericIdSearchTextVarText' })
       .fill(genericId);
 
-    await page
-      .getByRole('combobox', {
-        name: 'ssifSearchCollectionVarText',
-      })
-      .fill('101');
-
-    await page
-      .getByRole('option', { name: '101ItemText', exact: true })
-      .waitFor();
-
-    await page.keyboard.press('Enter');
+    await selectComboboxOption(
+      page,
+      'ssifSearchCollectionVarText',
+      '101ItemText',
+      '101',
+    );
 
     await expect(page).toHaveURL((url) => {
       const params = url.searchParams;
@@ -88,3 +83,36 @@ test.describe('Search output', () => {
     });
   });
 });
+
+
+const selectComboboxOption = async (
+  scope: Locator | Page,
+  comboboxName: string,
+  optionName: string,
+  filterText = optionName,
+) => {
+  const combobox = scope.getByRole('combobox', {
+    name: comboboxName,
+    exact: true,
+  });
+
+  await combobox.click();
+  const filter = scope
+    .getByRole('textbox', { name: /Filtrera alternativ/i })
+    .first();
+  const hasVisibleFilter = await filter.isVisible().catch(() => false);
+
+  if (hasVisibleFilter) {
+    await filter.fill(filterText);
+    await filter.press('Enter');
+    await expect(combobox).toContainText(optionName);
+    return;
+  }
+
+  await combobox.fill(filterText);
+  await scope
+    .getByRole('option', { name: optionName, exact: true })
+    .first()
+    .waitFor();
+  await combobox.press('Enter');
+};

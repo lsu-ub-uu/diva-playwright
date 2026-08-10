@@ -2,8 +2,8 @@ import { expect, type Page } from '@playwright/test';
 
 export const logIn = async (
   page: Page,
-  userName: string = 'DiVA SystemAdmin',
-  expectedUserText = 'DiVA SystemAdmin',
+  userName: string = 'Playwright Tester',
+  expectedUserText = 'Playwright Tester',
 ) => {
   // Log in
   await page.getByRole('button', { name: 'divaClient_LoginText' }).click();
