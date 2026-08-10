@@ -16,7 +16,7 @@
  *     You should have received a copy of the GNU General Public License
  */
 
-import { test } from './util/fixtures';
+import { test } from '../util/fixtures';
 import {
   APIRequestContext,
   expect,
@@ -24,8 +24,7 @@ import {
   type Page,
 } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { createUrl } from './util/createUrl';
-import { logIn } from './util/logIn';
+import { createUrl } from '../util/createUrl';
 
 const VALIDATION_TYPES_WITH_POPULAR_GENRE_CONTENT_TYPE = [
   'publication_newspaper-article',
@@ -241,9 +240,6 @@ const createOutputOfType = async (
 
   // Go to start page
   await page.goto(createUrl('/'));
-
-  // Log in
-  await logIn(page);
 
   // Select validation type
   await page.getByRole('button', { name: 'divaClient_createText' }).click();

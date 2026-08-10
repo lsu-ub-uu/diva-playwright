@@ -16,9 +16,9 @@
  *     You should have received a copy of the GNU General Public License
  */
 
-import { test } from './util/fixtures';
+import { test } from '../util/fixtures';
 import { expect } from '@playwright/test';
-import { createUrl } from './util/createUrl';
+import { createUrl } from '../util/createUrl';
 
 test.describe('Error', () => {
   test('Shows 404 error page for missing record id', async ({ page }) => {

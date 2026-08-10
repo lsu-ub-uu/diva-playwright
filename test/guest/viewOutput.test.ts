@@ -1,10 +1,10 @@
-import { test } from './util/fixtures';
+import { test } from '../util/fixtures';
 import { expect } from '@playwright/test';
-import { createUrl } from './util/createUrl';
+import { createUrl } from '../util/createUrl';
 import {
   getFirstDataAtomicValueWithNameInData,
   getFirstDataGroupWithNameInData,
-} from './util/coraUtils';
+} from '../util/coraUtils';
 
 test.describe('View output', () => {
   test('View report', async ({ page, divaOutput }) => {

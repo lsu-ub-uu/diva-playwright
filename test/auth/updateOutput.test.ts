@@ -16,15 +16,14 @@
  *     You should have received a copy of the GNU General Public License
  */
 
-import { test } from './util/fixtures';
+import { test } from '../util/fixtures';
 import { expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { createUrl } from './util/createUrl';
-import { logIn } from './util/logIn';
+import { createUrl } from '../util/createUrl';
 import {
   getFirstDataAtomicValueWithNameInData,
   getFirstDataGroupWithNameInData,
-} from './util/coraUtils';
+} from '../util/coraUtils';
 import path from 'node:path';
 
 test.describe('Update output', () => {
@@ -39,9 +38,6 @@ test.describe('Update output', () => {
     );
 
     await page.goto(createUrl(`/diva-output/${recordId}/update`));
-
-    // Log in
-    await logIn(page);
 
     const mainForm = page.getByRole('main');
     //Assert update page info
@@ -90,9 +86,6 @@ test.describe('Update output', () => {
     );
     await page.goto(createUrl(`/diva-output/${recordId}/update`));
 
-    // Log in
-    await logIn(page);
-
     const mainForm = page.getByRole('main');
     await expect(mainForm.getByRole('heading', { level: 1 })).toHaveText(
       'reportUpdateGroupText',
@@ -103,7 +96,7 @@ test.describe('Update output', () => {
       .click();
     await mainForm
       .getByLabel('attachmentFileLinkText')
-      .setInputFiles(path.join(__dirname, 'assets/dog.jpg'));
+      .setInputFiles(path.join(__dirname, '../assets/dog.jpg'));
 
     await expect(
       mainForm

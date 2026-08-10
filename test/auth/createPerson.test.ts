@@ -16,11 +16,10 @@
  *     You should have received a copy of the GNU General Public License
  */
 
-import { test } from './util/fixtures';
+import { test } from '../util/fixtures';
 import { expect, type Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { createUrl } from './util/createUrl';
-import { logIn } from './util/logIn';
+import { createUrl } from '../util/createUrl';
 
 test.describe('Create person', () => {
   test('Create person', async ({ page, request, authtoken }) => {
@@ -29,9 +28,6 @@ test.describe('Create person', () => {
 
     // Go to start page
     await page.goto(createUrl('/diva-person'));
-
-    // Log in
-    await logIn(page);
 
     // Select validation type
     await page.getByRole('link', { name: 'divaClient_createText' }).click();
@@ -45,7 +41,6 @@ test.describe('Create person', () => {
     await page
       .getByRole('textbox', { name: 'namePartGivenTextVarText', exact: true })
       .fill(mockGivenName);
-
 
     // Submit
     await page

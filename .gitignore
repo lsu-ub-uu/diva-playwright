@@ -24,6 +24,7 @@ target
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+test/.auth/
 
 # JUnit
 junit-report.xml

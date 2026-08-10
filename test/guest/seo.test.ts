@@ -1,10 +1,10 @@
 import { expect } from '@playwright/test';
-import { test } from './util/fixtures';
-import { createUrl } from './util/createUrl';
+import { test } from '../util/fixtures';
+import { createUrl } from '../util/createUrl';
 import {
   getFirstDataAtomicValueWithNameInData,
   getFirstDataGroupWithNameInData,
-} from './util/coraUtils';
+} from '../util/coraUtils';
 
 const { BASE_URL } = process.env;
 

@@ -24,11 +24,35 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'firefox',
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+    },
+    {
+      name: 'firefox-auth',
+      testDir: './test/auth',
+      use: {
+        ...devices['Desktop Firefox'],
+        storageState: 'test/.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    {
+      name: 'chromium-auth',
+      testDir: './test/auth',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'test/.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    {
+      name: 'firefox-guest',
+      testDir: './test/guest',
       use: { ...devices['Desktop Firefox'] },
     },
     {
-      name: 'chromium',
+      name: 'chromium-guest',
+      testDir: './test/guest',
       use: { ...devices['Desktop Chrome'] },
     },
   ],

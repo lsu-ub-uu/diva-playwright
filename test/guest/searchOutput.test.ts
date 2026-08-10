@@ -2,9 +2,9 @@ import { expect, type Locator, type Page } from '@playwright/test';
 import {
   getFirstDataAtomicValueWithNameInData,
   getFirstDataGroupWithNameInData,
-} from './util/coraUtils';
-import { test } from './util/fixtures';
-import { goToPageAndWaitForHydration } from './util/goToPage';
+} from '../util/coraUtils';
+import { test } from '../util/fixtures';
+import { goToPageAndWaitForHydration } from '../util/goToPage';
 
 test.describe('Search output', () => {
   test('Search for records', async ({ page, divaOutput }) => {
@@ -83,7 +83,6 @@ test.describe('Search output', () => {
     });
   });
 });
-
 
 const selectComboboxOption = async (
   scope: Locator | Page,
