@@ -15,19 +15,25 @@
 		</permissionUnit>
 		<visibility>published</visibility>
 	</recordInfo>
+	<dataQuality>2026</dataQuality>
 	<genre type="outputType">publication_review-article</genre>
 	<language repeatId="0">
 		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
 	</language>
-	<status>published</status>
 	<genre type="contentType">ref</genre>
+	<note type="publicationStatus">published</note>
+    <titleInfo lang="ger">
+        <title>TestTitle</title>
+        <subtitle>TestSubtitle</subtitle>
+    </titleInfo>
+    <titleInfo type="alternative" lang="swe" repeatId="0">
+        <title>Svensk titel</title>
+        <subtitle>Svensk undertitel</subtitle>
+    </titleInfo>
 	<originInfo>
 		<dateIssued>
 			<year>2025</year>
 		</dateIssued>
 	</originInfo>
 	<classification authority="ssif" repeatId="0">1</classification>
-	<titleInfo lang="ger">
-		<title>TestTitle</title>
-	</titleInfo>
 </output>

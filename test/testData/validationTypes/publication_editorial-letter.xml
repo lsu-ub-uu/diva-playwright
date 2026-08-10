@@ -15,6 +15,7 @@
 		</permissionUnit>
 		<visibility>published</visibility>
 	</recordInfo>
+	<dataQuality>2026</dataQuality>
 	<genre type="outputType">publication_editorial-letter</genre>
 	<language repeatId="0">
 		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
@@ -27,7 +28,12 @@
 		</dateIssued>
 	</originInfo>
 	<classification authority="ssif" repeatId="0">1</classification>
-	<titleInfo lang="ger">
-		<title>TestTitle</title>
-	</titleInfo>
+    <titleInfo lang="ger">
+        <title>TestTitle</title>
+        <subtitle>TestSubtitle</subtitle>
+    </titleInfo>
+    <titleInfo type="alternative" lang="swe" repeatId="0">
+        <title>Svensk titel</title>
+        <subtitle>Svensk undertitel</subtitle>
+    </titleInfo>
 </output>
