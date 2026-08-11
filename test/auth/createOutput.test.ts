@@ -97,6 +97,9 @@ const createOutputOfType = async (
 
   const form = page.getByRole('main');
 
+  await form
+    .getByRole('button', { name: 'contentInformationHeadlineText' })
+    .click();
   // Language
   await form
     .getByRole('button', { name: 'languageGroupText', exact: true })
@@ -107,17 +110,26 @@ const createOutputOfType = async (
     'gerLangItemText',
     'ger',
   );
+  await form
+    .getByRole('button', { name: 'contentInformationHeadlineText' })
+    .click();
 
   // Publication Status
   if (additionalFields?.includes('publicationStatus')) {
     await form
-      .getByRole('button', { name: 'genreContentTypeCollectionText' })
+      .getByRole('button', { name: 'contentInformationHeadlineText' })
       .click();
+    /*     await form
+      .getByRole('button', { name: 'genreContentTypeCollectionText' })
+      .click(); */
     await form
       .getByRole('combobox', { name: 'publicationStatusCollectionVarText' })
       .selectOption({ label: 'publishedItemText' });
-    await form
+    /*     await form
       .getByRole('button', { name: 'genreContentTypeCollectionText' })
+      .click(); */
+    await form
+      .getByRole('button', { name: 'contentInformationHeadlineText' })
       .click();
   }
 
@@ -129,6 +141,9 @@ const createOutputOfType = async (
   // Content type
   if (additionalFields?.includes('genreContentType') && hasGenreContentType) {
     await form
+      .getByRole('button', { name: 'contentInformationHeadlineText' })
+      .click();
+    await form
       .getByRole('button', { name: 'genreContentTypeCollectionText' })
       .click();
     await form
@@ -137,12 +152,18 @@ const createOutputOfType = async (
     await form
       .getByRole('button', { name: 'genreContentTypeCollectionText' })
       .click();
+    await form
+      .getByRole('button', { name: 'contentInformationHeadlineText' })
+      .click();
   }
 
   if (
     additionalFields?.includes('genreContentType') &&
     hasPopularGenreContentType
   ) {
+    await form
+      .getByRole('button', { name: 'contentInformationHeadlineText' })
+      .click();
     await form
       .getByRole('button', { name: 'genreContentTypeCollectionText' })
       .click();
