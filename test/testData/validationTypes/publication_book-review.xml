@@ -21,14 +21,7 @@
 		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
 	</language>
 	<genre type="contentType">vet</genre>
-	<status>published</status>
-	<genre type="contentType">ref</genre>
-	<originInfo>
-		<dateIssued>
-			<year>2025</year>
-		</dateIssued>
-	</originInfo>
-	<classification authority="ssif" repeatId="0">1</classification>
+	<note type="publicationStatus">published</note>
     <titleInfo lang="ger">
         <title>TestTitle</title>
         <subtitle>TestSubtitle</subtitle>
@@ -37,4 +30,10 @@
         <title>Svensk titel</title>
         <subtitle>Svensk undertitel</subtitle>
     </titleInfo>
+	<originInfo>
+		<dateIssued>
+			<year>2025</year>
+		</dateIssued>
+	</originInfo>
+	<classification authority="ssif" repeatId="0">1</classification>
 </output>
