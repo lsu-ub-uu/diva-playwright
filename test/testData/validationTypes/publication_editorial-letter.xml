@@ -20,8 +20,8 @@
 	<language repeatId="0">
 		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
 	</language>
-	<status>published</status>
 	<genre type="contentType">ref</genre>
+	<note type="publicationStatus">published</note>
 	<originInfo>
 		<dateIssued>
 			<year>2025</year>

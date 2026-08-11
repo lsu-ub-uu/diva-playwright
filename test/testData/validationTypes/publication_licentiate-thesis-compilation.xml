@@ -17,6 +17,7 @@
 	</recordInfo>
 	<dataQuality>2026</dataQuality>
 	<genre type="outputType">publication_licentiate-thesis-compilation</genre>
+	<genre type="contentType">vet</genre>
 	<language repeatId="0">
 		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
 	</language>

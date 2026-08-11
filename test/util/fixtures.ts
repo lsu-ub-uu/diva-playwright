@@ -173,6 +173,12 @@ export const test = base.extend<Fixtures, WorkerFixtures>({
         },
       );
 
+      if (!response.ok()) {
+        throw new Error(
+          `Failed to create diva output: ${await response.text()}`,
+        );
+      }
+
       responseBody = await response.json();
       return responseBody.record.data as DataGroup;
     };

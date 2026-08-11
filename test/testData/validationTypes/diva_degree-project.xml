@@ -20,9 +20,9 @@
 	<language repeatId="0">
 		<languageTerm authority="iso639-2b" type="code">ger</languageTerm>
 	</language>
-	<studentDegree>
+	<studentDegree repeatId="0">
 		<degreeLevel>H2</degreeLevel>
-		<credits>15hp</credits>
+		<credits>15</credits>
 	</studentDegree>
 	<originInfo>
 		<dateIssued>
