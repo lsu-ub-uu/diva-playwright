@@ -96,10 +96,10 @@ const createOutputOfType = async (
   await expect(page).toHaveTitle('divaClient_createRecordText | DiVA');
 
   const form = page.getByRole('main');
-
+  
   // Language
   await form
-    .getByRole('button', { name: 'languageGroupText', exact: true })
+    .getByRole('button', { name: 'contentInformationHeadlineText', exact: true })
     .click();
   await selectComboboxOption(
     form,
@@ -111,14 +111,9 @@ const createOutputOfType = async (
   // Publication Status
   if (additionalFields?.includes('publicationStatus')) {
     await form
-      .getByRole('button', { name: 'genreContentTypeCollectionText' })
-      .click();
-    await form
       .getByRole('combobox', { name: 'publicationStatusCollectionVarText' })
       .selectOption({ label: 'publishedItemText' });
-    await form
-      .getByRole('button', { name: 'genreContentTypeCollectionText' })
-      .click();
+
   }
 
   const hasGenreContentType =
@@ -129,23 +124,14 @@ const createOutputOfType = async (
   // Content type
   if (additionalFields?.includes('genreContentType') && hasGenreContentType) {
     await form
-      .getByRole('button', { name: 'genreContentTypeCollectionText' })
-      .click();
-    await form
       .getByRole('combobox', { name: 'genreContentTypeCollectionText' })
       .selectOption({ label: 'peerReviewedItemText' });
-    await form
-      .getByRole('button', { name: 'genreContentTypeCollectionText' })
-      .click();
   }
 
   if (
     additionalFields?.includes('genreContentType') &&
     hasPopularGenreContentType
   ) {
-    await form
-      .getByRole('button', { name: 'genreContentTypeCollectionText' })
-      .click();
     await form
       .getByRole('combobox', {
         name: 'genreContentTypeOtherPopularCollectionVarText',
