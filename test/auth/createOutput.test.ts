@@ -96,10 +96,13 @@ const createOutputOfType = async (
   await expect(page).toHaveTitle('divaClient_createRecordText | DiVA');
 
   const form = page.getByRole('main');
-  
+
   // Language
   await form
-    .getByRole('button', { name: 'contentInformationHeadlineText', exact: true })
+    .getByRole('button', {
+      name: 'contentInformationHeadlineText',
+      exact: true,
+    })
     .click();
   await selectComboboxOption(
     form,
@@ -108,12 +111,31 @@ const createOutputOfType = async (
     'ger',
   );
 
+  // Name type="personal"
+  if (additionalFields?.includes('nameTypePersonal')) {
+    await form
+      .getByRole('button', {
+        name: 'namePersonalHeadlineText',
+      })
+      .click();
+    await form.getByText(/namePersonal(Author)?GroupText/).click();
+    if (validationType !== 'diva_degree-project') {
+      await form
+        .getByRole('combobox', {
+          name: /role.*CollectionVarText/,
+        })
+        .selectOption({ label: 'autItemText' });
+    }
+    await form
+      .getByRole('textbox', { name: 'namePartFamilyTextVarText' })
+      .fill(faker.person.lastName());
+  }
+
   // Publication Status
   if (additionalFields?.includes('publicationStatus')) {
     await form
       .getByRole('combobox', { name: 'publicationStatusCollectionVarText' })
       .selectOption({ label: 'publishedItemText' });
-
   }
 
   const hasGenreContentType =

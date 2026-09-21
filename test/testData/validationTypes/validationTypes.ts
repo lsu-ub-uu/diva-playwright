@@ -2,7 +2,7 @@ export const validationTypes = [
   {
     name: 'Patent',
     validationType: 'intellectual-property_patent',
-    additionalFields: undefined,
+    additionalFields: ['nameTypePersonal'],
   },
   {
     name: 'Editorial proceeding',
@@ -12,7 +12,7 @@ export const validationTypes = [
   {
     name: 'Licentiate thesis (compilation)',
     validationType: 'publication_licentiate-thesis-compilation',
-    additionalFields: undefined,
+    additionalFields: ['nameTypePersonal'],
   },
   {
     name: 'Article in daily/newspaper',
@@ -52,7 +52,7 @@ export const validationTypes = [
   {
     name: 'Licentiate thesis (monograph)',
     validationType: 'publication_licentiate-thesis-monograph',
-    additionalFields: undefined,
+    additionalFields: ['nameTypePersonal'],
   },
   {
     name: 'Artistic work',
@@ -72,7 +72,7 @@ export const validationTypes = [
   {
     name: 'Degree project (independent project)',
     validationType: 'diva_degree-project',
-    additionalFields: ['studentDegree'],
+    additionalFields: ['nameTypePersonal', 'studentDegree'],
   },
   {
     name: 'Introductory text in journal / proceeding (letters, editorials, comments, notes)',
@@ -97,7 +97,7 @@ export const validationTypes = [
   {
     name: 'Documented artistic research project (doctoral thesis)',
     validationType: 'artistic-work_artistic-thesis',
-    additionalFields: undefined,
+    additionalFields: ['nameTypePersonal'],
   },
   {
     name: 'Review',
@@ -147,11 +147,11 @@ export const validationTypes = [
   {
     name: 'Doctoral thesis (monograph)',
     validationType: 'publication_doctoral-thesis-monograph',
-    additionalFields: undefined,
+    additionalFields: ['nameTypePersonal'],
   },
   {
     name: 'Doctoral thesis (compilation)',
     validationType: 'publication_doctoral-thesis-compilation',
-    additionalFields: undefined,
+    additionalFields: ['nameTypePersonal'],
   },
 ];

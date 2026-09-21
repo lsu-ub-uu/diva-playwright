@@ -30,6 +30,10 @@
         <title>Svensk titel</title>
         <subtitle>Svensk undertitel</subtitle>
     </titleInfo>
+	<name type="personal" repeatId="0">
+		<namePart type="family">Doe</namePart>
+		<role><roleTerm repeatId="0">aut</roleTerm></role>
+	</name>
 	<originInfo>
 		<dateIssued>
 			<year>2025</year>
