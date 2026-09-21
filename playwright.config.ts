@@ -8,7 +8,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!CI,
   retries: CI ? 2 : 0,
-  workers: CI ? 1 : undefined,
+  workers: CI ? 2 : undefined,
   reporter: CI
     ? [
         ['list'],
