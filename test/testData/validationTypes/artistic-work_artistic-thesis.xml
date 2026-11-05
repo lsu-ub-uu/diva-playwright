@@ -32,7 +32,7 @@
     </titleInfo>
 	<name type="personal" repeatId="0">
 		<namePart type="family">Doe</namePart>
-		<role><roleTerm repeatId="0">aut</roleTerm></role>
+		<role repeatId="0"><roleTerm>aut</roleTerm></role>
 	</name>
 	<originInfo>
 		<dateIssued>
