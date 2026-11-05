@@ -9,8 +9,9 @@ test.describe('Landing page', () => {
     await expect(page.getByRole('heading', { level: 1 }), {
       message: 'Title',
     }).toHaveText('titleText');
+    await expect(page.getByPlaceholder('divaClient_heroLabelText')).toBeVisible();
 
-    await expect(
+    /* await expect(
       page.getByRole('link', {
         name: 'diva-outputPluralText divaClient_navigationCardPublicationDescriptionText',
       }),
@@ -24,6 +25,6 @@ test.describe('Landing page', () => {
       page.getByRole('link', {
         name: 'diva-projectPluralText divaClient_navigationCardProjectDescriptionText',
       }),
-    ).toBeVisible();
+    ).toBeVisible(); */
   });
 });

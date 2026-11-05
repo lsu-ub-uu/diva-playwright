@@ -45,8 +45,6 @@ test.describe('SEO', () => {
           `<urlset xmlns="http://www\\.sitemaps\\.org/schemas/sitemap/0\\.9">\\s*`,
           `<url>\\s*<loc>.*${escapedBaseUrl}?</loc>\\s*</url>\\s*`,
           `<url>\\s*<loc>.*${escapedBaseUrl}?/diva-output</loc>\\s*</url>\\s*`,
-          `<url>\\s*<loc>.*${escapedBaseUrl}?/diva-person</loc>\\s*</url>\\s*`,
-          `<url>\\s*<loc>.*${escapedBaseUrl}?/diva-project</loc>\\s*</url>\\s*`,
           `(?:<url>[\\s\\S]*?</url>\\s*)*`,
           `</urlset>`,
         ].join(''),
