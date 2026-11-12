@@ -15,7 +15,12 @@ test.describe('Copy to new record', () => {
     );
     await page.goto(createUrl(`/diva-output/${recordId}`));
 
-    await page.getByRole('button', { name: 'Copy to new record' }).click();
+    await page
+      .getByRole('button', { name: 'divaClient_moreNavigationText' })
+      .click();
+    await page
+      .getByRole('button', { name: 'divaClient_copyAsNewText' })
+      .click();
 
     const form = page.getByRole('main');
 
