@@ -26,6 +26,7 @@ import {
 import { faker } from '@faker-js/faker';
 import { createUrl } from '../util/createUrl';
 import { validationTypes } from '../testData/validationTypes/validationTypes';
+import { getRecordIdFromUpdatePageUrl } from '../util/getRecordIdFromUpdatePageUrl';
 
 const VALIDATION_TYPES_WITH_POPULAR_GENRE_CONTENT_TYPE = [
   'publication_newspaper-article',
@@ -47,12 +48,6 @@ test.describe('Output', () => {
     });
   });
 });
-
-const getRecordIdFromUpdatePageUrl = (page: Page) => {
-  const url = page.url(); // /diva-output/:id/update
-  const segments = url.split('/');
-  return segments[segments.length - 2];
-};
 
 const selectComboboxOption = async (
   scope: Locator,
