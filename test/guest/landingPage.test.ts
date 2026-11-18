@@ -26,7 +26,6 @@ test.describe('Landing page', () => {
       }),
     ).toBeVisible();
   });
-  test.fixme('asserts the authenticated redirect to output search', async () => { });
   test.fixme('uses a non-default member title', async () => { });
   test.fixme('converts landing page failures to route errors', async () => { });
 });
