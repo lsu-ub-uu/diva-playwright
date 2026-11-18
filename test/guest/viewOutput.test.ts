@@ -25,4 +25,19 @@ test.describe('View output', () => {
       }).toHaveText('TestTitle: TestSubtitle');
     });
   });
+  test.fixme('uses missing-title text when output title information is absent', async ({ page, divaOutputFactory }) => {
+    const divaOutput = await divaOutputFactory('classic_publication_report.xml');
+
+    const recordId = getFirstDataAtomicValueWithNameInData(
+      getFirstDataGroupWithNameInData(divaOutput, 'recordInfo'),
+      'id',
+    );
+
+    await page.goto(createUrl(`/diva-output/${recordId}`));
+
+    // Title
+    await expect(page.getByRole('heading', { level: 1 }), {
+      message: 'Title',
+    }).toHaveText('divaClient_missingTitleText');
+  });
 });
